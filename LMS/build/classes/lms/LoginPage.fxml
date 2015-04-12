@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lms.LoginPageController">
+   <children>
+      <TextField fx:id="usernameInput" layoutX="322.0" layoutY="169.0" />
+      <Text layoutX="123.0" layoutY="190.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Username" />
+      <Text layoutX="125.0" layoutY="252.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password" />
+      <PasswordField fx:id="passInput" layoutX="322.0" layoutY="231.0" />
+      <Button layoutX="268.0" layoutY="315.0" mnemonicParsing="false" onMouseClicked="#loginEvent" text="Button" />
+   </children>
+</AnchorPane>
