@@ -16,9 +16,14 @@ import javafx.stage.Stage;
  * @author Kris
  */
 public class LMS extends Application {
+    private static Parent root;
+    private static Stage stage;
+    private static String sessionUser;
+    private static String registrationPassword;
     
     @Override
     public void start(Stage stage) throws Exception {
+        this.stage = stage;
         Parent root = FXMLLoader.load(getClass().getResource("LoginPage.fxml"));
         
         Scene scene = new Scene(root);
@@ -32,6 +37,26 @@ public class LMS extends Application {
      */
     public static void main(String[] args) {
         launch(args);
+    }
+    
+    public static Parent getParent() {
+        return root;
+    }
+    public static Stage getStage() {
+        return stage;
+    }
+    
+    public static void setSessionUser(String username) {
+            sessionUser = username;
+    }
+    public static String getSessionUser() {
+        return sessionUser;
+    }
+    public static String getRegistrationPassword() {
+        return registrationPassword;
+    }
+    public static void setRegistrationPassword(String pass) {
+        registrationPassword = pass;
     }
     
 }

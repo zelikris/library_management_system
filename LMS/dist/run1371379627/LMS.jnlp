@@ -11,7 +11,7 @@
   </resources>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="LMS.jar" size="12845" download="eager" />
+    <jar href="LMS.jar" size="11057" download="eager" />
     <jar href="lib/derby.jar" size="2835824" download="eager" />
     <jar href="lib/derbyclient.jar" size="584976" download="eager" />
     <jar href="lib/derbynet.jar" size="251081" download="eager" />

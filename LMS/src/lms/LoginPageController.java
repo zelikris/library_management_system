@@ -5,6 +5,7 @@
  */
 package lms;
 
+import java.io.IOException;
 import javafx.scene.input.MouseEvent;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -18,6 +19,9 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -62,8 +66,8 @@ public class LoginPageController implements Initializable {
         ResultSet users = stmt.executeQuery("SELECT * FROM KRIS.\"USER\"");
         
         while (users.next() && !matchFound) {
-            String u = users.getString("username");
-            String p = users.getString("password");
+            String u = users.getString("USERNAME");
+            String p = users.getString("Password");
             //System.out.println(u + " " + p);
             if (username.equals(u) && password.equals(p)) {
                 matchFound = true;
@@ -78,6 +82,21 @@ public class LoginPageController implements Initializable {
         } catch(SQLException e) {
             System.err.println(e);
         }
+    }
     
+    @FXML
+    private void registerEvent(MouseEvent event) {
+       try {
+            Parent foster = LMS.getParent();
+            Stage stage = LMS.getStage();
+            foster = FXMLLoader.load(getClass().getResource("RegistrationForm.fxml"));
+
+            Scene scene = new Scene(foster);
+
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
