@@ -9,7 +9,9 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 
 /**
@@ -17,18 +19,20 @@ import javafx.scene.control.TextField;
  *
  * @author keatts
  */
-public class HoldRequestPageController implements Initializable {
+public class ReturnBookPageController implements Initializable {
 
-    @FXML Button reserveBooksButton, backButton,
-            submitButton, closeButton;
-    @FXML TextField holdRequestDateField, returnDateField;
-
+    @FXML ComboBox conditionBox;
+    @FXML TextField issueIdField, isbnField, copyNoField, usernameField;
+    @FXML TableColumn selectCol, isbnCol, bookCol, editionCol, copiesCol;
+    @FXML TableView table;
+    
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        conditionBox.getItems().addAll("N", "Y");
+        conditionBox.setValue("N");
     }    
     
 }
