@@ -15,20 +15,22 @@ import javafx.scene.control.TextField;
 /**
  * FXML Controller class
  *
- * @author keatts
+ * @author zain
  */
-public class HoldRequestPageController implements Initializable {
+public class TrackBookLocationController implements Initializable {
 
-    @FXML
-    private Button submitButton;
-    @FXML
-    private Button okayButton;
     @FXML
     private TextField isbn;
     @FXML
-    private TextField copyNumber;
+    private Button locateButton;
     @FXML
-    private TextField availableDate;
+    private TextField floorNumber;
+    @FXML
+    private TextField aisleNumber;
+    @FXML
+    private TextField subjectName;
+    @FXML
+    private TextField shelfName;
     /**
      * Initializes the controller class.
      */
