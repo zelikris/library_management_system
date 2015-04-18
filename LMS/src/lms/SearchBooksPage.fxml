@@ -7,17 +7,21 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="lms.SearchBooksPageController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lms.SearchBooksPageController">
    <children>
-      <TextField fx:id="isbnInput" layoutX="221.0" layoutY="125.0" />
-      <TextField fx:id="titleInput" layoutX="221.0" layoutY="186.0" />
-      <TextField fx:id="authorInput" layoutX="221.0" layoutY="244.0" />
+      <TextField fx:id="isbnInput" layoutX="207.0" layoutY="125.0" />
+      <TextField fx:id="titleInput" layoutX="207.0" layoutY="186.0" />
+      <TextField fx:id="authorInput" layoutX="207.0" layoutY="244.0" />
       <Text layoutX="83.0" layoutY="146.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ISBN" />
       <Text layoutX="83.0" layoutY="207.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Title" />
       <Text layoutX="83.0" layoutY="265.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Author" />
-      <Button layoutX="156.0" layoutY="318.0" mnemonicParsing="false" text="Back" />
-      <Button layoutX="268.0" layoutY="318.0" mnemonicParsing="false" text="Search" />
-      <Button layoutX="408.0" layoutY="318.0" mnemonicParsing="false" text="Close" />
+      <Button layoutX="146.0" layoutY="318.0" mnemonicParsing="false" text="Back" />
+      <Button layoutX="258.0" layoutY="318.0" mnemonicParsing="false" text="Search" />
+      <Button layoutX="398.0" layoutY="318.0" mnemonicParsing="false" text="Close" />
+      <Text layoutX="195.0" layoutY="68.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Search Books">
+         <font>
+            <Font size="36.0" />
+         </font>
+      </Text>
    </children>
 </AnchorPane>
