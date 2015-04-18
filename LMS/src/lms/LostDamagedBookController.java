@@ -35,6 +35,8 @@ public class LostDamagedBookController implements Initializable {
     private TextField lastUserOfBook;
     @FXML
     private TextField amountToCharge;
+    @FXML
+    private Button backButton;
     /**
      * Initializes the controller class.
      */

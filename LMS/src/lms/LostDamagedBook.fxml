@@ -7,8 +7,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="lms.LostDamagedBookController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lms.LostDamagedBookController">
    <children>
       <Text layoutX="105.0" layoutY="68.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Lost/Damaged Book" underline="true">
          <font>
@@ -28,5 +27,6 @@
       <TextField fx:id="amountToCharge" layoutX="191.0" layoutY="286.0" />
       <Button fx:id="submitButton" layoutX="372.0" layoutY="353.0" mnemonicParsing="false" onMouseClicked="#submitButtonPressed" text="Submit" />
       <Button fx:id="cancelButton" layoutX="458.0" layoutY="353.0" mnemonicParsing="false" onMouseClicked="#cancelButtonPressed" text="Cancel" />
+      <Button fx:id="backButton" layoutX="33.0" layoutY="353.0" mnemonicParsing="false" onMouseClicked="#backButtonPressed" text="Back" />
    </children>
 </AnchorPane>

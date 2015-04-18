@@ -31,6 +31,8 @@ public class TrackBookLocationController implements Initializable {
     private TextField subjectName;
     @FXML
     private TextField shelfName;
+    @FXML
+    private Button backButton;
     /**
      * Initializes the controller class.
      */

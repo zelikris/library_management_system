@@ -7,10 +7,9 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="lms.BookCheckoutController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lms.BookCheckoutController">
    <children>
-      <Text layoutX="140.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Book Checkout">
+      <Text layoutX="140.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Book Checkout" underline="true">
          <font>
             <Font size="44.0" />
          </font>
@@ -28,5 +27,6 @@
       <Text layoutX="46.0" layoutY="297.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Estimated Return Date" />
       <TextField fx:id="estimatedReturnDate" layoutX="215.0" layoutY="280.0" />
       <Button fx:id="confirmButton" layoutX="449.0" layoutY="340.0" mnemonicParsing="false" onMouseClicked="#confirmButtonPressed" text="Confirm" />
+      <Button fx:id="backButton" layoutX="48.0" layoutY="340.0" mnemonicParsing="false" onMouseClicked="#backButtonPressed" text="Back" />
    </children>
 </AnchorPane>

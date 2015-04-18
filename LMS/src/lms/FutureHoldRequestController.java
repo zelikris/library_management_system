@@ -7,7 +7,10 @@ package lms;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 
 /**
  * FXML Controller class
@@ -16,6 +19,18 @@ import javafx.fxml.Initializable;
  */
 public class FutureHoldRequestController implements Initializable {
 
+    @FXML
+    private Button requestButton;
+    @FXML
+    private Button okayButton;
+    @FXML
+    private TextField isbn;
+    @FXML
+    private TextField copyNumber;
+    @FXML
+    private TextField availableDate;
+    @FXML
+    private Button backButton;
     /**
      * Initializes the controller class.
      */

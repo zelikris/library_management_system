@@ -33,6 +33,8 @@ public class BookCheckoutController implements Initializable {
     private TextField checkoutDate;
     @FXML
     private TextField estimatedReturnDate;
+    @FXML
+    private Button backButton;
     /**
      * Initializes the controller class.
      */

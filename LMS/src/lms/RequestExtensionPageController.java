@@ -38,6 +38,8 @@ public class RequestExtensionPageController implements Initializable {
     private TextField newReturnDate;
     @FXML
     private Button submitExtensionRequest;
+    @FXML
+    private Button backButton;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
