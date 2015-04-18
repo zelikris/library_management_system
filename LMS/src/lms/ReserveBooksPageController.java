@@ -10,18 +10,17 @@ import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
+import javafx.scene.control.TableView;
 
 /**
  * FXML Controller class
  *
  * @author keatts
  */
-public class HoldRequestPageController implements Initializable {
+public class ReserveBooksPageController implements Initializable {
 
-    @FXML Button reserveBooksButton, backButton,
-            submitButton, closeButton;
-    @FXML TextField holdRequestDateField, returnDateField;
+    @FXML Button backButton;
+    @FXML TableView table;
 
     /**
      * Initializes the controller class.

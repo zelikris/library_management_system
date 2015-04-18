@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="lms.ReserveBooksPageController">
+   <children>
+      <Text layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Books on Reserve" />
+      <TableView layoutX="14.0" layoutY="38.0" prefHeight="309.0" prefWidth="572.0">
+        <columns>
+          <TableColumn prefWidth="133.0" text="ISBN" />
+          <TableColumn prefWidth="222.0" text="Title of the Book" />
+            <TableColumn minWidth="0.0" prefWidth="88.0" text="Edition" />
+            <TableColumn prefWidth="128.0" text="#copies Available" />
+        </columns>
+      </TableView>
+      <Button layoutX="528.0" layoutY="360.0" mnemonicParsing="false" text="Back" />
+   </children>
+</AnchorPane>
