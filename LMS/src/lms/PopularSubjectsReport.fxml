@@ -7,17 +7,17 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="lms.PopularSubjectsReportController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lms.PopularSubjectsReportController">
    <children>
       <Text layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Popular Subject Report" />
-      <Button layoutX="14.0" layoutY="360.0" mnemonicParsing="false" text="Back" />
-      <TableView layoutX="52.0" layoutY="52.0" prefHeight="286.0" prefWidth="489.0">
+      <Button fx:id="backButton" layoutX="14.0" layoutY="360.0" mnemonicParsing="false" onAction="#backAction" text="Back" />
+      <TableView fx:id="table" layoutX="52.0" layoutY="52.0" prefHeight="286.0" prefWidth="489.0">
         <columns>
-          <TableColumn prefWidth="142.0" text="Month" />
-          <TableColumn prefWidth="170.0" text="Top Subject" />
-            <TableColumn prefWidth="176.0" text="#checkouts" />
+          <TableColumn fx:id="monthCol" prefWidth="142.0" text="Month" />
+          <TableColumn fx:id="subjectCol" prefWidth="170.0" text="Top Subject" />
+            <TableColumn fx:id="checkoutsCol" prefWidth="176.0" text="#checkouts" />
         </columns>
       </TableView>
+      <Button fx:id="updateButton" layoutX="498.0" layoutY="360.0" mnemonicParsing="false" onAction="#updateTable" text="Update Table" />
    </children>
 </AnchorPane>
