@@ -7,16 +7,13 @@
     <offline-allowed/>
   </information>
   <resources>
-    <jfx:javafx-runtime version="8.0+" href="http://javadl.sun.com/webapps/download/GetFile/javafx-latest/windows-i586/javafx2.jnlp"/>
-  </resources>
-  <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="LMS.jar" size="12845" download="eager" />
-    <jar href="lib/derby.jar" size="2835824" download="eager" />
-    <jar href="lib/derbyclient.jar" size="584976" download="eager" />
-    <jar href="lib/derbynet.jar" size="251081" download="eager" />
-    <jar href="lib/derbyrun.jar" size="7106" download="eager" />
-    <jar href="lib/derbytools.jar" size="213283" download="eager" />
+    <jar href="LMS.jar" size="13694" download="eager" />
+    <jar href="lib/derby.jar" size="3104883" download="eager" />
+    <jar href="lib/derbyclient.jar" size="585704" download="eager" />
+    <jar href="lib/derbynet.jar" size="266471" download="eager" />
+    <jar href="lib/derbyrun.jar" size="9670" download="eager" />
+    <jar href="lib/derbytools.jar" size="229601" download="eager" />
   </resources>
   <applet-desc  width="800" height="600" main-class="com.javafx.main.NoJavaFXFallback"  name="LMS" >
     <param name="requiredFXVersion" value="8.0+"/>

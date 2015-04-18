@@ -27,5 +27,6 @@
       <TextField fx:id="firstName" layoutX="150.0" layoutY="56.0" />
       <TextField fx:id="email" layoutX="150.0" layoutY="158.0" />
       <Text layoutX="55.0" layoutY="179.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Email" />
+      <Text layoutX="82.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Registration Page" />
    </children>
 </AnchorPane>

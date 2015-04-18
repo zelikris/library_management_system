@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lms.RequestExtensionPageController">
+   <children>
+      <Text layoutX="200.0" layoutY="58.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Request Extension on Book" underline="true" />
+      <Text layoutX="62.0" layoutY="128.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Enter your Issue ID" />
+      <TextField fx:id="issueID" layoutX="215.0" layoutY="111.0" />
+      <Button layoutX="435.0" layoutY="111.0" mnemonicParsing="false" onMouseClicked="#submitButton" text="Submit" />
+      <Button layoutX="345.0" layoutY="350.0" mnemonicParsing="false" onMouseClicked="#submitExtensionRequest" text="Submit Extension Request" />
+      <Text layoutX="34.0" layoutY="169.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Original Checkout Date" />
+      <Text fx:id="currReturnDate" layoutX="33.0" layoutY="235.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Current Return Date" />
+      <Text fx:id="newReturnDate" layoutX="35.0" layoutY="307.0" strokeType="OUTSIDE" strokeWidth="0.0" text="New Return Date" />
+      <Text layoutX="33.0" layoutY="271.0" strokeType="OUTSIDE" strokeWidth="0.0" text="New Extension Date" />
+      <Text layoutX="33.0" layoutY="201.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Current Extension Date" />
+      <TextField fx:id="originalCheckoutDate" editable="false" layoutX="215.0" layoutY="151.0" />
+      <TextField fx:id="currentExtensionDate" editable="false" layoutX="215.0" layoutY="183.0" />
+      <TextField fx:id="currentReturnDate" editable="false" layoutX="215.0" layoutY="216.0" />
+      <TextField fx:id="newExtensionDate" editable="false" layoutX="215.0" layoutY="253.0" />
+      <TextField fx:id="newReturnDate" editable="false" layoutX="214.0" layoutY="286.0" />
+   </children>
+</AnchorPane>
