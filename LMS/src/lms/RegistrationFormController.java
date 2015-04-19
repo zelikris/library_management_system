@@ -112,30 +112,35 @@ public class RegistrationFormController implements Initializable {
     
     private boolean usernameExists(String username) {
         boolean matchFound = false;
-        try{ 
-        Class.forName("org.apache.derby.jdbc.EmbeddedDriver");
-        }catch(ClassNotFoundException e){
-            System.out.println(e);
-        }
+        Connection con = null;
         
         try{
-        Connection con = DriverManager.getConnection("jdbc:derby://localhost:1527/libraryDB", "kris", "zeli");
-        Statement stmt = con.createStatement();
-        
-        ResultSet users = stmt.executeQuery("SELECT * FROM KRIS.\"USER\"");
-        //Export to function to stop the while loop with a return
-        while (users.next() && !matchFound) {
-            String u = users.getString("USERNAME");
-            
-            if (username.equals(u)) {
-                return true;
-            } 
-            
-        }
+            Class.forName("com.mysql.jdbc.Driver").newInstance();
+                con = DriverManager.getConnection("jdbc:mysql://academic-mysql.cc.gatech.edu/cs4400_Group_22", "cs4400_Group_22",
+                "ayt2V3Ck");
+            Statement stmt = con.createStatement();
+
+            ResultSet users = stmt.executeQuery("SELECT * FROM USER");
+            //Export to function to stop the while loop with a return
+            while (users.next() && !matchFound) {
+                String u = users.getString("USERNAME");
+
+                if (username.equals(u)) {
+                    return true;
+                } 
+
+            }
                 
-        }catch(SQLException e){
-            System.err.println(e);
-        }
+        } catch(Exception e) {
+            System.err.println("Exception: " + e.getMessage());
+        } finally {
+            try {
+                if(con != null)
+                con.close();
+            } catch(SQLException e) {
+                System.err.println(e);
+            }   
+        }    
         return matchFound;
     }
     

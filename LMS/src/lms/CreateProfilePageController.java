@@ -77,7 +77,7 @@ public class CreateProfilePageController implements Initializable {
        try {
             Parent foster = LMS.getParent();
             Stage stage = LMS.getStage();
-            foster = FXMLLoader.load(getClass().getResource("SearchBooksPage.fxml"));
+            foster = FXMLLoader.load(getClass().getResource("SearchBook.fxml"));
 
             Scene scene = new Scene(foster);
 
@@ -93,37 +93,41 @@ public class CreateProfilePageController implements Initializable {
         String lName = lastName.getText();
         String fullName = fName + " " + lName;
         LocalDate dob = dateOfBirth.getValue();
-        String dobSqlDate = convertToSQLDate(dob);
+        //String dobSqlDate = convertToSQLDate(dob);
         
         String addrs = address.getText();
         String gendr = gender.getValue();
         boolean isAFaculty = isFaculty.isSelected();
         String dept = department.getText();
         String theEmail = email.getText();
+        Connection con = null;
         
-        try{ 
-        Class.forName("org.apache.derby.jdbc.EmbeddedDriver");
-        }catch(ClassNotFoundException e){
-            System.out.println(e);
-        }
-        
-        try{
-        Connection con = DriverManager.getConnection("jdbc:derby://localhost:1527/libraryDB", "kris", "zeli");
-        Statement stmt = con.createStatement();
-        
-        stmt.executeUpdate("INSERT INTO \"USER\" VALUES('"+ LMS.getSessionUser() +"','" + LMS.getRegistrationPassword() + "')");
-        stmt.executeUpdate("INSERT INTO \"STUDENT_FACULTY\"(Sf_username, Name, "
-                + "Dob, Gender, "
-                + "Email, Address, Is_faculty, "
-                + "Dept)\n"
-                + "VALUES ('" + LMS.getSessionUser() + "', "
-                + "'" + fullName + "', '" + dobSqlDate + "', '" + gendr + "', '"+ theEmail +"', "
-                + "'" + addrs + "', " + isAFaculty + ", '" + dept + "')");
-        //Export to function to stop the while loop with a return
+        try {
+            Class.forName("com.mysql.jdbc.Driver").newInstance();
+                con = DriverManager.getConnection("jdbc:mysql://academic-mysql.cc.gatech.edu/cs4400_Group_22", "cs4400_Group_22",
+                "ayt2V3Ck");
+            Statement stmt = con.createStatement();
 
-        }catch(SQLException e){
-            System.err.println(e);
-        }
+            stmt.executeUpdate("INSERT INTO USER VALUES('"+ LMS.getSessionUser() +"','" + LMS.getRegistrationPassword() + "')");
+            stmt.executeUpdate("INSERT INTO STUDENT_FACULTY(Sf_username, Name, "
+                    + "Dob, Gender, "
+                    + "Email, Address, Is_faculty, "
+                    + "Dept)\n"
+                    + "VALUES ('" + LMS.getSessionUser() + "', "
+                    + "'" + fullName + "', '" + dob + "', '" + gendr + "', '"+ theEmail +"', "
+                    + "'" + addrs + "', " + isAFaculty + ", '" + dept + "')");
+            //Export to function to stop the while loop with a return
+
+        } catch(Exception e) {
+            System.err.println("Exception: " + e.getMessage());
+        } finally {
+            try {
+                if(con != null)
+                con.close();
+            } catch(SQLException e) {
+                System.err.println(e);
+            }   
+        }    
     }
     
     @FXML
