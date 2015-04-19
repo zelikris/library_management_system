@@ -12,7 +12,6 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
@@ -23,7 +22,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import lms.Book;
 
 /**
  * FXML Controller class
@@ -49,7 +47,7 @@ public class SearchBookController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        booksFound = new HashSet<Book>();
+        booksFound = new HashSet<>();
     }    
     
     @FXML
@@ -181,7 +179,7 @@ public class SearchBookController implements Initializable {
                 System.out.println("Match NOT found");
             }
             
-        } catch(Exception e) {
+        } catch(ClassNotFoundException | InstantiationException | IllegalAccessException | SQLException e) {
             System.err.println("Exception: " + e.getMessage());
         } finally {
             try {
@@ -234,7 +232,7 @@ public class SearchBookController implements Initializable {
             System.out.println("Match NOT found");
         }
             
-            } catch(Exception e) {
+            } catch(ClassNotFoundException | InstantiationException | IllegalAccessException | SQLException e) {
                 System.err.println("Exception: " + e.getMessage());
             } finally {
                 try {
@@ -267,16 +265,8 @@ public class SearchBookController implements Initializable {
     private void addBookToList(String title, String date, String checkedOut, String onReserve) {
         Boolean isCheckedOut = null;
         Boolean isOnReserve = null;
-        if (checkedOut.equalsIgnoreCase("true") || checkedOut.equalsIgnoreCase("1")) {
-            isCheckedOut = true;
-        } else {
-            isCheckedOut = false;
-        }
-        if (onReserve.equalsIgnoreCase("true") || onReserve.equalsIgnoreCase("1")) {
-            isOnReserve = true;
-        } else {
-            isOnReserve = false;
-        }
+        isCheckedOut = checkedOut.equalsIgnoreCase("true") || checkedOut.equalsIgnoreCase("1");
+        isOnReserve = onReserve.equalsIgnoreCase("true") || onReserve.equalsIgnoreCase("1");
         Book b = new Book(title, isCheckedOut, date, isOnReserve);
         booksFound.add(b);
     }

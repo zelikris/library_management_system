@@ -7,6 +7,11 @@ package lms;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ResourceBundle;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -36,32 +41,24 @@ public class PopularBooksReportController implements Initializable {
     @FXML TableColumn titleCol;
     @FXML TableColumn checkoutsCol;
     @FXML TableView table;
-    
-    private final ObservableList<PopularBook> data =
-        FXCollections.observableArrayList(
-            new PopularBook("Jan", "Fundamentals of Databases", 14),
-            new PopularBook("Jan", "Data Mining Principles", 8),
-            new PopularBook("Jan", "Internetworking with TCP/IP", 10),
-            new PopularBook("Feb", "Data Mining Principles", 22),
-            new PopularBook("Feb", "Object Oriented Software Engineering", 21),
-            new PopularBook("Feb", "Fundamentals of Databases", 5)
-        );
+
+    private final ObservableList<PopularBook> data = FXCollections.observableArrayList();
 
     public static class PopularBook {
         private final SimpleStringProperty month;
         private final SimpleStringProperty title;
         private final SimpleIntegerProperty checkouts;
-        
+
         private PopularBook(String month, String title, int checkouts) {
             this.month = new SimpleStringProperty(month);
             this.title = new SimpleStringProperty(title);
             this.checkouts = new SimpleIntegerProperty(checkouts);
         }
-        
+
         public String getMonth() {
             return month.get();
         }
-        
+
         public void setMonth(String month) {
             this.month.set(month);
         }
@@ -69,15 +66,15 @@ public class PopularBooksReportController implements Initializable {
         public String getTitle() {
             return title.get();
         }
-        
+
         public void setTitle(String title) {
             this.title.set(title);
         }
-        
+
         public int getCheckouts() {
             return checkouts.get();
         }
-        
+
         public void setCheckouts(int checkouts) {
             this.checkouts.set(checkouts);
         }
@@ -89,7 +86,7 @@ public class PopularBooksReportController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-    }    
+    }
 
     public void backAction() {
         try {
@@ -107,6 +104,72 @@ public class PopularBooksReportController implements Initializable {
     }
 
     public void updateTable() {
+        Connection con = null;
+
+        String[] months;
+        months = new String[12];
+        months[0] = "Jan";
+        months[1] = "Feb";
+        months[2] = "Mar";
+        months[3] = "Apr";
+        months[4] = "May";
+        months[5] = "Jun";
+        months[6] = "Jul";
+        months[7] = "Aug";
+        months[8] = "Sep";
+        months[9] = "Oct";
+        months[10] = "Nov";
+        months[11] = "Dec";
+        
+        try {
+            Class.forName("com.mysql.jdbc.Driver").newInstance();
+            con = DriverManager.getConnection("jdbc:mysql://academic-mysql.cc.gatech.edu/cs4400_Group_22", "cs4400_Group_22",
+            "ayt2V3Ck");
+
+            Statement stmt = con.createStatement();
+            ResultSet results = stmt.executeQuery("SELECT * FROM\n" +
+                                                "(\n" +
+                                                "    SELECT BOOK.Title, COUNT(BOOK.Title), MONTH(ISSUES.Date_of_issue)\n" +
+                                                "    FROM BOOK\n" +
+                                                "    INNER JOIN ISSUES\n" +
+                                                "    ON BOOK.Isbn = ISSUES.I_isbn\n" +
+                                                "    WHERE MONTH(ISSUES.Date_of_issue) = 3\n" +
+                                                "    GROUP BY BOOK.Isbn, MONTH(ISSUES.Date_of_issue)\n" +
+                                                "    ORDER BY COUNT(BOOK.Title) DESC\n" +
+                                                "    LIMIT 3\n" +
+                                                ") T1\n" +
+                                                "UNION\n" +
+                                                "SELECT * FROM\n" +
+                                                "(\n" +
+                                                "    SELECT BOOK.Title, COUNT(BOOK.Title), MONTH(ISSUES.Date_of_issue)\n" +
+                                                "    FROM BOOK\n" +
+                                                "    INNER JOIN ISSUES\n" +
+                                                "    ON BOOK.Isbn = ISSUES.I_isbn\n" +
+                                                "    WHERE MONTH(ISSUES.Date_of_issue) = 4\n" +
+                                                "    GROUP BY BOOK.Isbn, MONTH(ISSUES.Date_of_issue)\n" +
+                                                "    ORDER BY COUNT(BOOK.Title) DESC\n" +
+                                                "    LIMIT 3\n" +
+                                                ") T2");
+
+            while (results.next()) {
+                String title = results.getString("Title");
+                Integer checkouts = Integer.parseInt(results.getString("COUNT(BOOK.Title)"));
+                String month  = months[Integer.parseInt(results.getString("MONTH(ISSUES.Date_of_issue)"))];
+
+                data.add(new PopularBook(month, title, checkouts));
+            }
+        } catch(ClassNotFoundException | InstantiationException | IllegalAccessException | SQLException e) {
+            System.err.println("Exception: " + e.getMessage());
+        } finally {
+            try {
+                if (con != null) {
+                    con.close();
+                }
+            } catch(SQLException e) {
+                System.err.println(e);
+            }
+        }
+
         monthCol.setCellValueFactory(
                 new PropertyValueFactory <>("month"));
         titleCol.setCellValueFactory(

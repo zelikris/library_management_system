@@ -7,6 +7,11 @@ package lms;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ResourceBundle;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -37,16 +42,7 @@ public class FrequentUsersReportController implements Initializable {
     @FXML TableColumn checkoutsCol;
     @FXML TableView table;
 
-    private final ObservableList<FrequentUser> data =
-        FXCollections.observableArrayList(
-            new FrequentUser("Jan", "Malvika Paul", 18),
-            new FrequentUser("Jan", "Gayatri Singh", 14),
-            new FrequentUser("Feb", "Anthony Tsou", 22),
-            new FrequentUser("Feb", "Gayatri Singh", 21),
-            new FrequentUser("Feb", "Chong Guo", 12),
-            new FrequentUser("Feb", "Sen Lin", 11),
-            new FrequentUser("Feb", "Amol Parikh", 11)
-        );
+    private final ObservableList<FrequentUser> data = FXCollections.observableArrayList();
 
     public static class FrequentUser {
         private final SimpleStringProperty month;
@@ -90,7 +86,7 @@ public class FrequentUsersReportController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-    }    
+    }
 
     public void backAction() {
         try {
@@ -108,6 +104,74 @@ public class FrequentUsersReportController implements Initializable {
     }
 
     public void updateTable() {
+        Connection con = null;
+
+        String[] months;
+        months = new String[12];
+        months[0] = "Jan";
+        months[1] = "Feb";
+        months[2] = "Mar";
+        months[3] = "Apr";
+        months[4] = "May";
+        months[5] = "Jun";
+        months[6] = "Jul";
+        months[7] = "Aug";
+        months[8] = "Sep";
+        months[9] = "Oct";
+        months[10] = "Nov";
+        months[11] = "Dec";
+
+        try {
+            Class.forName("com.mysql.jdbc.Driver").newInstance();
+            con = DriverManager.getConnection("jdbc:mysql://academic-mysql.cc.gatech.edu/cs4400_Group_22", "cs4400_Group_22",
+            "ayt2V3Ck");
+
+            Statement stmt = con.createStatement();
+            ResultSet results = stmt.executeQuery("SELECT * FROM\n" +
+                                                "(\n" +
+                                                "    SELECT USER.Username, COUNT(USER.Username), MONTH(ISSUES.Date_of_issue)\n" +
+                                                "    FROM USER\n" +
+                                                "    INNER JOIN ISSUES\n" +
+                                                "    ON USER.Username = ISSUES.I_sf_username\n" +
+                                                "    WHERE MONTH(ISSUES.Date_of_issue) = 3\n" +
+                                                "    GROUP BY USER.Username, MONTH(ISSUES.Date_of_issue)\n" +
+                                                "    HAVING COUNT(USER.Username) > 10\n" +
+                                                "    ORDER BY COUNT(USER.Username) DESC\n" +
+                                                "    LIMIT 5\n" +
+                                                ") T1\n" +
+                                                "UNION\n" +
+                                                "SELECT * FROM\n" +
+                                                "(\n" +
+                                                "    SELECT USER.Username, COUNT(USER.Username), MONTH(ISSUES.Date_of_issue)\n" +
+                                                "    FROM USER\n" +
+                                                "    INNER JOIN ISSUES\n" +
+                                                "    ON USER.Username = ISSUES.I_sf_username\n" +
+                                                "    WHERE MONTH(ISSUES.Date_of_issue) = 4\n" +
+                                                "    GROUP BY USER.Username, MONTH(ISSUES.Date_of_issue)\n" +
+                                                "    HAVING COUNT(USER.Username) > 10\n" +
+                                                "    ORDER BY COUNT(USER.Username) DESC\n" +
+                                                "    LIMIT 5\n" +
+                                                ") T2");
+
+            while (results.next()) {
+                String username = results.getString("Username");
+                Integer checkouts = Integer.parseInt(results.getString("COUNT(USER.Username)"));
+                String month  = months[Integer.parseInt(results.getString("MONTH(ISSUES.Date_of_issue)"))];
+
+                data.add(new FrequentUser(month, username, checkouts));
+            }
+        } catch(ClassNotFoundException | InstantiationException | IllegalAccessException | SQLException e) {
+            System.err.println("Exception: " + e.getMessage());
+        } finally {
+            try {
+                if (con != null) {
+                    con.close();
+                }
+            } catch(SQLException e) {
+                System.err.println(e);
+            }
+        }
+
         monthCol.setCellValueFactory(
                 new PropertyValueFactory <>("month"));
         usernameCol.setCellValueFactory(

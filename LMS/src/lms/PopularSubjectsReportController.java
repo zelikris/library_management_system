@@ -7,6 +7,11 @@ package lms;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ResourceBundle;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -37,15 +42,7 @@ public class PopularSubjectsReportController implements Initializable {
     @FXML TableColumn checkoutsCol;
     @FXML TableView table;
 
-    private final ObservableList<PopularSubject> data =
-        FXCollections.observableArrayList(
-            new PopularSubject("Jan", "Computer Science", 98),
-            new PopularSubject("Jan", "History", 54),
-            new PopularSubject("Jan", "Mathematics", 52),
-            new PopularSubject("Feb", "Computer Science", 121),
-            new PopularSubject("Feb", "Psychology", 32),
-            new PopularSubject("Feb", "Mathematics", 21)
-        );
+    private final ObservableList<PopularSubject> data = FXCollections.observableArrayList();
 
     public static class PopularSubject {
         private final SimpleStringProperty month;
@@ -89,7 +86,7 @@ public class PopularSubjectsReportController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-    }    
+    }
 
     public void backAction() {
         try {
@@ -107,6 +104,74 @@ public class PopularSubjectsReportController implements Initializable {
     }
 
     public void updateTable() {
+        Connection con = null;
+
+        String[] months;
+        months = new String[12];
+        months[0] = "Jan";
+        months[1] = "Feb";
+        months[2] = "Mar";
+        months[3] = "Apr";
+        months[4] = "May";
+        months[5] = "Jun";
+        months[6] = "Jul";
+        months[7] = "Aug";
+        months[8] = "Sep";
+        months[9] = "Oct";
+        months[10] = "Nov";
+        months[11] = "Dec";
+        
+        try {
+            Class.forName("com.mysql.jdbc.Driver").newInstance();
+            con = DriverManager.getConnection("jdbc:mysql://academic-mysql.cc.gatech.edu/cs4400_Group_22", "cs4400_Group_22",
+            "ayt2V3Ck");
+
+            Statement stmt = con.createStatement();
+            ResultSet results = stmt.executeQuery("SELECT * FROM\n" +
+                                                "(\n" +
+                                                "    SELECT SUBJECT.S_Name, MONTH(ISSUES.Date_of_issue), COUNT(BOOK.Title)\n" +
+                                                "    FROM BOOK\n" +
+                                                "    INNER JOIN SUBJECT\n" +
+                                                "    ON BOOK.Subject_Name = SUBJECT.S_Name\n" +
+                                                "    INNER JOIN ISSUES\n" +
+                                                "    ON BOOK.ISBN = ISSUES.I_ISBN\n" +
+                                                "    WHERE MONTH(ISSUES.Date_of_issue) = 3\n" +
+                                                "    GROUP BY SUBJECT.S_Name, MONTH(ISSUES.Date_of_issue)\n" +
+                                                "    ORDER BY COUNT(SUBJECT.S_Name) DESC\n" +
+                                                ") T1\n" +
+                                                "UNION\n" +
+                                                "SELECT * FROM\n" +
+                                                "(\n" +
+                                                "    SELECT SUBJECT.S_Name, MONTH(ISSUES.Date_of_issue), COUNT(BOOK.Title)\n" +
+                                                "    FROM BOOK\n" +
+                                                "    INNER JOIN SUBJECT\n" +
+                                                "    ON BOOK.Subject_Name = SUBJECT.S_Name\n" +
+                                                "    INNER JOIN ISSUES\n" +
+                                                "    ON BOOK.ISBN = ISSUES.I_ISBN\n" +
+                                                "    WHERE MONTH(ISSUES.Date_of_issue) = 4\n" +
+                                                "    GROUP BY SUBJECT.S_Name, MONTH(ISSUES.Date_of_issue)\n" +
+                                                "    ORDER BY COUNT(SUBJECT.S_Name) DESC\n" +
+                                                ") T2");
+
+            while (results.next()) {
+                String subject = results.getString("S_Name");
+                String month  = months[Integer.parseInt(results.getString("MONTH(ISSUES.Date_of_issue)"))];
+                Integer checkouts = Integer.parseInt(results.getString("COUNT(BOOK.Title)"));
+
+                data.add(new PopularSubject(month, subject, checkouts));
+            }
+        } catch(ClassNotFoundException | InstantiationException | IllegalAccessException | SQLException e) {
+            System.err.println("Exception: " + e.getMessage());
+        } finally {
+            try {
+                if (con != null) {
+                    con.close();
+                }
+            } catch(SQLException e) {
+                System.err.println(e);
+            }
+        }
+
         monthCol.setCellValueFactory(
                 new PropertyValueFactory <>("month"));
         subjectCol.setCellValueFactory(
