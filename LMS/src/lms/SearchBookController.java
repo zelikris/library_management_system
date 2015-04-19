@@ -59,7 +59,7 @@ public class SearchBookController implements Initializable {
             LMS.setRegistrationPassword(null);
             Parent foster = LMS.getParent();
             Stage stage = LMS.getStage();
-            foster = FXMLLoader.load(getClass().getResource("LoginPage.fxml"));
+            foster = FXMLLoader.load(getClass().getResource("Home.fxml"));
 
             Scene scene = new Scene(foster);
 

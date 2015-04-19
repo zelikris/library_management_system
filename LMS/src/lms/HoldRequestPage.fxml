@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 <?import java.lang.*?>
@@ -6,7 +7,8 @@
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="lms.HoldRequestPageController">
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lms.HoldRequestPageController">
 <children>
 <Text layoutX="16.0" layoutY="66.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Future Hold Request for a Book" underline="true">
 <font>
@@ -19,7 +21,7 @@
 <TextField fx:id="copyNumber" editable="false" layoutX="150.0" layoutY="195.0" />
 <Text layoutX="46.0" layoutY="266.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Expected Available Date" />
 <TextField fx:id="availableDate" editable="false" layoutX="215.0" layoutY="249.0" />
-<Button fx:id="submitButton" layoutX="355.0" layoutY="130.0" mnemonicParsing="false" onMouseClicked="#submitButtonPressed" text="Submit" />
-<Button fx:id="okayButton" layoutX="442.0" layoutY="338.0" mnemonicParsing="false" onMouseClicked="#okayButtonPressed" text="OK" />
+<Button fx:id="submitButton" layoutX="355.0" layoutY="130.0" mnemonicParsing="false" text="Submit" />
+<Button fx:id="okayButton" layoutX="442.0" layoutY="338.0" mnemonicParsing="false" text="OK" />
 </children>
 </AnchorPane>

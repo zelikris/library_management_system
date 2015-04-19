@@ -69,7 +69,7 @@ public class LoginPageController implements Initializable {
             if (username.equals(u) && password.equals(p)) {
                 matchFound = true;
                 System.out.println("Match found");
-                goToSearchBooksPage();
+                goToHomePage();
             } 
         }
         
@@ -89,11 +89,11 @@ public class LoginPageController implements Initializable {
         }    
     }
     
-    private void goToSearchBooksPage() {
+    private void goToHomePage() {
        try {
             Parent foster = LMS.getParent();
             Stage stage = LMS.getStage();
-            foster = FXMLLoader.load(getClass().getResource("SearchBook.fxml"));
+            foster = FXMLLoader.load(getClass().getResource("Home.fxml"));
 
             Scene scene = new Scene(foster);
 
