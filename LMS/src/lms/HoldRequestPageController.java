@@ -9,7 +9,6 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 
 /**
@@ -19,9 +18,11 @@ import javafx.scene.control.TextField;
  */
 public class HoldRequestPageController implements Initializable {
 
-    @FXML Button reserveBooksButton, backButton,
-            submitButton, closeButton;
-    @FXML TextField holdRequestDateField, returnDateField;
+    @FXML 
+    private TextField holdRequestDateField;
+    
+    @FXML 
+    private TextField returnDateField;
 
     /**
      * Initializes the controller class.
