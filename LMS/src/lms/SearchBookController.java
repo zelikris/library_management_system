@@ -245,8 +245,6 @@ public class SearchBookController implements Initializable {
     }
     
     private void goToShowBooksScreen() {
-        LMS.setSessionUser(null);
-        LMS.setRegistrationPassword(null);
         try {
                 Parent foster = LMS.getParent();
                 Stage stage = LMS.getStage();

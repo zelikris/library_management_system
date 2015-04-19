@@ -53,7 +53,7 @@ public class HomeController implements Initializable {
         try {
             Parent foster = LMS.getParent();
             Stage stage = LMS.getStage();
-            foster = FXMLLoader.load(getClass().getResource("HoldRequestPage.fxml"));
+            foster = FXMLLoader.load(getClass().getResource("HoldRequestSearch.fxml"));
 
             Scene scene = new Scene(foster);
 

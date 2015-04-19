@@ -5,22 +5,26 @@
  */
 package lms;
 
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.RadioButton;
+
 /**
  *
  * @author Kris
  */
 public class Book {
-    private Boolean selected;
     private String isbn;
     private String title;
-    private Integer edition;
+    private String edition;
     private Integer copies;
     private Boolean isCheckedOut;
     private String returnDate;
     private Boolean isOnReserve;
+    private SimpleObjectProperty<RadioButton> selected;
+    private int copiesAvailable;
     
-    //SELECT BOOK.Title, BOOK_COPY.Is_Checked_Out, ISSUES.Return_date, BOOK.Is_Book_On_Reserve\n
-    
+    // for search books
     public Book(String aTitle, Boolean checkedOut, String aReturnDate, Boolean onReserve) {
         title = aTitle;
         isCheckedOut = checkedOut;
@@ -28,12 +32,26 @@ public class Book {
         isOnReserve = onReserve;
     }
 
-    public Book(Boolean select, String aIsbn, String aTitle, Integer aEdition, Integer aCopies) {
-        selected = select;
-        isbn = aIsbn;
-        title = aTitle;
-        edition = aEdition;
-        copies = aCopies;
+//    public Book(Boolean select, String aIsbn, String aTitle, String aEdition, Integer aCopies) {
+//        selected = select;
+//        isbn = aIsbn;
+//        title = aTitle;
+//        edition = aEdition;
+//        copies = aCopies;
+//    }
+    
+    // for hold request
+    public Book(String theIsbn, String theTitle, String theEdition, Boolean onReserve, int available) {
+        isbn = theIsbn;
+        title = theTitle;
+        edition = theEdition;
+        onReserve = isOnReserve;
+        copiesAvailable = available;
+        
+    }
+    
+    public int getCopiesAvailable() {
+        return copiesAvailable;
     }
     
     public Boolean getIsCheckedOut() {
@@ -48,7 +66,7 @@ public class Book {
         return isOnReserve;
     }
 
-    public Boolean getSelected() {
+    public SimpleObjectProperty<RadioButton> getSelected() {
         return selected;
     }
 
@@ -60,11 +78,16 @@ public class Book {
         return title;
     }
 
-    public Integer getEdition() {
+    public String getEdition() {
         return edition;
     }
 
     public Integer getCopies() {
         return copies;
+    }
+    
+    @Override
+    public String toString() {
+        return getTitle();
     }
 }
