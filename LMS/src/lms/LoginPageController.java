@@ -72,6 +72,7 @@ public class LoginPageController implements Initializable {
             if (username.equals(u) && password.equals(p)) {
                 matchFound = true;
                 System.out.println("Match found");
+                goToSearchBooksPage();
             } 
         }
         
@@ -81,6 +82,21 @@ public class LoginPageController implements Initializable {
         
         } catch(SQLException e) {
             System.err.println(e);
+        }
+    }
+    
+    private void goToSearchBooksPage() {
+       try {
+            Parent foster = LMS.getParent();
+            Stage stage = LMS.getStage();
+            foster = FXMLLoader.load(getClass().getResource("SearchBook.fxml"));
+
+            Scene scene = new Scene(foster);
+
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
     
