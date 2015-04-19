@@ -53,8 +53,6 @@ public class SearchBookController implements Initializable {
     @FXML
     private void onBackEvent(MouseEvent event) {
         try {
-            LMS.setSessionUser(null);
-            LMS.setRegistrationPassword(null);
             Parent foster = LMS.getParent();
             Stage stage = LMS.getStage();
             foster = FXMLLoader.load(getClass().getResource("Home.fxml"));

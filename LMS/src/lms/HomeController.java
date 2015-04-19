@@ -99,4 +99,21 @@ public class HomeController implements Initializable {
         }
     }
     
+    @FXML
+    private void onViewReportsEvent(MouseEvent event) {
+        try {
+            Parent foster = LMS.getParent();
+            Stage stage = LMS.getStage();
+            foster = FXMLLoader.load(getClass().getResource("ReportsPage.fxml"));
+
+            Scene scene = new Scene(foster);
+
+            stage.setScene(scene);
+            stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
 }

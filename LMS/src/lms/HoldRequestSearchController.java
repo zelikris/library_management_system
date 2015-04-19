@@ -53,6 +53,23 @@ public class HoldRequestSearchController implements Initializable {
     }
     
     @FXML
+    private void onBackEvent(MouseEvent event) {
+        try {
+            Parent foster = LMS.getParent();
+            Stage stage = LMS.getStage();
+            foster = FXMLLoader.load(getClass().getResource("Home.fxml"));
+
+            Scene scene = new Scene(foster);
+
+            stage.setScene(scene);
+            stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }    
+    
+    @FXML
     private void onSearchEvent(MouseEvent event) {
         if (!isbnInput.getText().equals("")) {
             searchByIsbn();
@@ -100,20 +117,22 @@ public class HoldRequestSearchController implements Initializable {
             Statement stmt = con.createStatement();
 
             // TODO: if not available: show the date when the book will be available, which is based on last check-out OR hold-status
-            ResultSet books = stmt.executeQuery("SELECT BOOK.Isbn, BOOK.Title, BOOK.Edition, BOOK.Is_Book_On_Reserve, COUNT(BOOK_COPY.Copy_Number)\n" +
+            ResultSet books = stmt.executeQuery("SELECT BOOK_COPY.Copy_Number, BOOK.Isbn, BOOK.Title, BOOK.Edition, BOOK.Is_Book_On_Reserve, COUNT(BOOK_COPY.Copy_Number)\n" +
                                                 "FROM BOOK_COPY \n" +
                                                 "INNER JOIN BOOK \n" +
                                                 "ON BOOK_COPY.C_ISBN = BOOK.ISBN \n" +                                                
-                                                "WHERE BOOK.ISBN = '" + isbn + "' AND BOOK_COPY.Is_Checked_Out = 0 AND BOOK_COPY.Is_damaged = 0");
+                                                "WHERE BOOK.ISBN = '" + isbn + "' AND BOOK_COPY.Is_Checked_Out = 0 AND BOOK_COPY.Is_damaged = 0 AND BOOK_COPY.Is_On_Hold = 0");
 
             while (books.next()) { 
+                int copyNumber = books.getInt("Copy_number");
+                //System.out.println("Copy number: " + copyNumber);
                 String theIsbn = books.getString("Isbn");
                 String theTitle = books.getString("Title");
                 String theEdition = books.getString("Edition");
                 String onReserve = books.getString("Is_Book_On_Reserve");
                 int copiesAvailable = books.getInt("COUNT(BOOK_COPY.Copy_Number)");
                 
-                addBookToList(theIsbn, theTitle, theEdition, onReserve, copiesAvailable);
+                addBookToList(theIsbn, theTitle, theEdition, onReserve, copiesAvailable, copyNumber);
                 
                 matchFound = true;
                 System.out.println("Match found: " + books.getString("Title"));
@@ -151,21 +170,22 @@ public class HoldRequestSearchController implements Initializable {
             Statement stmt = con.createStatement();
 
             // TODO: if not available: show the date when the book will be available, which is based on last check-out OR hold-status
-            ResultSet books = stmt.executeQuery("SELECT BOOK.Isbn, BOOK.Title, BOOK.Edition, BOOK.Is_Book_On_Reserve, COUNT(BOOK_COPY.Copy_Number)\n" +
+            ResultSet books = stmt.executeQuery("SELECT BOOK_COPY.Copy_Number, BOOK.Isbn, BOOK.Title, BOOK.Edition, BOOK.Is_Book_On_Reserve, COUNT(BOOK_COPY.Copy_Number)\n" +
                                                 "FROM BOOK_COPY \n" +
                                                 "INNER JOIN BOOK \n" +
                                                 "ON BOOK_COPY.C_ISBN = BOOK.ISBN \n" +         
-                                                "WHERE BOOK.Title = '" + title + "' AND BOOK_COPY.Is_Checked_Out = 0 AND BOOK_COPY.Is_damaged = 0 \n" +
+                                                "WHERE BOOK.Title = '" + title + "' AND BOOK_COPY.Is_Checked_Out = 0 AND BOOK_COPY.Is_damaged = 0 AND BOOK_COPY.Is_On_Hold = 0\n" +
                                                 "GROUP BY BOOK.Title");
 
             while (books.next()) { 
+                int copyNumber = books.getInt("Copy_number");
                 String theIsbn = books.getString("Isbn");
                 String theTitle = books.getString("Title");
                 String theEdition = books.getString("Edition");
                 String onReserve = books.getString("Is_Book_On_Reserve");
                 int copiesAvailable = books.getInt("COUNT(BOOK_COPY.Copy_Number)");
                 
-                addBookToList(theIsbn, theTitle, theEdition, onReserve, copiesAvailable);
+                addBookToList(theIsbn, theTitle, theEdition, onReserve, copiesAvailable, copyNumber);
                 
                 matchFound = true;
                 System.out.println("Match found: " + books.getString("Title"));
@@ -203,23 +223,24 @@ public class HoldRequestSearchController implements Initializable {
             Statement stmt = con.createStatement();
 
             // TODO: if not available: show the date when the book will be available, which is based on last check-out OR hold-status
-            ResultSet books = stmt.executeQuery("SELECT BOOK.Isbn, BOOK.Title, BOOK.Edition, BOOK.Is_Book_On_Reserve, COUNT(BOOK_COPY.Copy_Number)\n" +
+            ResultSet books = stmt.executeQuery("SELECT BOOK_COPY.Copy_Number, BOOK.Isbn, BOOK.Title, BOOK.Edition, BOOK.Is_Book_On_Reserve, COUNT(BOOK_COPY.Copy_Number)\n" +
                                                 "FROM BOOK_COPY \n" +
                                                 "INNER JOIN BOOK \n" +
                                                 "ON BOOK_COPY.C_ISBN = BOOK.ISBN \n" +
                                                 "INNER JOIN BOOK_AUTHORS \n" +
                                                 "ON BOOK.Isbn = BOOK_AUTHORS.B_ISBN \n" +                                                
-                                                "WHERE BOOK_AUTHORS.Name = '" + author + "' AND BOOK_COPY.Is_Checked_Out = 0 AND BOOK_COPY.Is_damaged = 0 \n" +
+                                                "WHERE BOOK_AUTHORS.Name = '" + author + "' AND BOOK_COPY.Is_Checked_Out = 0 AND BOOK_COPY.Is_damaged = 0 AND BOOK_COPY.Is_On_Hold = 0\n" +
                                                 "GROUP BY BOOK.Title");
 
             while (books.next()) { 
+                int copyNumber = books.getInt("Copy_number");
                 String theIsbn = books.getString("Isbn");
                 String theTitle = books.getString("Title");
                 String theEdition = books.getString("Edition");
                 String onReserve = books.getString("Is_Book_On_Reserve");
                 int copiesAvailable = books.getInt("COUNT(BOOK_COPY.Copy_Number)");
                 
-                addBookToList(theIsbn, theTitle, theEdition, onReserve, copiesAvailable);
+                addBookToList(theIsbn, theTitle, theEdition, onReserve, copiesAvailable, copyNumber);
                 
                 matchFound = true;
                 System.out.println("Match found: " + books.getString("Title"));
@@ -241,7 +262,7 @@ public class HoldRequestSearchController implements Initializable {
         } 
     }
     
-    private void addBookToList(String theIsbn, String theTitle, String theEdition, String onReserve, int copiesAvailable) {
+    private void addBookToList(String theIsbn, String theTitle, String theEdition, String onReserve, int copiesAvailable, int copyNumber) {
         Boolean isCheckedOut = null;
         Boolean isOnReserve = null;
         if (onReserve.equalsIgnoreCase("1")) {
@@ -249,11 +270,13 @@ public class HoldRequestSearchController implements Initializable {
         } else {
             isOnReserve = false;
         }
-        Book b = new Book(theIsbn, theTitle, theEdition, isOnReserve, copiesAvailable);
+        Book b = new Book(theIsbn, theTitle, theEdition, isOnReserve, copiesAvailable, copyNumber);
         if (isOnReserve) {
             booksOnReserve.add(b);
         } else {
-            availableBooks.add(b);
+            if (copiesAvailable != 0) {
+                availableBooks.add(b);
+            }
         }
     }
     

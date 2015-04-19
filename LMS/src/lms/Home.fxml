@@ -9,14 +9,15 @@
 
 <AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lms.HomeController">
    <children>
-      <Text layoutX="194.0" layoutY="76.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome!">
+      <Text layoutX="194.0" layoutY="66.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Welcome!">
          <font>
             <Font size="48.0" />
          </font>
       </Text>
-      <Button layoutX="138.0" layoutY="125.0" mnemonicParsing="false" onMouseClicked="#onSearchEvent" prefHeight="86.0" prefWidth="162.0" text="Search" />
-      <Button layoutX="300.0" layoutY="125.0" mnemonicParsing="false" onMouseClicked="#onHoldRequestEvent" prefHeight="86.0" prefWidth="162.0" text="Hold Request" />
-      <Button layoutX="138.0" layoutY="211.0" mnemonicParsing="false" onMouseClicked="#onFutureHoldRequestEvent" prefHeight="86.0" prefWidth="162.0" text="Future Hold Request" />
-      <Button layoutX="300.0" layoutY="211.0" mnemonicParsing="false" onMouseClicked="#onRequestExtensionEvent" prefHeight="86.0" prefWidth="162.0" text="Request Extension" />
+      <Button layoutX="138.0" layoutY="96.0" mnemonicParsing="false" onMouseClicked="#onSearchEvent" prefHeight="86.0" prefWidth="162.0" text="Search" />
+      <Button layoutX="300.0" layoutY="96.0" mnemonicParsing="false" onMouseClicked="#onHoldRequestEvent" prefHeight="86.0" prefWidth="162.0" text="Hold Request" />
+      <Button layoutX="138.0" layoutY="182.0" mnemonicParsing="false" onMouseClicked="#onFutureHoldRequestEvent" prefHeight="86.0" prefWidth="162.0" text="Future Hold Request" />
+      <Button layoutX="300.0" layoutY="182.0" mnemonicParsing="false" onMouseClicked="#onRequestExtensionEvent" prefHeight="86.0" prefWidth="162.0" text="Request Extension" />
+      <Button layoutX="138.0" layoutY="268.0" mnemonicParsing="false" onMouseClicked="#onViewReportsEvent" prefHeight="86.0" prefWidth="324.0" text="View Reports" />
    </children>
 </AnchorPane>

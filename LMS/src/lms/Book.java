@@ -23,6 +23,7 @@ public class Book {
     private Boolean isOnReserve;
     private SimpleObjectProperty<RadioButton> selected;
     private int copiesAvailable;
+    private int copyNumber;
     
     // for search books
     public Book(String aTitle, Boolean checkedOut, String aReturnDate, Boolean onReserve) {
@@ -41,13 +42,18 @@ public class Book {
 //    }
     
     // for hold request
-    public Book(String theIsbn, String theTitle, String theEdition, Boolean onReserve, int available) {
+    public Book(String theIsbn, String theTitle, String theEdition, Boolean onReserve, int available, int aCopyNumber) {
         isbn = theIsbn;
         title = theTitle;
         edition = theEdition;
         onReserve = isOnReserve;
         copiesAvailable = available;
+        copyNumber = aCopyNumber;
         
+    }
+    
+    public int getCopyNumber() {
+        return copyNumber;
     }
     
     public int getCopiesAvailable() {

@@ -91,6 +91,7 @@ public class LoginPageController implements Initializable {
     
     private void goToHomePage() {
        try {
+            LMS.setSessionUser(usernameInput.getText());
             Parent foster = LMS.getParent();
             Stage stage = LMS.getStage();
             foster = FXMLLoader.load(getClass().getResource("Home.fxml"));

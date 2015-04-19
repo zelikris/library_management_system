@@ -26,7 +26,6 @@ public class ReportsPageController implements Initializable {
     @FXML Button popularBooksButton;
     @FXML Button frequentUsersButton;
     @FXML Button popularSubjectsButton;
-    @FXML Button backButton;
 
     /**
      * Initializes the controller class.
@@ -40,7 +39,7 @@ public class ReportsPageController implements Initializable {
         try {
             Parent foster = LMS.getParent();
             Stage stage = LMS.getStage();
-            foster = FXMLLoader.load(getClass().getResource("SomePage.fxml"));
+            foster = FXMLLoader.load(getClass().getResource("Home.fxml"));
 
             Scene scene = new Scene(foster);
 
