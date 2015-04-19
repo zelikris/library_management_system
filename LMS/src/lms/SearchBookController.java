@@ -12,6 +12,8 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -21,6 +23,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import lms.Book;
 
 /**
  * FXML Controller class
@@ -39,13 +42,14 @@ public class SearchBookController implements Initializable {
     private String isbn;
     private String title;
     private String author;
+    private static HashSet<Book> booksFound;
     
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        booksFound = new HashSet<Book>();
     }    
     
     @FXML
@@ -70,10 +74,13 @@ public class SearchBookController implements Initializable {
     private void onSearchEvent(MouseEvent event) {
         if (!isbnInput.getText().equals("")) {
             searchByIsbn();
+            goToShowBooksScreen();
         } else if (!titleInput.getText().equals("")) {
             searchByTitle();
+            goToShowBooksScreen();
         } else if (!authorInput.getText().equals("")) {
             searchByAuthor();
+            goToShowBooksScreen();
         } else {
             System.out.println("All fields Null!");
         }
@@ -105,9 +112,16 @@ public class SearchBookController implements Initializable {
                                                 "ON BOOK_COPY.C_isbn = ISSUES.I_Isbn AND BOOK_COPY.Copy_number = ISSUES.I_copy_no\n" +
                                                 "WHERE BOOK.ISBN = '" + isbn + "'");
 
-            while (books.next() && !matchFound) {       
+            while (books.next()) { 
+                String theTitle = books.getString("Title");
+                String theDate = books.getString("Return_date");
+                String checkedOut = books.getString("Is_Checked_Out");
+                String onReserve = books.getString("Is_Book_On_Reserve");
+                
+                addBookToList(theTitle, theDate, checkedOut, onReserve);
+                
                 matchFound = true;
-                System.out.println("Match found");
+                System.out.println("Match found: " + books.getString("Title"));
             }
 
             if (!matchFound) {
@@ -152,7 +166,13 @@ public class SearchBookController implements Initializable {
                                                 "ON BOOK_COPY.C_isbn = ISSUES.I_Isbn AND BOOK_COPY.Copy_number = ISSUES.I_copy_no\n" +
                                                 "WHERE BOOK.Title = '" + title + "'");
 
-            while (books.next() && !matchFound) {       
+            while (books.next()) {
+                String theTitle = books.getString("Title");
+                String theDate = books.getString("Return_date");
+                String checkedOut = books.getString("Is_Checked_Out");
+                String onReserve = books.getString("Is_Book_On_Reserve");
+                
+                addBookToList(theTitle, theDate, checkedOut, onReserve);
                 matchFound = true;
                 System.out.println("Match found");
             }
@@ -199,7 +219,13 @@ public class SearchBookController implements Initializable {
                                             "ON BOOK_COPY.C_isbn = ISSUES.I_Isbn AND BOOK_COPY.Copy_number = ISSUES.I_copy_no\n" +
                                             "WHERE BOOK_AUTHORS.Name = '" + author + "'");
                                           
-        while (books.next() && !matchFound) {       
+        while (books.next()) {
+            String theTitle = books.getString("Title");
+            String theDate = books.getString("Return_date");
+            String checkedOut = books.getString("Is_Checked_Out");
+            String onReserve = books.getString("Is_Book_On_Reserve");
+
+            addBookToList(theTitle, theDate, checkedOut, onReserve);
             matchFound = true;
             System.out.println("Match found");
         }
@@ -218,5 +244,44 @@ public class SearchBookController implements Initializable {
                     System.err.println(e);
                 }   
             }    
-    }    
+    }
+    
+    private void goToShowBooksScreen() {
+        LMS.setSessionUser(null);
+        LMS.setRegistrationPassword(null);
+        try {
+                Parent foster = LMS.getParent();
+                Stage stage = LMS.getStage();
+                foster = FXMLLoader.load(getClass().getResource("ShowBooks.fxml"));
+        
+                Scene scene = new Scene(foster);
+        
+                stage.setScene(scene);
+                stage.show();
+                
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+    }
+    
+    private void addBookToList(String title, String date, String checkedOut, String onReserve) {
+        Boolean isCheckedOut = null;
+        Boolean isOnReserve = null;
+        if (checkedOut.equalsIgnoreCase("true") || checkedOut.equalsIgnoreCase("1")) {
+            isCheckedOut = true;
+        } else {
+            isCheckedOut = false;
+        }
+        if (onReserve.equalsIgnoreCase("true") || onReserve.equalsIgnoreCase("1")) {
+            isOnReserve = true;
+        } else {
+            isOnReserve = false;
+        }
+        Book b = new Book(title, isCheckedOut, date, isOnReserve);
+        booksFound.add(b);
+    }
+    
+    public static HashSet<Book> getBooksFound() {
+        return booksFound;
+    }
 }
