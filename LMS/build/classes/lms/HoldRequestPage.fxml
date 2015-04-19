@@ -1,11 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lms.HoldRequestPageController">
-    
+<AnchorPane id="AnchorPane" prefHeight="715.0" prefWidth="674.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lms.HoldRequestPageController">
+<children>
+<Button layoutX="512.0" layoutY="370.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="141.0" text="Submit" />
+<Button layoutX="444.0" layoutY="370.0" mnemonicParsing="false" onMouseClicked="#onBackEvent" text="Back" />
+<Text layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Books Available Summary" />
+<TableView fx:id="availableTable" editable="true" layoutX="16.0" layoutY="45.0" prefHeight="265.0" prefWidth="637.0">
+<columns>
+<TableColumn fx:id="availIsbn" prefWidth="181.0" text="ISBN" />
+<TableColumn fx:id="availTitle" prefWidth="213.0" text="Title" />
+<TableColumn fx:id="availEdition" prefWidth="92.0" text="Edition" />
+<TableColumn fx:id="availNoAvailableCopies" prefWidth="150.0" text="#copies available" />
+</columns>
+</TableView>
+<TextField fx:id="holdRequestDateField" editable="false" layoutX="124.0" layoutY="325.0" style="-fx-background-color: dddddd;" />
+<Text layoutX="14.0" layoutY="343.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Hold Request Date">
+<font>
+<Font size="12.0" />
+</font>
+</Text>
+<Text layoutX="342.0" layoutY="345.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Estimated Return Date">
+<font>
+<Font size="12.0" />
+</font>
+</Text>
+<TextField editable="false" layoutX="469.0" layoutY="323.0" style="-fx-background-color: dddddd;" />
+      <TableView fx:id="onReserveTable" disable="true" layoutX="19.0" layoutY="426.0" prefHeight="265.0" prefWidth="637.0">
+         <columns>
+            <TableColumn fx:id="resIsbn" prefWidth="176.0" text="ISBN" />
+            <TableColumn fx:id="resTitle" prefWidth="194.0" text="Title" />
+            <TableColumn fx:id="resEdition" prefWidth="105.0" text="Edition" />
+            <TableColumn fx:id="resNoAvailableCopies" prefWidth="161.0" text="#copies available" />
+         </columns>
+      </TableView>
+      <Text layoutX="19.0" layoutY="417.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Books on Reserve" />
+      <ComboBox fx:id="selectAvail" layoutX="20.0" layoutY="370.0" prefHeight="31.0" prefWidth="366.0" promptText="Select Available Book" />
+</children>
 </AnchorPane>

@@ -7,8 +7,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="lms.RegistrationFormController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lms.RegistrationFormController">
    <children>
       <TextField fx:id="username" layoutX="300.0" layoutY="132.0" />
       <Text layoutX="132.0" layoutY="153.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Username:" />
@@ -18,5 +17,6 @@
       <Button fx:id="cancelButton" layoutX="165.0" layoutY="309.0" mnemonicParsing="false" onMouseClicked="#cancelEvent" text="Cancel" />
       <PasswordField fx:id="password" layoutX="300.0" layoutY="177.0" />
       <PasswordField fx:id="confirmPassword" layoutX="300.0" layoutY="225.0" />
+      <Text layoutX="103.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Register here!" />
    </children>
 </AnchorPane>
