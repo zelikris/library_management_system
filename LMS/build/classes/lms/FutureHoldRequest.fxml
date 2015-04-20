@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lms.FutureHoldRequestController">
+   <children>
+      <Text layoutX="92.0" layoutY="68.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Future Hold Request" underline="true">
+         <font>
+            <Font size="41.0" />
+         </font>
+      </Text>
+      <Text layoutX="56.0" layoutY="135.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ISBN" />
+      <TextField fx:id="isbn" layoutX="132.0" layoutY="118.0" />
+      <Button fx:id="requestButton" layoutX="452.0" layoutY="118.0" mnemonicParsing="false" text="Request" />
+      <Text layoutX="56.0" layoutY="185.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Copy Number" />
+      <TextField fx:id="copyNumber" editable="false" layoutX="165.0" layoutY="168.0" />
+      <Text layoutX="56.0" layoutY="230.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Expected Available Date" />
+      <TextField fx:id="availableDate" editable="false" layoutX="244.0" layoutY="213.0" />
+      <Button fx:id="okayButton" layoutX="462.0" layoutY="334.0" mnemonicParsing="false" text="OK" />
+      <Button fx:id="backButton" layoutX="41.0" layoutY="334.0" mnemonicParsing="false" text="Back" />
+   </children>
+</AnchorPane>

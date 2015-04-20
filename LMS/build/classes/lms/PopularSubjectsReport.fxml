@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lms.PopularSubjectsReportController">
+   <children>
+      <Text layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Popular Subject Report" />
+      <Button fx:id="backButton" layoutX="14.0" layoutY="360.0" mnemonicParsing="false" onAction="#backAction" text="Back" />
+      <TableView fx:id="table" layoutX="52.0" layoutY="52.0" prefHeight="286.0" prefWidth="489.0">
+        <columns>
+          <TableColumn fx:id="monthCol" prefWidth="142.0" text="Month" />
+          <TableColumn fx:id="subjectCol" prefWidth="170.0" text="Top Subject" />
+            <TableColumn fx:id="checkoutsCol" prefWidth="176.0" text="#checkouts" />
+        </columns>
+      </TableView>
+      <Button fx:id="updateButton" layoutX="498.0" layoutY="360.0" mnemonicParsing="false" onAction="#updateTable" text="Update Table" />
+   </children>
+</AnchorPane>

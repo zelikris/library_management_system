@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lms.ReportsPageController">
+   <children>
+      <Button fx:id="backButton" layoutX="14.0" layoutY="360.0" mnemonicParsing="false" onAction="#backAction" text="Back" />
+      <Button fx:id="frequentUsersButton" layoutX="224.0" layoutY="187.0" mnemonicParsing="false" onAction="#frequentUsersAction" text="Frequent Users Report" />
+      <Button fx:id="popularSubjectsButton" layoutX="226.0" layoutY="119.0" mnemonicParsing="false" onAction="#popularBooksAction" text="Popular Books Report" />
+      <Button fx:id="popularBooksButton" layoutX="219.0" layoutY="260.0" mnemonicParsing="false" onAction="#popularSubjectsAction" text="Popular Subjects Report" />
+   </children>
+</AnchorPane>

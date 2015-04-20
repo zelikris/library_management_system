@@ -5,12 +5,34 @@
  */
 package lms;
 
+import java.io.IOException;
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.ResourceBundle;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -42,7 +64,102 @@ public class LostDamagedBookController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        currentTime.setText(getTime());
     }    
+    public void searchLastUserPressed(MouseEvent event) {
+        String bookISBN = isbn.getText();
+        String copyNum = bookCopyNumber.getText();
+        Connection con = null;
+        try {
+            Class.forName("com.mysql.jdbc.Driver").newInstance();
+            con = DriverManager.getConnection("jdbc:mysql://academic-mysql.cc.gatech.edu/cs4400_Group_22", "cs4400_Group_22",
+            "ayt2V3Ck");
+
+            Statement stmt = con.createStatement();
+            ResultSet results = stmt.executeQuery("SELECT ISSUES.I_sf_username\n" +
+                    "FROM ISSUES\n" +
+                    "WHERE ISSUES.I_isbn = " + bookISBN + " AND ISSUES.I_copy_no = " + copyNum + "\n" +
+                    "ORDER BY Date_of_issue DESC\n" +
+                    "LIMIT 1");
+            while (results.next()) {
+                lastUserOfBook.setText(results.getString("I_sf_username"));
+            }
+        } catch(Exception e) {
+            System.err.println("Exception: " + e.getMessage());
+        } finally {
+            try {
+                if (con != null) {
+                    con.close();
+                }
+            } catch(SQLException e) {
+                System.err.println(e);
+            }
+        }
+    }
     
+    public void submitButtonPressed(MouseEvent event) {
+        String chargeThis = amountToCharge.getText();
+        Connection con = null;
+        try {
+            Class.forName("com.mysql.jdbc.Driver").newInstance();
+            con = DriverManager.getConnection("jdbc:mysql://academic-mysql.cc.gatech.edu/cs4400_Group_22", "cs4400_Group_22",
+            "ayt2V3Ck");
+
+            Statement stmt = con.createStatement();
+            stmt.executeUpdate("UPDATE STUDENT_FACULTY.Penalty\n" +
+                    "SET Penalty = Penalty + '" + chargeThis + "'\n" +
+                    "WHERE Sf_username = '" + lastUserOfBook.getText() + "'");
+        } catch(Exception e) {
+            System.err.println("Exception: " + e.getMessage());
+        } finally {
+            try {
+                if (con != null) {
+                    con.close();
+                }
+            } catch(SQLException e) {
+                System.err.println(e);
+            }
+        }
+    }
+    
+    public String getTime() {
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        //get current date time with Date()
+        Date date = new Date();
+        System.out.println(dateFormat.format(date));
+
+        //get current date time with Calendar()
+        Calendar cal = Calendar.getInstance();
+        return dateFormat.format(cal.getTime()).toString();
+    }
+    
+    public void backButtonPressed() {
+        try {
+            Parent foster = LMS.getParent();
+            Stage stage = LMS.getStage();
+            foster = FXMLLoader.load(getClass().getResource("Home.fxml"));
+
+            Scene scene = new Scene(foster);
+
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public void cancelButtonPressed() {
+        try {
+            Parent foster = LMS.getParent();
+            Stage stage = LMS.getStage();
+            foster = FXMLLoader.load(getClass().getResource("Home.fxml"));
+
+            Scene scene = new Scene(foster);
+
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
