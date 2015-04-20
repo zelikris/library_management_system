@@ -8,7 +8,7 @@
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="LMS.jar" size="64801" download="eager" />
+    <jar href="LMS.jar" size="72698" download="eager" />
     <jar href="lib/mysql-connector-java-5.1.35-bin.jar" size="968670" download="eager" />
   </resources>
   <applet-desc  width="800" height="600" main-class="com.javafx.main.NoJavaFXFallback"  name="LMS" >

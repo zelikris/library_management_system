@@ -18,6 +18,5 @@
             <TableColumn fx:id="checkoutsCol" minWidth="0.0" prefWidth="145.0" text="#checkouts" />
         </columns>
       </TableView>
-      <Button fx:id="updateButton" layoutX="499.0" layoutY="360.0" mnemonicParsing="false" onAction="#updateTable" text="Update Table" />
    </children>
 </AnchorPane>

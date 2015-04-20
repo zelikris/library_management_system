@@ -15,8 +15,8 @@
          </font></Text>
       <Text layoutX="35.0" layoutY="130.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Enter your Issue ID" />
       <TextField fx:id="issueID" layoutX="215.0" layoutY="111.0" />
-      <Button fx:id="submitButton" layoutX="435.0" layoutY="111.0" mnemonicParsing="false" text="Submit" />
-      <Button fx:id="submitExtensionRequest" layoutX="345.0" layoutY="350.0" mnemonicParsing="false" text="Submit Extension Request" />
+      <Button fx:id="submitButton" layoutX="435.0" layoutY="111.0" mnemonicParsing="false" onMouseClicked="#submitButtonPressed" text="Submit" />
+      <Button fx:id="submitExtensionRequest" layoutX="345.0" layoutY="350.0" mnemonicParsing="false" onMouseClicked="#submitExtensionRequestPressed" text="Submit Extension Request" />
       <Text layoutX="34.0" layoutY="169.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Original Checkout Date" />
       <Text layoutX="33.0" layoutY="235.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Current Return Date" />
       <Text layoutX="35.0" layoutY="307.0" strokeType="OUTSIDE" strokeWidth="0.0" text="New Return Date" />

@@ -7,26 +7,25 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="lms.DamagedBooksReportController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lms.DamagedBooksReportController">
    <children>
       <Text layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Damaged Books Report" />
       <Text layoutX="35.0" layoutY="59.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Month" />
       <Text layoutX="321.0" layoutY="59.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Subject" />
       <Text layoutX="321.0" layoutY="95.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Subject" />
       <Text layoutX="321.0" layoutY="135.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Subject" />
-      <ComboBox layoutX="92.0" layoutY="41.0" prefWidth="150.0" />
-      <ComboBox layoutX="384.0" layoutY="41.0" prefWidth="150.0" />
-      <ComboBox layoutX="384.0" layoutY="77.0" prefWidth="150.0" />
-      <ComboBox layoutX="384.0" layoutY="117.0" prefWidth="150.0" />
-      <Button layoutX="100.0" layoutY="98.0" mnemonicParsing="false" text="Show Report" />
-      <TableView layoutX="15.0" layoutY="158.0" prefHeight="190.0" prefWidth="571.0">
+      <ComboBox fx:id="monthBox" layoutX="92.0" layoutY="41.0" prefWidth="150.0" />
+      <ComboBox fx:id="subjectBoxOne" layoutX="384.0" layoutY="41.0" prefWidth="150.0" />
+      <ComboBox fx:id="subjectBoxTwo" layoutX="384.0" layoutY="77.0" prefWidth="150.0" />
+      <ComboBox fx:id="subjectBoxThree" layoutX="384.0" layoutY="117.0" prefWidth="150.0" />
+      <Button fx:id="showReportButton" layoutX="100.0" layoutY="98.0" mnemonicParsing="false" onAction="#showReportAction" text="Show Report" />
+      <TableView fx:id="table" layoutX="15.0" layoutY="158.0" prefHeight="190.0" prefWidth="571.0">
         <columns>
-          <TableColumn prefWidth="203.0" text="Month" />
-          <TableColumn prefWidth="199.0" text="Subject" />
-            <TableColumn prefWidth="168.0" text="#damaged books" />
+          <TableColumn fx:id="monthCol" prefWidth="203.0" text="Month" />
+          <TableColumn fx:id="subjectCol" prefWidth="199.0" text="Subject" />
+            <TableColumn fx:id="numDamagedCol" prefWidth="168.0" text="#damaged books" />
         </columns>
       </TableView>
-      <Button layoutX="15.0" layoutY="361.0" mnemonicParsing="false" text="Back" />
+      <Button fx:id="backButton" layoutX="15.0" layoutY="361.0" mnemonicParsing="false" onAction="#backAction" text="Back" />
    </children>
 </AnchorPane>
