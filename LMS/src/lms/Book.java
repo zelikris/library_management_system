@@ -25,11 +25,13 @@ public class Book {
     private int copyNumber;
     
     // for search books
-    public Book(String aTitle, Boolean checkedOut, String aReturnDate, Boolean onReserve) {
+    public Book(String aTitle, Boolean checkedOut, String aReturnDate, Boolean onReserve, String theIsbn, int cNumber) {
         title = aTitle;
         isCheckedOut = checkedOut;
         returnDate = aReturnDate;
         isOnReserve = onReserve;
+        isbn = theIsbn;
+        copyNumber = cNumber;
     }
 
 //    public Book(Boolean select, String aIsbn, String aTitle, String aEdition, Integer aCopies) {

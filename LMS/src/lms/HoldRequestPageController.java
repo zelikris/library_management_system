@@ -72,6 +72,9 @@ public class HoldRequestPageController implements Initializable {
     private TableColumn<Book, String> resEdition;
     @FXML
     private TableColumn<Book, Integer> resNoAvailableCopies;
+    
+    private String theDate;
+    private String nDate;
 
     /**
      * Initializes the controller class.
@@ -109,16 +112,19 @@ public class HoldRequestPageController implements Initializable {
         newDate = c.getTime();
 
         String date = sFormat.format(new Date());
-        holdRequestDateField.setText(date);
+        theDate = date;
         
         // estimated return date = curdate + 17
-        returnDateField.setText(sFormat.format(newDate));
+        String aNewDate = sFormat.format(newDate);
+        nDate = aNewDate;
     }    
     
     @FXML
     private void onSubmitEvent(MouseEvent event) {
         if (selectAvail.getValue() != null) {
             updateBookCopy();
+            holdRequestDateField.setText(theDate);
+            returnDateField.setText(nDate);
         } else {
             System.out.println("No book was selected!");
         }
@@ -149,9 +155,9 @@ public class HoldRequestPageController implements Initializable {
             System.out.println("IssueID: " + issueID);
             stmt.executeUpdate("UPDATE BOOK_COPY\n" +
                             "SET Is_on_hold = TRUE, Is_checked_out = FALSE\n" +
-                            "WHERE C_isbn = '" + comboSelection.getIsbn() + "' AND Copy_number = '" + comboSelection.getCopyNumber() + "'\n" +
-                            "INSERT INTO ISSUES\n" +
-                            "VALUES ('" + comboSelection.getIsbn() + "', " + comboSelection.getCopyNumber() + ", '" + LMS.getSessionUser() + "', DATE_ADD(CURDATE(), INTERVAL 17 DAY), DATE_ADD(CURDATE(), INTERVAL 17 DAY), '" + issueID + "')");
+                            "WHERE C_isbn = '" + comboSelection.getIsbn() + "' AND Copy_number = '" + comboSelection.getCopyNumber() + "';");
+            stmt.executeUpdate("INSERT INTO ISSUES(I_ISBN, I_copy_no, I_SF_Username, Return_Date, Extension_Date, Date_of_Issue, Issue_ID)\n" +
+                                "VALUES ('" + comboSelection.getIsbn() + "', " + comboSelection.getCopyNumber() + ", '" + LMS.getSessionUser() + "', DATE_ADD(CURDATE(), INTERVAL 17 DAY), CURDATE(), CURDATE(), '" + issueID + "')");
            
         } catch(Exception e) {
             System.err.println("Exception: " + e.getMessage());

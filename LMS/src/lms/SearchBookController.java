@@ -96,28 +96,29 @@ public class SearchBookController implements Initializable {
            
             
             Statement stmt = con.createStatement();
-
-            // TODO: if not available: show the date when the book will be available, which is based on last check-out OR hold-status
-            ResultSet books = stmt.executeQuery("SELECT BOOK.Title, BOOK_COPY.Is_Checked_Out, ISSUES.Return_date, BOOK.Is_Book_On_Reserve\n" +
-                                                "FROM BOOK_COPY \n" +
-                                                "INNER JOIN BOOK \n" +
-                                                "ON BOOK_COPY.C_ISBN = BOOK.ISBN \n" +
-                                                "INNER JOIN BOOK_AUTHORS \n" +
-                                                "ON BOOK.Isbn = BOOK_AUTHORS.B_ISBN \n" +
-                                                "LEFT JOIN ISSUES \n" +
-                                                "ON BOOK_COPY.C_isbn = ISSUES.I_Isbn AND BOOK_COPY.Copy_number = ISSUES.I_copy_no\n" +
-                                                "WHERE BOOK.ISBN = '" + isbn + "'");
+            
+            ResultSet books = stmt.executeQuery("SELECT BOOK.Title, BOOK_COPY.Is_Checked_Out, ISSUES.Return_date, BOOK.Is_Book_On_Reserve, Isbn, Copy_number\n" +
+                                "FROM BOOK_COPY\n" +
+                                "INNER JOIN BOOK ON BOOK_COPY.C_ISBN = BOOK.ISBN\n" +
+                                "INNER JOIN BOOK_AUTHORS ON BOOK.Isbn = BOOK_AUTHORS.B_ISBN\n" +
+                                "LEFT JOIN ISSUES ON BOOK_COPY.C_isbn = ISSUES.I_Isbn\n" +
+                                "AND BOOK_COPY.Copy_number = ISSUES.I_copy_no\n" +
+                                "WHERE BOOK.ISBN = '" + isbn + "'" +
+                                "GROUP BY Isbn, Copy_number\n" +
+                                "ORDER BY Return_date DESC");
 
             while (books.next()) { 
                 String theTitle = books.getString("Title");
                 String theDate = books.getString("Return_date");
                 String checkedOut = books.getString("Is_Checked_Out");
                 String onReserve = books.getString("Is_Book_On_Reserve");
+                String theIsbn = books.getString("Isbn");
+                int copyNumber = books.getInt("Copy_number");
                 
-                addBookToList(theTitle, theDate, checkedOut, onReserve);
+                addBookToList(theTitle, theDate, checkedOut, onReserve, theIsbn, copyNumber);
                 
                 matchFound = true;
-                System.out.println("Match found: " + books.getString("Title"));
+                System.out.println("Match found: " + theTitle);
             }
 
             if (!matchFound) {
@@ -152,25 +153,27 @@ public class SearchBookController implements Initializable {
             Statement stmt = con.createStatement();
 
             // TODO: if not available: show the date when the book will be available, which is based on last check-out OR hold-status
-            ResultSet books = stmt.executeQuery("SELECT BOOK.Title, BOOK_COPY.Is_Checked_Out, ISSUES.Return_date, BOOK.Is_Book_On_Reserve\n" +
-                                                "FROM BOOK_COPY \n" +
-                                                "INNER JOIN BOOK \n" +
-                                                "ON BOOK_COPY.C_ISBN = BOOK.ISBN \n" +
-                                                "INNER JOIN BOOK_AUTHORS \n" +
-                                                "ON BOOK.Isbn = BOOK_AUTHORS.B_ISBN \n" +
-                                                "LEFT JOIN ISSUES \n" +
-                                                "ON BOOK_COPY.C_isbn = ISSUES.I_Isbn AND BOOK_COPY.Copy_number = ISSUES.I_copy_no\n" +
-                                                "WHERE BOOK.Title = '" + title + "'");
+            ResultSet books = stmt.executeQuery("SELECT BOOK.Title, BOOK_COPY.Is_Checked_Out, ISSUES.Return_date, BOOK.Is_Book_On_Reserve, Isbn, Copy_number\n" +
+                                "FROM BOOK_COPY\n" +
+                                "INNER JOIN BOOK ON BOOK_COPY.C_ISBN = BOOK.ISBN\n" +
+                                "INNER JOIN BOOK_AUTHORS ON BOOK.Isbn = BOOK_AUTHORS.B_ISBN\n" +
+                                "LEFT JOIN ISSUES ON BOOK_COPY.C_isbn = ISSUES.I_Isbn\n" +
+                                "AND BOOK_COPY.Copy_number = ISSUES.I_copy_no\n" +
+                                "WHERE BOOK.Title = '" + title + "'" +
+                                "GROUP BY Isbn, Copy_number\n" +
+                                "ORDER BY Return_date DESC");
 
             while (books.next()) {
                 String theTitle = books.getString("Title");
                 String theDate = books.getString("Return_date");
                 String checkedOut = books.getString("Is_Checked_Out");
                 String onReserve = books.getString("Is_Book_On_Reserve");
+                String theIsbn = books.getString("Isbn");
+                int copyNumber = books.getInt("Copy_number");
                 
-                addBookToList(theTitle, theDate, checkedOut, onReserve);
+                addBookToList(theTitle, theDate, checkedOut, onReserve, theIsbn, copyNumber);
                 matchFound = true;
-                System.out.println("Match found");
+                System.out.println("Match found: " + theTitle);
             }
 
             if (!matchFound) {
@@ -205,25 +208,27 @@ public class SearchBookController implements Initializable {
         Statement stmt = con.createStatement();
         
         // TODO: if not available: show the date when the book will be available, which is based on last check-out OR hold-status
-        ResultSet books = stmt.executeQuery("SELECT BOOK.Title, BOOK_COPY.Is_Checked_Out, ISSUES.Return_date, BOOK.Is_Book_On_Reserve\n" +
-                                            "FROM BOOK_COPY \n" +
-                                            "INNER JOIN BOOK \n" +
-                                            "ON BOOK_COPY.C_ISBN = BOOK.ISBN \n" +
-                                            "INNER JOIN BOOK_AUTHORS \n" +
-                                            "ON BOOK.Isbn = BOOK_AUTHORS.B_ISBN \n" +
-                                            "LEFT JOIN ISSUES \n" +
-                                            "ON BOOK_COPY.C_isbn = ISSUES.I_Isbn AND BOOK_COPY.Copy_number = ISSUES.I_copy_no\n" +
-                                            "WHERE BOOK_AUTHORS.Name = '" + author + "'");
+        ResultSet books = stmt.executeQuery("SELECT BOOK.Title, BOOK_COPY.Is_Checked_Out, ISSUES.Return_date, BOOK.Is_Book_On_Reserve, Isbn, Copy_number\n" +
+                                "FROM BOOK_COPY\n" +
+                                "INNER JOIN BOOK ON BOOK_COPY.C_ISBN = BOOK.ISBN\n" +
+                                "INNER JOIN BOOK_AUTHORS ON BOOK.Isbn = BOOK_AUTHORS.B_ISBN\n" +
+                                "LEFT JOIN ISSUES ON BOOK_COPY.C_isbn = ISSUES.I_Isbn\n" +
+                                "AND BOOK_COPY.Copy_number = ISSUES.I_copy_no\n" +
+                                "WHERE BOOK_AUTHORS.Name = '" + author + "'" +
+                                "GROUP BY Isbn, Copy_number\n" +
+                                "ORDER BY Return_date DESC");
                                           
         while (books.next()) {
             String theTitle = books.getString("Title");
             String theDate = books.getString("Return_date");
             String checkedOut = books.getString("Is_Checked_Out");
             String onReserve = books.getString("Is_Book_On_Reserve");
+            String theIsbn = books.getString("Isbn");
+            int copyNumber = books.getInt("Copy_number");
 
-            addBookToList(theTitle, theDate, checkedOut, onReserve);
+            addBookToList(theTitle, theDate, checkedOut, onReserve, theIsbn, copyNumber);
             matchFound = true;
-            System.out.println("Match found");
+            System.out.println("Match found: " + theTitle);
         }
         
         if (!matchFound) {
@@ -258,12 +263,12 @@ public class SearchBookController implements Initializable {
             }
     }
     
-    private void addBookToList(String title, String date, String checkedOut, String onReserve) {
-        Boolean isCheckedOut = null;
-        Boolean isOnReserve = null;
+    private void addBookToList(String title, String date, String checkedOut, String onReserve, String theIsbn, int copyNumber) {
+        Boolean isCheckedOut = false;
+        Boolean isOnReserve = false;
         isCheckedOut = checkedOut.equalsIgnoreCase("true") || checkedOut.equalsIgnoreCase("1");
         isOnReserve = onReserve.equalsIgnoreCase("true") || onReserve.equalsIgnoreCase("1");
-        Book b = new Book(title, isCheckedOut, date, isOnReserve);
+        Book b = new Book(title, isCheckedOut, date, isOnReserve, theIsbn, copyNumber);
         booksFound.add(b);
     }
     

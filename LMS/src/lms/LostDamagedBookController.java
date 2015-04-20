@@ -106,7 +106,7 @@ public class LostDamagedBookController implements Initializable {
             "ayt2V3Ck");
 
             Statement stmt = con.createStatement();
-            stmt.executeUpdate("UPDATE STUDENT_FACULTY.Penalty\n" +
+            stmt.executeUpdate("UPDATE STUDENT_FACULTY\n" +
                     "SET Penalty = Penalty + '" + chargeThis + "'\n" +
                     "WHERE Sf_username = '" + lastUserOfBook.getText() + "'");
         } catch(Exception e) {

@@ -39,6 +39,10 @@ public class ShowBooksController implements Initializable {
     private TableColumn<Book, String> returnDate;
     @FXML
     private TableColumn<Book, String> title;
+    @FXML
+    private TableColumn<Book, String> isbn;
+    @FXML
+    private TableColumn<Book, Integer> copyNumber;
 
 
     /**
@@ -53,7 +57,9 @@ public class ShowBooksController implements Initializable {
         title.setCellValueFactory(new PropertyValueFactory<Book, String>("title"));
         returnDate.setCellValueFactory(new PropertyValueFactory<Book, String>("returnDate"));
         isCheckedOut.setCellValueFactory(new PropertyValueFactory<Book, Boolean>("isCheckedOut"));
-        isOnReserve.setCellValueFactory(new PropertyValueFactory<Book, Boolean>("isOnReserve"));       
+        isOnReserve.setCellValueFactory(new PropertyValueFactory<Book, Boolean>("isOnReserve"));
+        isbn.setCellValueFactory(new PropertyValueFactory<Book, String>("isbn"));
+        copyNumber.setCellValueFactory(new PropertyValueFactory<Book, Integer>("copyNumber"));
         
         bigTable.setItems(list);       
     }    
