@@ -36,7 +36,6 @@ import javafx.stage.Stage;
 public class FrequentUsersReportController implements Initializable {
 
     @FXML Button backButton;
-    @FXML Button updateButton;
     @FXML TableColumn monthCol;
     @FXML TableColumn usernameCol;
     @FXML TableColumn checkoutsCol;
@@ -85,7 +84,7 @@ public class FrequentUsersReportController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        updateTable();
     }
 
     public void backAction() {

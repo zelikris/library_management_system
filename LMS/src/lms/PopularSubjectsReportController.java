@@ -36,7 +36,6 @@ import javafx.stage.Stage;
 public class PopularSubjectsReportController implements Initializable {
 
     @FXML Button backButton;
-    @FXML Button updateButton;
     @FXML TableColumn monthCol;
     @FXML TableColumn subjectCol;
     @FXML TableColumn checkoutsCol;
@@ -85,7 +84,7 @@ public class PopularSubjectsReportController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        updateTable();
     }
 
     public void backAction() {

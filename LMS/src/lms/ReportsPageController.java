@@ -23,6 +23,7 @@ import javafx.stage.Stage;
  */
 public class ReportsPageController implements Initializable {
 
+    @FXML Button damagedBooksButton;
     @FXML Button popularBooksButton;
     @FXML Button frequentUsersButton;
     @FXML Button popularSubjectsButton;
@@ -40,6 +41,21 @@ public class ReportsPageController implements Initializable {
             Parent foster = LMS.getParent();
             Stage stage = LMS.getStage();
             foster = FXMLLoader.load(getClass().getResource("Home.fxml"));
+
+            Scene scene = new Scene(foster);
+
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void damagedBooksAction() {
+        try {
+            Parent foster = LMS.getParent();
+            Stage stage = LMS.getStage();
+            foster = FXMLLoader.load(getClass().getResource("DamagedBooksReport.fxml"));
 
             Scene scene = new Scene(foster);
 

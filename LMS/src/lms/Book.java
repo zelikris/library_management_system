@@ -6,7 +6,6 @@
 package lms;
 
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.RadioButton;
 
 /**
