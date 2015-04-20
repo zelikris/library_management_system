@@ -73,6 +73,7 @@ public class LostDamagedBookController implements Initializable {
         currentTime.setText(getTime());
     }    
     public void searchLastUserPressed(MouseEvent event) {
+        success.setText("");
         String bookISBN = isbn.getText();
         String copyNum = bookCopyNumber.getText();
         if (bookISBN.equals("") || copyNum.equals("")) {
@@ -115,6 +116,7 @@ public class LostDamagedBookController implements Initializable {
     }
     
     public void submitButtonPressed(MouseEvent event) {
+        success.setText("");
         String chargeThis = amountToCharge.getText();
         Connection con = null;
         if (!searchedUser) {

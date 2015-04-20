@@ -63,6 +63,7 @@ public class BookCheckoutController implements Initializable {
     }    
     @FXML
     public void prepareCheckoutButtonPressed(MouseEvent event) {
+        success.setText("");
         checkoutPrepared = true;
         String id = issueID.getText();
         if (id.equals("")) {
@@ -115,6 +116,7 @@ public class BookCheckoutController implements Initializable {
     }
     @FXML
     public void confirmButtonPressed(MouseEvent event) {
+        success.setText("");
         if (!checkoutPrepared) {
             error.setText("First Prepare Checkout");
         } else {

@@ -21,6 +21,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 /**
@@ -51,6 +52,11 @@ public class RequestExtensionPageController implements Initializable {
     private Button submitExtensionRequest;
     @FXML
     private Button backButton;
+    @FXML
+    private Text  error;
+    @FXML
+    private Text success;
+    private boolean enteredIssueID;
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -58,25 +64,81 @@ public class RequestExtensionPageController implements Initializable {
     }    
     @FXML
     public void submitExtensionRequestPressed(MouseEvent event) {
+        success.setText("");
         String id = issueID.getText();
         int isStudent = checkStudentOrStaff(); //1 if student, 0 if staff
         Connection con = null;
         int countExtensions = countNumberOfExtensions();
-        if (isStudent == 1 && countExtensions >= 2) {
-            System.out.println("NO MORE EXTENSIONS");
-        } else if (isStudent == 0 && countExtensions >= 4) {
-            System.out.println("NO MORE EXTENSIONS");            
+        if (!enteredIssueID) {
+            error.setText("First enter valid Issue ID");
         } else {
-        try {
+            if (isStudent == 1 && countExtensions >= 2) {
+                error.setText("Out of Extensions");
+            } else if (isStudent == 0 && countExtensions >= 4) {
+                error.setText("Out of Extensions");            
+            } else {
+                try {
+                    error.setText("");
+                    Class.forName("com.mysql.jdbc.Driver").newInstance();
+                    con = DriverManager.getConnection("jdbc:mysql://academic-mysql.cc.gatech.edu/cs4400_Group_22", "cs4400_Group_22",
+                    "ayt2V3Ck");
+
+                    Statement stmt = con.createStatement();
+                    stmt.executeUpdate("UPDATE ISSUES\n" + 
+                            "SET Extension_date = CURDATE(), Return_date = DATE_ADD(CURDATE(), INTERVAL 14 DAY), \n" +
+                            "Count_of_extensions = " + (countExtensions + 1) + "\n" +
+                            "WHERE Issue_ID = '" + id + "'");
+                    success.setText("Done!");
+                } catch (Exception e) {
+                    System.err.println(e.getMessage());
+                } finally {
+                    try {
+                        if (con != null) {
+                            con.close();
+                        }
+                    } catch (SQLException e) {
+                        System.err.println(e.getMessage());
+                    }
+                }
+            }
+        }
+    }
+    @FXML
+    public void submitButtonPressed(MouseEvent event) {
+        String id = issueID.getText();
+        Connection con = null;
+        success.setText("");
+        if (id.equals("")) {
+            error.setText("Issue ID can't be empty");
+        } else {
+            try {
+                error.setText("");
                 Class.forName("com.mysql.jdbc.Driver").newInstance();
                 con = DriverManager.getConnection("jdbc:mysql://academic-mysql.cc.gatech.edu/cs4400_Group_22", "cs4400_Group_22",
                 "ayt2V3Ck");
 
                 Statement stmt = con.createStatement();
-                stmt.executeUpdate("UPDATE ISSUES\n" + 
-                        "SET Extension_date = CURDATE(), Return_date = DATE_ADD(CURDATE(), INTERVAL 14 DAY), \n" +
-                        "Count_of_extensions = " + (countExtensions + 1) + "\n" +
-                        "WHERE Issue_ID = '" + id + "'");
+                ResultSet results =  stmt.executeQuery("SELECT Date_of_issue, Return_date, Extension_date\n" + 
+                        "FROM ISSUES\n" + 
+                        "WHERE ISSUES.Issue_id = " + id + "\n");
+                String originalCheckout = "";
+                while (results.next()) {
+                    originalCheckout = results.getString("Date_of_issue");
+                    currentExtensionDate.setText(results.getString("Extension_date"));
+                    currentReturnDate.setText(results.getString("Return_date"));
+                }
+                if (originalCheckout.equals("")) {
+                    error.setText("Invalid Issue ID");
+                } else {
+                    originalCheckoutDate.setText(originalCheckout);
+                    ResultSet moreResults = stmt.executeQuery("SELECT CURDATE(), DATE_ADD(CURDATE(), INTERVAL 14 DAY)");
+                    while(moreResults.next()) {
+                        newReturnDate.setText(moreResults.getString("DATE_ADD(CURDATE(), INTERVAL 14 DAY)"));
+                        newExtensionDate.setText(moreResults.getString("CURDATE()"));
+                    }
+                    enteredIssueID = true;
+                }
+                
             } catch (Exception e) {
                 System.err.println(e.getMessage());
             } finally {
@@ -87,44 +149,6 @@ public class RequestExtensionPageController implements Initializable {
                 } catch (SQLException e) {
                     System.err.println(e.getMessage());
                 }
-            }
-        }
-    }
-    @FXML
-    public void submitButtonPressed(MouseEvent event) {
-        String id = issueID.getText();
-        Connection con = null;
-        if (id.equals("")) {
-            System.out.println("Issue ID can't be empty!");
-        }
-        try {
-            Class.forName("com.mysql.jdbc.Driver").newInstance();
-            con = DriverManager.getConnection("jdbc:mysql://academic-mysql.cc.gatech.edu/cs4400_Group_22", "cs4400_Group_22",
-            "ayt2V3Ck");
-
-            Statement stmt = con.createStatement();
-            ResultSet results =  stmt.executeQuery("SELECT Date_of_issue, Return_date, Extension_date\n" + 
-                    "FROM ISSUES\n" + 
-                    "WHERE ISSUES.Issue_id = " + id + "\n");
-            while (results.next()) {
-                originalCheckoutDate.setText(results.getString("Date_of_issue"));
-                currentExtensionDate.setText(results.getString("Extension_date"));
-                currentReturnDate.setText(results.getString("Return_date"));
-            }
-            ResultSet moreResults = stmt.executeQuery("SELECT CURDATE(), DATE_ADD(CURDATE(), INTERVAL 14 DAY)");
-            while(moreResults.next()) {
-                newReturnDate.setText(moreResults.getString("DATE_ADD(CURDATE(), INTERVAL 14 DAY)"));
-                newExtensionDate.setText(moreResults.getString("CURDATE()"));
-            }
-        } catch (Exception e) {
-            System.err.println(e.getMessage());
-        } finally {
-            try {
-                if (con != null) {
-                    con.close();
-                }
-            } catch (SQLException e) {
-                System.err.println(e.getMessage());
             }
         }
     }
