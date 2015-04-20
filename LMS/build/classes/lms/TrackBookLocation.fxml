@@ -26,5 +26,6 @@
       <Text layoutX="298.0" layoutY="267.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Subject" />
       <TextField fx:id="subjectName" editable="false" layoutX="398.0" layoutY="250.0" />
       <Button fx:id="backButton" layoutX="40.0" layoutY="331.0" mnemonicParsing="false" onMouseClicked="#backButtonPressed" text="Back" />
+      <Text fx:id="error" fill="#ee0202" layoutX="329.0" layoutY="101.0" strokeType="OUTSIDE" strokeWidth="0.0" />
    </children>
 </AnchorPane>

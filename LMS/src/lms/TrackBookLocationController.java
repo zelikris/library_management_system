@@ -21,6 +21,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 /**
@@ -44,6 +45,8 @@ public class TrackBookLocationController implements Initializable {
     private TextField shelfNumber;
     @FXML
     private Button backButton;
+    @FXML
+    private Text error;
     /**
      * Initializes the controller class.
      */
@@ -55,47 +58,50 @@ public class TrackBookLocationController implements Initializable {
     public void locateButtonPressed(MouseEvent event) {
         String bookISBN = isbn.getText();
         if (bookISBN.equals("")) {
-            System.out.println("Book ISBN can't be empty!");
-        }
-        Connection con = null;
-        try {
-            Class.forName("com.mysql.jdbc.Driver").newInstance();
-                con = DriverManager.getConnection("jdbc:mysql://academic-mysql.cc.gatech.edu/cs4400_Group_22", "cs4400_Group_22",
-                "ayt2V3Ck");
-            Statement stmt = con.createStatement();
-            ResultSet results = stmt.executeQuery("SELECT BOOK.Isbn, BOOK.Subject_name, BOOK.Shelf_no, SHELF.Shelf_number, SHELF.Aisle_number,\n" +
-                    "SHELF.Floor_no\n" +
-                    "FROM BOOK\n" +
-                    "INNER JOIN SHELF\n" +
-                    "ON BOOK.Shelf_no = SHELF.Shelf_number\n" +
-                    "WHERE BOOK.Isbn = " + isbn.getText() + "\n");
-            String floorNo = "";
-            String aisleNo = "";
-            String subject = "";
-            String shelfNo = "";
-            while (results.next()) {
-                floorNo = results.getString("Floor_no");
-                aisleNo = results.getString("Aisle_number");
-                subject = results.getString("Subject_name");
-                shelfNo = results.getString("Shelf_no");
-            }
-            floorNumber.setText(floorNo);
-            aisleNumber.setText(aisleNo);
-            shelfNumber.setText(shelfNo);
-            subjectName.setText(subject);
-        } catch(Exception e) {
-            System.err.println("Exception: " + e.getMessage());
-        } finally {
+            error.setText("Book ISBN can't be empty!");
+        } else {
+            error.setText("");
+            Connection con = null;
             try {
-                if (con != null) {
-                    con.close();
+                Class.forName("com.mysql.jdbc.Driver").newInstance();
+                    con = DriverManager.getConnection("jdbc:mysql://academic-mysql.cc.gatech.edu/cs4400_Group_22", "cs4400_Group_22",
+                    "ayt2V3Ck");
+                Statement stmt = con.createStatement();
+                ResultSet results = stmt.executeQuery("SELECT BOOK.Isbn, BOOK.Subject_name, BOOK.Shelf_no, SHELF.Shelf_number, SHELF.Aisle_number,\n" +
+                        "SHELF.Floor_no\n" +
+                        "FROM BOOK\n" +
+                        "INNER JOIN SHELF\n" +
+                        "ON BOOK.Shelf_no = SHELF.Shelf_number\n" +
+                        "WHERE BOOK.Isbn = " + isbn.getText() + "\n");
+                String floorNo = "";
+                String aisleNo = "";
+                String subject = "";
+                String shelfNo = "";
+                while (results.next()) {
+                    floorNo = results.getString("Floor_no");
+                    aisleNo = results.getString("Aisle_number");
+                    subject = results.getString("Subject_name");
+                    shelfNo = results.getString("Shelf_no");
                 }
-            } catch (SQLException e) {
-                System.err.println(e.getMessage());
+                if (floorNo.equals("") && aisleNo.equals("") && subject.equals("") && shelfNo.equals("")) {
+                    error.setText("Invalid ISBN");
+                }
+                floorNumber.setText(floorNo);
+                aisleNumber.setText(aisleNo);
+                shelfNumber.setText(shelfNo);
+                subjectName.setText(subject);
+            } catch(Exception e) {
+                System.err.println("Exception: " + e.getMessage());
+            } finally {
+                try {
+                    if (con != null) {
+                        con.close();
+                    }
+                } catch (SQLException e) {
+                    System.err.println(e.getMessage());
+                }
             }
         }
-        
-        
     }
     public void backButtonPressed() {
         try {

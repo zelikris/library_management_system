@@ -32,6 +32,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 /**
@@ -59,6 +60,11 @@ public class LostDamagedBookController implements Initializable {
     private TextField amountToCharge;
     @FXML
     private Button backButton;
+    @FXML
+    private Text error;
+    @FXML
+    private Text success;
+    private boolean searchedUser;
     /**
      * Initializes the controller class.
      */
@@ -69,30 +75,41 @@ public class LostDamagedBookController implements Initializable {
     public void searchLastUserPressed(MouseEvent event) {
         String bookISBN = isbn.getText();
         String copyNum = bookCopyNumber.getText();
-        Connection con = null;
-        try {
-            Class.forName("com.mysql.jdbc.Driver").newInstance();
-            con = DriverManager.getConnection("jdbc:mysql://academic-mysql.cc.gatech.edu/cs4400_Group_22", "cs4400_Group_22",
-            "ayt2V3Ck");
-
-            Statement stmt = con.createStatement();
-            ResultSet results = stmt.executeQuery("SELECT ISSUES.I_sf_username\n" +
-                    "FROM ISSUES\n" +
-                    "WHERE ISSUES.I_isbn = " + bookISBN + " AND ISSUES.I_copy_no = " + copyNum + "\n" +
-                    "ORDER BY Date_of_issue DESC\n" +
-                    "LIMIT 1");
-            while (results.next()) {
-                lastUserOfBook.setText(results.getString("I_sf_username"));
-            }
-        } catch(Exception e) {
-            System.err.println("Exception: " + e.getMessage());
-        } finally {
+        if (bookISBN.equals("") || copyNum.equals("")) {
+            error.setText("ISBN and Copy# can't be empty");
+        } else {
+            Connection con = null;
             try {
-                if (con != null) {
-                    con.close();
+                Class.forName("com.mysql.jdbc.Driver").newInstance();
+                con = DriverManager.getConnection("jdbc:mysql://academic-mysql.cc.gatech.edu/cs4400_Group_22", "cs4400_Group_22",
+                "ayt2V3Ck");
+
+                Statement stmt = con.createStatement();
+                ResultSet results = stmt.executeQuery("SELECT ISSUES.I_sf_username\n" +
+                        "FROM ISSUES\n" +
+                        "WHERE ISSUES.I_isbn = " + bookISBN + " AND ISSUES.I_copy_no = " + copyNum + "\n" +
+                        "ORDER BY Date_of_issue DESC\n" +
+                        "LIMIT 1");
+                String lastUser = "";
+                while (results.next()) {
+                    lastUser = results.getString("I_sf_username");
                 }
-            } catch(SQLException e) {
-                System.err.println(e);
+                if (lastUser.equals("")) {
+                    error.setText("Invalid information");
+                } else {
+                    lastUserOfBook.setText(results.getString("I_sf_username"));
+                    searchedUser = true;
+                }
+            } catch(Exception e) {
+                System.err.println("Exception: " + e.getMessage());
+            } finally {
+                try {
+                    if (con != null) {
+                        con.close();
+                    }
+                } catch(SQLException e) {
+                    System.err.println(e);
+                }
             }
         }
     }
@@ -100,24 +117,29 @@ public class LostDamagedBookController implements Initializable {
     public void submitButtonPressed(MouseEvent event) {
         String chargeThis = amountToCharge.getText();
         Connection con = null;
-        try {
-            Class.forName("com.mysql.jdbc.Driver").newInstance();
-            con = DriverManager.getConnection("jdbc:mysql://academic-mysql.cc.gatech.edu/cs4400_Group_22", "cs4400_Group_22",
-            "ayt2V3Ck");
-
-            Statement stmt = con.createStatement();
-            stmt.executeUpdate("UPDATE STUDENT_FACULTY\n" +
-                    "SET Penalty = Penalty + '" + chargeThis + "'\n" +
-                    "WHERE Sf_username = '" + lastUserOfBook.getText() + "'");
-        } catch(Exception e) {
-            System.err.println("Exception: " + e.getMessage());
-        } finally {
+        if (!searchedUser) {
+            error.setText("First Search for Last User");
+        } else {
             try {
-                if (con != null) {
-                    con.close();
+                Class.forName("com.mysql.jdbc.Driver").newInstance();
+                con = DriverManager.getConnection("jdbc:mysql://academic-mysql.cc.gatech.edu/cs4400_Group_22", "cs4400_Group_22",
+                "ayt2V3Ck");
+
+                Statement stmt = con.createStatement();
+                stmt.executeUpdate("UPDATE STUDENT_FACULTY\n" +
+                        "SET Penalty = Penalty + '" + chargeThis + "'\n" +
+                        "WHERE Sf_username = '" + lastUserOfBook.getText() + "'");
+                success.setText("Done!");
+            } catch(Exception e) {
+                System.err.println("Exception: " + e.getMessage());
+            } finally {
+                try {
+                    if (con != null) {
+                        con.close();
+                    }
+                } catch(SQLException e) {
+                    System.err.println(e);
                 }
-            } catch(SQLException e) {
-                System.err.println(e);
             }
         }
     }

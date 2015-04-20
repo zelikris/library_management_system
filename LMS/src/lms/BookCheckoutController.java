@@ -79,12 +79,26 @@ public class BookCheckoutController implements Initializable {
                 ResultSet results = stmt.executeQuery("SELECT I_sf_username, I_isbn, I_copy_no, Date_of_issue, DATE_ADD(CURDATE(), INTERVAL 14 DAY) AS Return_date\n" +
                         "FROM ISSUES\n" +
                         "WHERE Issue_id = " + id + "\n");
+                String userName = "";
+                String copyNo = "";
+                String isbnNo = "";
+                String checkout = "";
+                String estReturn = "";
                 while (results.next()) {
-                    username.setText(results.getString("I_sf_username"));
-                    copyNumber.setText(results.getString("I_copy_no"));
-                    isbn.setText(results.getString("I_isbn"));
-                    checkoutDate.setText(results.getString("Date_of_issue"));
-                    estimatedReturnDate.setText(results.getString("Return_date"));
+                    userName = results.getString("I_sf_username");
+                    copyNo = results.getString("I_copy_no");
+                    isbnNo = results.getString("I_isbn");
+                    checkout = results.getString("Date_of_issue");
+                    estReturn = results.getString("Return_date");
+                }
+                if (userName.equals("")) {
+                    error.setText("Invalid ISBN!");
+                } else {
+                    username.setText(userName);
+                    copyNumber.setText(copyNo);
+                    isbn.setText(isbnNo);
+                    checkoutDate.setText(checkout);
+                    estimatedReturnDate.setText(estReturn);
                 }
             } catch (Exception e) {
                 System.err.println(e.getMessage());
@@ -102,8 +116,9 @@ public class BookCheckoutController implements Initializable {
     @FXML
     public void confirmButtonPressed(MouseEvent event) {
         if (!checkoutPrepared) {
-            System.out.println("First put in Issue ID and Press Prepare Checkout!");
+            error.setText("First Prepare Checkout");
         } else {
+            error.setText((""));
             Connection con = null;
             String id = issueID.getText();
             try {

@@ -28,5 +28,7 @@
       <Button fx:id="submitButton" layoutX="372.0" layoutY="353.0" mnemonicParsing="false" onMouseClicked="#submitButtonPressed" text="Submit" />
       <Button fx:id="cancelButton" layoutX="458.0" layoutY="353.0" mnemonicParsing="false" onMouseClicked="#cancelButtonPressed" text="Cancel" />
       <Button fx:id="backButton" layoutX="33.0" layoutY="353.0" mnemonicParsing="false" onMouseClicked="#backButtonPressed" text="Back" />
+      <Text fx:id="error" fill="#ee0e0e" layoutX="238.0" layoutY="239.0" strokeType="OUTSIDE" strokeWidth="0.0" />
+      <Text fx:id="success" fill="#08e81e" layoutX="372.0" layoutY="342.0" strokeType="OUTSIDE" strokeWidth="0.0" />
    </children>
 </AnchorPane>
