@@ -30,6 +30,8 @@ public class FutureHoldRequestController implements Initializable {
     @FXML
     private TextField availableDate;
     @FXML
+    private TextField user;
+    @FXML
     private Button backButton;
     /**
      * Initializes the controller class.
