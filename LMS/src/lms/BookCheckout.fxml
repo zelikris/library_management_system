@@ -29,7 +29,7 @@
       <Button fx:id="backButton" layoutX="48.0" layoutY="340.0" mnemonicParsing="false" onMouseClicked="#backButtonPressed" text="Back" />
       <Text layoutX="340.0" layoutY="249.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ISBN" />
       <Button fx:id="prepareCheckoutButton" layoutX="338.0" layoutY="122.0" mnemonicParsing="false" onMouseClicked="#prepareCheckoutButtonPressed" text="Prepare Checkout" />
-      <Text fx:id="success" layoutX="390.0" layoutY="331.0" strokeType="OUTSIDE" strokeWidth="0.0" />
-      <Text fx:id="error" layoutX="339.0" layoutY="110.0" strokeType="OUTSIDE" strokeWidth="0.0" />
+      <Text fx:id="success" fill="#09dd37" layoutX="390.0" layoutY="331.0" strokeType="OUTSIDE" strokeWidth="0.0" />
+      <Text fx:id="error" fill="#eb0404" layoutX="339.0" layoutY="110.0" strokeType="OUTSIDE" strokeWidth="0.0" />
    </children>
 </AnchorPane>
