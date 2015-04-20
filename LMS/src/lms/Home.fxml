@@ -18,6 +18,7 @@
       <Button layoutX="300.0" layoutY="96.0" mnemonicParsing="false" onMouseClicked="#onHoldRequestEvent" prefHeight="86.0" prefWidth="162.0" text="Hold Request" />
       <Button layoutX="138.0" layoutY="182.0" mnemonicParsing="false" onMouseClicked="#onFutureHoldRequestEvent" prefHeight="86.0" prefWidth="162.0" text="Future Hold Request" />
       <Button layoutX="300.0" layoutY="182.0" mnemonicParsing="false" onMouseClicked="#onRequestExtensionEvent" prefHeight="86.0" prefWidth="162.0" text="Request Extension" />
-      <Button layoutX="138.0" layoutY="268.0" mnemonicParsing="false" onMouseClicked="#onViewReportsEvent" prefHeight="86.0" prefWidth="324.0" text="View Reports" />
+      <Button layoutX="300.0" layoutY="268.0" mnemonicParsing="false" onMouseClicked="#onViewReportsEvent" prefHeight="86.0" prefWidth="162.0" text="View Reports" />
+      <Button layoutX="138.0" layoutY="268.0" mnemonicParsing="false" onMouseClicked="#onReturnBookEvent" prefHeight="86.0" prefWidth="162.0" text="Return Book" />
    </children>
 </AnchorPane>

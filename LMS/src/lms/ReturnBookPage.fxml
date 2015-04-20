@@ -15,10 +15,12 @@
       <Text layoutX="304.0" layoutY="205.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Copy Number" />
       <Text layoutX="14.0" layoutY="296.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Return in Damaged Condition" />
       <Text layoutX="304.0" layoutY="296.0" strokeType="OUTSIDE" strokeWidth="0.0" text="User Name" />
-      <TextField layoutX="91.0" layoutY="104.0" />
-      <TextField layoutX="91.0" layoutY="187.0" style="-fx-background-color: dddddd;" />
-      <TextField layoutX="396.0" layoutY="187.0" style="-fx-background-color: dddddd;" />
-      <TextField layoutX="396.0" layoutY="278.0" style="-fx-background-color: dddddd;" />
+      <TextField fx:id="issueIdField" layoutX="91.0" layoutY="104.0" />
+      <TextField fx:id="isbnCol" layoutX="91.0" layoutY="187.0" style="-fx-background-color: dddddd;" />
+      <TextField fx:id="copyNoField" layoutX="396.0" layoutY="187.0" style="-fx-background-color: dddddd;" />
+      <TextField fx:id="usernameField" layoutX="396.0" layoutY="278.0" style="-fx-background-color: dddddd;" />
       <ComboBox fx:id="conditionBox" layoutX="201.0" layoutY="278.0" prefHeight="26.0" prefWidth="0.0" />
+      <Button fx:id="returnButton" layoutX="466.0" layoutY="333.0" mnemonicParsing="false" text="Return Book" />
+      <Button fx:id="backButton" layoutX="37.0" layoutY="333.0" mnemonicParsing="false" onAction="#backAction" text="Back" />
    </children>
 </AnchorPane>
