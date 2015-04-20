@@ -6,17 +6,18 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="454.0" prefWidth="672.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="lms.ShowBooksController">
+<AnchorPane id="AnchorPane" prefHeight="454.0" prefWidth="961.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lms.ShowBooksController">
    <children>
-      <TableView fx:id="bigTable" layoutX="10.0" layoutY="25.0" prefHeight="383.0" prefWidth="652.0">
+      <TableView fx:id="bigTable" layoutX="10.0" layoutY="25.0" prefHeight="383.0" prefWidth="942.0">
         <columns>
-            <TableColumn fx:id="title" prefWidth="257.0" text="Title" />
-            <TableColumn fx:id="returnDate" prefWidth="144.0" text="Return Date" />
-            <TableColumn fx:id="isCheckedOut" minWidth="0.0" prefWidth="124.0" text="Checked Out?" />
-            <TableColumn fx:id="isOnReserve" minWidth="0.0" prefWidth="126.0" text="On Reserve?" />
+            <TableColumn fx:id="title" prefWidth="245.0" text="Title" />
+            <TableColumn fx:id="returnDate" prefWidth="156.0" text="Return Date" />
+            <TableColumn fx:id="isCheckedOut" minWidth="0.0" prefWidth="110.0" text="Checked Out?" />
+            <TableColumn fx:id="isOnReserve" minWidth="0.0" prefWidth="125.0" text="On Reserve?" />
+            <TableColumn fx:id="isbn" minWidth="0.0" prefWidth="241.0" text="ISBN" />
+            <TableColumn fx:id="copyNumber" minWidth="0.0" prefWidth="63.0" text="Copy #" />
         </columns>
       </TableView>
-      <Button layoutX="311.0" layoutY="408.0" mnemonicParsing="false" onMouseClicked="#onBackEvent" text="Back" />
+      <Button layoutX="327.0" layoutY="408.0" mnemonicParsing="false" onMouseClicked="#onBackEvent" prefHeight="31.0" prefWidth="307.0" text="Back" />
    </children>
 </AnchorPane>

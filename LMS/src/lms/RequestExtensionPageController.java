@@ -62,9 +62,9 @@ public class RequestExtensionPageController implements Initializable {
         int isStudent = checkStudentOrStaff(); //1 if student, 0 if staff
         Connection con = null;
         int countExtensions = countNumberOfExtensions();
-        if (isStudent == 1 && countExtensions > 3) {
+        if (isStudent == 1 && countExtensions >= 2) {
             System.out.println("NO MORE EXTENSIONS");
-        } else if (isStudent == 0 && countExtensions > 5) {
+        } else if (isStudent == 0 && countExtensions >= 4) {
             System.out.println("NO MORE EXTENSIONS");            
         } else {
         try {

@@ -21,6 +21,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 /**
@@ -46,6 +47,13 @@ public class BookCheckoutController implements Initializable {
     private TextField estimatedReturnDate;
     @FXML
     private Button backButton;
+    @FXML
+    private Button prepareCheckoutButton;
+    private boolean checkoutPrepared;
+    @FXML
+    private Text success = new Text();
+    @FXML
+    private Text error = new Text();
     /**
      * Initializes the controller class.
      */
@@ -54,30 +62,79 @@ public class BookCheckoutController implements Initializable {
         // TODO
     }    
     @FXML
-    public void confirmButtonPressed(MouseEvent event) {
+    public void prepareCheckoutButtonPressed(MouseEvent event) {
+        checkoutPrepared = true;
         String id = issueID.getText();
         if (id.equals("")) {
-            System.out.println("Issue ID can't be empty!");
-        }
-        Connection con = null;
-        try {
-            Class.forName("com.mysql.jdbc.Driver").newInstance();
-            con = DriverManager.getConnection("jdbc:mysql://academic-mysql.cc.gatech.edu/cs4400_Group_22", "cs4400_Group_22",
-            "ayt2V3Ck");
-
-            Statement stmt = con.createStatement();
-            ResultSet results =  stmt.executeQuery("SELECT BOOK.COPY.C_isbn, BOOK_COPY.Copy_number\n" + 
-                    "FROM BOOK_COPY\n" + 
-                    "WHERE BOOK_COPY.C_isbn = " );
-        } catch (Exception e) {
-            System.err.println(e.getMessage());
-        } finally {
+            error.setText("IssueID can't be empty!");
+        } else {
+            error.setText("");
+            Connection con = null;
             try {
-                if (con != null) {
-                    con.close();
+                Class.forName("com.mysql.jdbc.Driver").newInstance();
+                con = DriverManager.getConnection("jdbc:mysql://academic-mysql.cc.gatech.edu/cs4400_Group_22", "cs4400_Group_22",
+                "ayt2V3Ck");
+
+                Statement stmt = con.createStatement();
+                ResultSet results = stmt.executeQuery("SELECT I_sf_username, I_isbn, I_copy_no, Date_of_issue, DATE_ADD(CURDATE(), INTERVAL 14 DAY) AS Return_date\n" +
+                        "FROM ISSUES\n" +
+                        "WHERE Issue_id = " + id + "\n");
+                while (results.next()) {
+                    username.setText(results.getString("I_sf_username"));
+                    copyNumber.setText(results.getString("I_copy_no"));
+                    isbn.setText(results.getString("I_isbn"));
+                    checkoutDate.setText(results.getString("Date_of_issue"));
+                    estimatedReturnDate.setText(results.getString("Return_date"));
                 }
-            } catch (SQLException e) {
+            } catch (Exception e) {
                 System.err.println(e.getMessage());
+            } finally {
+                try {
+                    if (con != null) {
+                        con.close();
+                    }
+                } catch (SQLException e) {
+                    System.err.println(e.getMessage());
+                }
+            }
+        }
+    }
+    @FXML
+    public void confirmButtonPressed(MouseEvent event) {
+        if (!checkoutPrepared) {
+            System.out.println("First put in Issue ID and Press Prepare Checkout!");
+        } else {
+            Connection con = null;
+            String id = issueID.getText();
+            try {
+                Class.forName("com.mysql.jdbc.Driver").newInstance();
+                con = DriverManager.getConnection("jdbc:mysql://academic-mysql.cc.gatech.edu/cs4400_Group_22", "cs4400_Group_22",
+                "ayt2V3Ck");
+
+                Statement stmt = con.createStatement();
+                stmt.executeUpdate("UPDATE BOOK_COPY T1\n" +
+                        "INNER JOIN (\n" +
+                        "SELECT C_isbn, Copy_number, Return_date, Future_requester, Is_checked_out, Is_on_hold\n" +
+                        "FROM BOOK_COPY\n" +
+                        "INNER JOIN ISSUES\n" +
+                        "ON BOOK_COPY.C_isbn = ISSUES.I_isbn AND BOOK_COPY.Copy_number = I_copy_no\n" +
+                        "WHERE ISSUES.Issue_id = " + id + "\n" +
+                        ") T2 ON T1.C_isbn = T2.C_isbn AND T1.Copy_number = T2.Copy_number\n" +
+                        "SET T1.Is_checked_out = TRUE, T1.Is_on_hold = FALSE");
+                stmt.executeUpdate("UPDATE ISSUES\n" +
+                        "SET Return_date = DATE_ADD(CURDATE(), INTERVAL 14 DAY), Extension_date = CURDATE()" +
+                        "WHERE Issue_id = " + id);
+                success.setText("Done!");
+            } catch (Exception e) {
+                System.err.println(e.getMessage());
+            } finally {
+                try {
+                    if (con != null) {
+                        con.close();
+                    }
+                } catch (SQLException e) {
+                    System.err.println(e.getMessage());
+                }
             }
         }
     }
