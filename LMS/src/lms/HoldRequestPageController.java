@@ -121,7 +121,39 @@ public class HoldRequestPageController implements Initializable {
         // estimated return date = curdate + 17
         String aNewDate = sFormat.format(newDate);
         nDate = aNewDate;
+        
+        if (userIsStaff()) {
+            submitButton.setDisable(true);
+        }
     }    
+    
+    private Boolean userIsStaff() {
+        Connection con = null;
+
+        try {
+            Class.forName("com.mysql.jdbc.Driver").newInstance();
+            con = DriverManager.getConnection("jdbc:mysql://academic-mysql.cc.gatech.edu/cs4400_Group_22", "cs4400_Group_22",
+            "ayt2V3Ck");
+
+            Statement stmt = con.createStatement();
+            ResultSet results = stmt.executeQuery("SELECT * FROM STAFF\n" +
+                                                  "WHERE Staff_username = '" + LMS.getSessionUser() + "'");
+            while (results.next()) {
+                return true;
+            }
+        } catch(ClassNotFoundException | InstantiationException | IllegalAccessException | SQLException e) {
+            System.err.println("Exception: " + e.getMessage());
+        } finally {
+            try {
+                if (con != null) {
+                    con.close();
+                }
+            } catch(SQLException e) {
+                System.err.println(e);
+            }
+        }
+        return false;
+    }
     
     @FXML
     private void onSubmitEvent(MouseEvent event) {

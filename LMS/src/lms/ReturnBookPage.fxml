@@ -9,7 +9,10 @@
 
 <AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lms.ReturnBookPageController">
    <children>
-      <Text layoutX="263.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Return Book" />
+      <Text layoutX="178.0" layoutY="66.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Return Book">
+         <font>
+            <Font size="48.0" />
+         </font></Text>
       <Text layoutX="29.0" layoutY="122.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Issue Id" />
       <Text layoutX="37.0" layoutY="205.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ISBN" />
       <Text layoutX="294.0" layoutY="206.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Copy Number" />
