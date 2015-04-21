@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
@@ -15,15 +16,17 @@
          </font>
       </Text>
       <Text layoutX="56.0" layoutY="135.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ISBN" />
-      <TextField fx:id="isbn" layoutX="132.0" layoutY="118.0" />
-      <Button fx:id="requestButton" layoutX="452.0" layoutY="118.0" mnemonicParsing="false" text="Request" />
-      <Text layoutX="56.0" layoutY="185.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Copy Number" />
-      <TextField fx:id="copyNumber" editable="false" layoutX="165.0" layoutY="168.0" style="-fx-background-color: dddddd;" />
-      <Text layoutX="56.0" layoutY="230.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Expected Available Date" />
-      <TextField fx:id="availableDate" editable="false" layoutX="244.0" layoutY="213.0" style="-fx-background-color: dddddd;" />
-      <Button fx:id="okayButton" layoutX="462.0" layoutY="334.0" mnemonicParsing="false" text="OK" />
-      <Button fx:id="backButton" layoutX="41.0" layoutY="334.0" mnemonicParsing="false" text="Back" />
-      <TextField fx:id="user" layoutX="119.0" layoutY="262.0" style="-fx-background-color: dddddd;" />
-      <Text layoutX="57.0" layoutY="280.0" strokeType="OUTSIDE" strokeWidth="0.0" text="User" />
+      <TextField fx:id="isbnInput" layoutX="132.0" layoutY="118.0" />
+      <Button fx:id="requestButton" layoutX="391.0" layoutY="118.0" mnemonicParsing="false" onMouseClicked="#onRequestEvent" prefHeight="31.0" prefWidth="135.0" text="Request" />
+      <Text layoutX="56.0" layoutY="209.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Copy Number" />
+      <TextField fx:id="copyNumberOut" editable="false" layoutX="165.0" layoutY="192.0" style="-fx-background-color: dddddd;" />
+      <Text layoutX="56.0" layoutY="254.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Expected Available Date" />
+      <TextField fx:id="availableDate" editable="false" layoutX="244.0" layoutY="237.0" style="-fx-background-color: dddddd;" />
+      <Button fx:id="okayButton" layoutX="437.0" layoutY="334.0" mnemonicParsing="false" onMouseClicked="#onOkEvent" prefHeight="31.0" prefWidth="135.0" text="OK" />
+      <Button fx:id="backButton" layoutX="41.0" layoutY="334.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="135.0" text="Back" />
+      <TextField fx:id="user" editable="false" layoutX="119.0" layoutY="286.0" style="-fx-background-color: dddddd;" />
+      <Text layoutX="57.0" layoutY="304.0" strokeType="OUTSIDE" strokeWidth="0.0" text="User" />
+      <Line endX="300.0" layoutX="300.0" layoutY="173.0" startX="-300.0" />
+      <Text fx:id="success" layoutX="477.0" layoutY="327.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Success!" visible="false" wrappingWidth="55.1513671875" />
    </children>
 </AnchorPane>
