@@ -20,14 +20,14 @@
       <TextField fx:id="bookCopyNumber" layoutX="372.0" layoutY="113.0" />
       <Text layoutX="33.0" layoutY="172.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Current Time" />
       <TextField fx:id="currentTime" editable="false" layoutX="131.0" layoutY="155.0" />
-      <Button fx:id="searchLastUser" layoutX="236.0" layoutY="195.0" mnemonicParsing="false" onMouseClicked="#searchLastUserPressed" text="Look for Last User" />
+      <Button fx:id="searchLastUser" layoutX="231.0" layoutY="207.0" mnemonicParsing="false" onMouseClicked="#searchLastUserPressed" text="Look for Last User" />
       <Text layoutX="33.0" layoutY="271.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Last User of the Book" />
       <TextField fx:id="lastUserOfBook" editable="false" layoutX="191.0" layoutY="254.0" />
       <Text layoutX="34.0" layoutY="303.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Amount to be Charged" />
       <TextField fx:id="amountToCharge" layoutX="191.0" layoutY="286.0" />
-      <Button fx:id="submitButton" layoutX="372.0" layoutY="353.0" mnemonicParsing="false" onMouseClicked="#submitButtonPressed" text="Submit" />
+      <Button fx:id="submitButton" layoutX="300.0" layoutY="353.0" mnemonicParsing="false" onMouseClicked="#submitButtonPressed" prefHeight="31.0" prefWidth="139.0" text="Submit" />
       <Button fx:id="cancelButton" layoutX="458.0" layoutY="353.0" mnemonicParsing="false" onMouseClicked="#cancelButtonPressed" text="Cancel" />
-      <Button fx:id="backButton" layoutX="33.0" layoutY="353.0" mnemonicParsing="false" onMouseClicked="#backButtonPressed" text="Back" />
+      <Button fx:id="backButton" layoutX="33.0" layoutY="353.0" mnemonicParsing="false" onMouseClicked="#backButtonPressed" prefHeight="31.0" prefWidth="139.0" text="Back" />
       <Text fx:id="error" fill="#ee0e0e" layoutX="238.0" layoutY="239.0" strokeType="OUTSIDE" strokeWidth="0.0" />
       <Text fx:id="success" fill="#08e81e" layoutX="372.0" layoutY="342.0" strokeType="OUTSIDE" strokeWidth="0.0" />
    </children>

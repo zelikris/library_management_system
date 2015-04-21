@@ -7,8 +7,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="lms.PenaltyPageController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lms.PenaltyPageController">
    <children>
       <Text layoutX="44.0" layoutY="56.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Issue Id" />
       <TextField fx:id="issueIdField" layoutX="104.0" layoutY="38.0" />
@@ -22,7 +21,7 @@
       <TextField fx:id="dueDateField" editable="false" layoutX="104.0" layoutY="133.0" style="-fx-background-color: dddddd;" />
       <TextField fx:id="todaysDateField" editable="false" layoutX="104.0" layoutY="234.0" style="-fx-background-color: dddddd;" />
       <TextField fx:id="newPenaltyField" editable="false" layoutX="406.0" layoutY="234.0" style="-fx-background-color: dddddd;" />
-      <Button fx:id="backButton" layoutX="34.0" layoutY="347.0" mnemonicParsing="false" onAction="#backAction" text="Back" />
+      <Button fx:id="backButton" layoutX="34.0" layoutY="347.0" mnemonicParsing="false" onAction="#backAction" prefHeight="31.0" prefWidth="111.0" text="Back" />
       <Button fx:id="penaltyButton" layoutX="469.0" layoutY="347.0" mnemonicParsing="false" onAction="#applyPenaltyAction" text="Apply Penalty" />
       <Button fx:id="lookUpButton" layoutX="272.0" layoutY="38.0" mnemonicParsing="false" onAction="#lookupAction" text="Look Up" />
    </children>

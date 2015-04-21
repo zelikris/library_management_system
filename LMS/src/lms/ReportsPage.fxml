@@ -8,7 +8,7 @@
 
 <AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lms.ReportsPageController">
    <children>
-      <Button fx:id="backButton" layoutX="14.0" layoutY="360.0" mnemonicParsing="false" onAction="#backAction" text="Back" />
+      <Button fx:id="backButton" layoutX="14.0" layoutY="360.0" mnemonicParsing="false" onAction="#backAction" prefHeight="31.0" prefWidth="114.0" text="Back" />
       <Button fx:id="frequentUsersButton" layoutX="224.0" layoutY="200.0" mnemonicParsing="false" onAction="#frequentUsersAction" text="Frequent Users Report" />
       <Button fx:id="popularSubjectsButton" layoutX="226.0" layoutY="129.0" mnemonicParsing="false" onAction="#popularBooksAction" text="Popular Books Report" />
       <Button fx:id="popularBooksButton" layoutX="219.0" layoutY="277.0" mnemonicParsing="false" onAction="#popularSubjectsAction" text="Popular Subjects Report" />

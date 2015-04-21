@@ -26,6 +26,6 @@
             <TableColumn fx:id="numDamagedCol" prefWidth="168.0" text="#damaged books" />
         </columns>
       </TableView>
-      <Button fx:id="backButton" layoutX="15.0" layoutY="361.0" mnemonicParsing="false" onAction="#backAction" text="Back" />
+      <Button fx:id="backButton" layoutX="15.0" layoutY="361.0" mnemonicParsing="false" onAction="#backAction" prefHeight="31.0" prefWidth="150.0" text="Back" />
    </children>
 </AnchorPane>

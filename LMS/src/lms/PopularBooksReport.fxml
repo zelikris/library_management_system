@@ -10,7 +10,7 @@
 <AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lms.PopularBooksReportController">
    <children>
       <Text layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Popular Books Report" />
-      <Button fx:id="backButton" layoutX="14.0" layoutY="360.0" mnemonicParsing="false" onAction="#backAction" text="Back" />
+      <Button fx:id="backButton" layoutX="14.0" layoutY="360.0" mnemonicParsing="false" onAction="#backAction" prefHeight="31.0" prefWidth="126.0" text="Back" />
       <TableView fx:id="table" layoutX="51.0" layoutY="58.0" prefHeight="284.0" prefWidth="499.0">
         <columns>
           <TableColumn fx:id="monthCol" prefWidth="125.0" text="Month" />

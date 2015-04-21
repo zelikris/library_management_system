@@ -9,13 +9,13 @@
 
 <AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lms.LoginPageController">
    <children>
-      <TextField fx:id="usernameInput" layoutX="322.0" layoutY="169.0" />
-      <Text layoutX="123.0" layoutY="190.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Username" />
-      <Text layoutX="125.0" layoutY="252.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password" />
-      <PasswordField fx:id="passInput" layoutX="322.0" layoutY="231.0" />
-      <Button defaultButton="true" layoutX="206.0" layoutY="320.0" mnemonicParsing="false" onAction="#loginEvent" text="Login" />
-      <Button layoutX="359.0" layoutY="320.0" mnemonicParsing="false" onMouseClicked="#registerEvent" text="Register" />
-      <Text layoutX="246.0" layoutY="75.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Login!" underline="true">
+      <TextField fx:id="usernameInput" layoutX="305.0" layoutY="154.0" />
+      <Text layoutX="106.0" layoutY="175.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Username" />
+      <Text layoutX="108.0" layoutY="237.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password" />
+      <PasswordField fx:id="passInput" layoutX="305.0" layoutY="216.0" />
+      <Button defaultButton="true" layoutX="226.0" layoutY="308.0" mnemonicParsing="false" onAction="#loginEvent" prefHeight="57.0" prefWidth="149.0" text="Login" />
+      <Button layoutX="496.0" layoutY="336.0" mnemonicParsing="false" onMouseClicked="#registerEvent" text="Register" />
+      <Text layoutX="252.0" layoutY="86.0" strokeLineJoin="ROUND" strokeType="OUTSIDE" strokeWidth="0.0" text="Login" underline="true">
          <font>
             <Font size="43.0" />
          </font>

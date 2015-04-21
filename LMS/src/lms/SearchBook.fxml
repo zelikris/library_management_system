@@ -15,8 +15,8 @@
       <Text layoutX="83.0" layoutY="146.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ISBN" />
       <Text layoutX="83.0" layoutY="207.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Title" />
       <Text layoutX="83.0" layoutY="265.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Author" />
-      <Button layoutX="182.0" layoutY="318.0" mnemonicParsing="false" onMouseClicked="#onBackEvent" text="Back" />
-      <Button layoutX="362.0" layoutY="318.0" mnemonicParsing="false" onMouseClicked="#onSearchEvent" text="Search" />
+      <Button layoutX="144.0" layoutY="318.0" mnemonicParsing="false" onMouseClicked="#onBackEvent" prefHeight="31.0" prefWidth="89.0" text="Back" />
+      <Button layoutX="290.0" layoutY="318.0" mnemonicParsing="false" onMouseClicked="#onSearchEvent" prefHeight="31.0" prefWidth="137.0" text="Search" />
       <Text layoutX="195.0" layoutY="68.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Search Books">
          <font>
             <Font size="36.0" />

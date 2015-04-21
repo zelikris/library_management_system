@@ -11,7 +11,7 @@
    <children>
       <TextField fx:id="address" layoutX="150.0" layoutY="213.0" prefHeight="70.0" prefWidth="187.0" />
       <TextField fx:id="lastName" layoutX="511.0" layoutY="56.0" />
-      <Button fx:id="registerButton" layoutX="507.0" layoutY="319.0" mnemonicParsing="false" onMousePressed="#onRegisterEvent" text="Register" />
+      <Button fx:id="registerButton" layoutX="455.0" layoutY="304.0" mnemonicParsing="false" onMousePressed="#onRegisterEvent" prefHeight="61.0" prefWidth="168.0" text="Register" />
       <Text layoutX="55.0" layoutY="77.0" strokeType="OUTSIDE" strokeWidth="0.0" text="First Name" />
       <Text layoutX="55.0" layoutY="134.0" strokeType="OUTSIDE" strokeWidth="0.0" text="D.O.B." />
       <Text layoutX="55.0" layoutY="230.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Address" />
@@ -19,7 +19,7 @@
       <Text layoutX="384.0" layoutY="135.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Gender" />
       <Text layoutX="384.0" layoutY="189.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Faculty Member?" />
       <Text fx:id="departmentLabel" layoutX="384.0" layoutY="246.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Department" visible="false" />
-      <CheckBox fx:id="isFaculty" layoutX="511.0" layoutY="173.0" mnemonicParsing="false" />
+      <CheckBox fx:id="isFaculty" layoutX="511.0" layoutY="179.0" mnemonicParsing="false" />
       <DatePicker fx:id="dateOfBirth" layoutX="150.0" layoutY="114.0" prefHeight="31.0" prefWidth="187.0" />
       <ComboBox fx:id="gender" layoutX="511.0" layoutY="114.0" prefHeight="31.0" prefWidth="187.0" visibleRowCount="2" />
       <Button fx:id="cancelButton" layoutX="232.0" layoutY="319.0" mnemonicParsing="false" onMouseClicked="#cancelEvent" text="Cancel" />
