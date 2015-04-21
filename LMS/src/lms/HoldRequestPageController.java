@@ -24,12 +24,14 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 /**
@@ -68,6 +70,12 @@ public class HoldRequestPageController implements Initializable {
     private TableColumn<Book, String> resEdition;
     @FXML
     private TableColumn<Book, Integer> resNoAvailableCopies;
+    @FXML
+    private Text error;
+    @FXML
+    private Text success;
+    @FXML
+    private Button submitButton;
     
     private String theDate;
     private String nDate;
@@ -117,12 +125,14 @@ public class HoldRequestPageController implements Initializable {
     
     @FXML
     private void onSubmitEvent(MouseEvent event) {
+        error.setText("");
+        success.setText("");
         if (selectAvail.getValue() != null) {
             updateBookCopy();
             holdRequestDateField.setText(theDate);
             returnDateField.setText(nDate);
         } else {
-            System.out.println("No book was selected!");
+            error.setText("Select a book!");
         }
     }
     
@@ -148,13 +158,13 @@ public class HoldRequestPageController implements Initializable {
             while (maxIssueId.next()) {
                 issueID = maxIssueId.getInt("MAX( Issue_id ) + 1");
             }
-            System.out.println("IssueID: " + issueID);
+            success.setText("Done! Your IssueID: " + issueID);
             stmt.executeUpdate("UPDATE BOOK_COPY\n" +
                             "SET Is_on_hold = TRUE, Is_checked_out = FALSE\n" +
                             "WHERE C_isbn = '" + comboSelection.getIsbn() + "' AND Copy_number = '" + comboSelection.getCopyNumber() + "';");
             stmt.executeUpdate("INSERT INTO ISSUES(I_ISBN, I_copy_no, I_SF_Username, Return_Date, Extension_Date, Date_of_Issue, Issue_ID)\n" +
                                 "VALUES ('" + comboSelection.getIsbn() + "', " + comboSelection.getCopyNumber() + ", '" + LMS.getSessionUser() + "', DATE_ADD(CURDATE(), INTERVAL 17 DAY), CURDATE(), CURDATE(), '" + issueID + "')");
-           
+           submitButton.setDisable(true);
         } catch(Exception e) {
             System.err.println("Exception: " + e.getMessage());
         } finally {
@@ -170,6 +180,7 @@ public class HoldRequestPageController implements Initializable {
     @FXML
     private void onBackEvent(MouseEvent event)  {
         try {
+            submitButton.setDisable(false);
             Parent foster = LMS.getParent();
             Stage stage = LMS.getStage();
             foster = FXMLLoader.load(getClass().getResource("HoldRequestSearch.fxml"));

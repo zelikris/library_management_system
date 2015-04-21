@@ -23,10 +23,11 @@
       <Text layoutX="56.0" layoutY="254.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Expected Available Date" />
       <TextField fx:id="availableDate" editable="false" layoutX="244.0" layoutY="237.0" style="-fx-background-color: dddddd;" />
       <Button fx:id="okayButton" layoutX="437.0" layoutY="334.0" mnemonicParsing="false" onMouseClicked="#onOkEvent" prefHeight="31.0" prefWidth="135.0" text="OK" />
-      <Button fx:id="backButton" layoutX="41.0" layoutY="334.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="135.0" text="Back" />
+      <Button fx:id="backButton" layoutX="41.0" layoutY="334.0" mnemonicParsing="false" onMouseClicked="#onBackEvent" prefHeight="31.0" prefWidth="135.0" text="Back" />
       <TextField fx:id="user" editable="false" layoutX="119.0" layoutY="286.0" style="-fx-background-color: dddddd;" />
       <Text layoutX="57.0" layoutY="304.0" strokeType="OUTSIDE" strokeWidth="0.0" text="User" />
       <Line endX="300.0" layoutX="300.0" layoutY="173.0" startX="-300.0" />
-      <Text fx:id="success" layoutX="477.0" layoutY="327.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Success!" visible="false" wrappingWidth="55.1513671875" />
+      <Text fx:id="error" fill="#eb0303" layoutX="391.0" layoutY="106.0" strokeType="OUTSIDE" strokeWidth="0.0" />
+      <Text fx:id="success" fill="#09f835" layoutX="468.0" layoutY="323.0" strokeType="OUTSIDE" strokeWidth="0.0" />
    </children>
 </AnchorPane>

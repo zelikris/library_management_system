@@ -9,7 +9,7 @@
 
 <AnchorPane id="AnchorPane" prefHeight="715.0" prefWidth="674.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lms.HoldRequestPageController">
 <children>
-<Button layoutX="512.0" layoutY="370.0" mnemonicParsing="false" onMouseClicked="#onSubmitEvent" prefHeight="31.0" prefWidth="141.0" text="Submit" />
+<Button fx:id="submitButton" layoutX="512.0" layoutY="370.0" mnemonicParsing="false" onMouseClicked="#onSubmitEvent" prefHeight="31.0" prefWidth="141.0" text="Submit" />
 <Button layoutX="444.0" layoutY="370.0" mnemonicParsing="false" onMouseClicked="#onBackEvent" text="Back" />
 <Text layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Books Available Summary" />
 <TableView fx:id="availableTable" editable="true" layoutX="16.0" layoutY="45.0" prefHeight="265.0" prefWidth="637.0">
@@ -42,5 +42,7 @@
       </TableView>
       <Text layoutX="19.0" layoutY="417.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Books on Reserve" />
       <ComboBox fx:id="selectAvail" layoutX="20.0" layoutY="370.0" prefHeight="31.0" prefWidth="366.0" promptText="Select Available Book" />
+      <Text fx:id="error" fill="#f50e0e" layoutX="422.0" layoutY="417.0" strokeType="OUTSIDE" strokeWidth="0.0" />
+      <Text fx:id="success" fill="#06da30" layoutX="419.0" layoutY="417.0" strokeType="OUTSIDE" strokeWidth="0.0" />
 </children>
 </AnchorPane>

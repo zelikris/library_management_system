@@ -5,6 +5,7 @@
  */
 package lms;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -13,11 +14,15 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -36,21 +41,27 @@ public class FutureHoldRequestController implements Initializable {
     private TextField user;
     @FXML
     private Text success;
+    @FXML
+    private Text error;
+    @FXML
+    private Button okayButton;
     
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
+        okayButton.setDisable(true);
     }
     
     @FXML
     private void onRequestEvent(MouseEvent event) {
         if (!isbnInput.getText().equals("")) {
+            error.setText("");
+            success.setText("");
             searchDB();
         } else {
-            System.out.println("ISBN cannot be null!");
+            error.setText("ISBN cannot be null!");
         }
     }
     
@@ -58,10 +69,9 @@ public class FutureHoldRequestController implements Initializable {
     private void onOkEvent(MouseEvent event) {
         if (!isbnInput.getText().equals("") && !copyNumberOut.getText().equals("")) {
             updateDB();
-            success.setVisible(true);
-        } else {
-            System.out.println("Cannot submit future hold on zero books!");
+            success.setText("Success!");
         }
+        okayButton.setDisable(true);
     }
     
     private void updateDB() {
@@ -100,6 +110,7 @@ public class FutureHoldRequestController implements Initializable {
     }
     
     private void searchDB() {
+        error.setText("");
         String isbn = isbnInput.getText();
         //String user = LMS.getSessionUser();
         Connection con = null;
@@ -127,13 +138,13 @@ public class FutureHoldRequestController implements Initializable {
             copyNumberOut.setText(copyNumber);
             availableDate.setText(returnDate);
             user.setText(LMS.getSessionUser());
-
+            okayButton.setDisable(false);
             matchFound = true;
             System.out.println("Match found: copy#: " + copyNumber + ", return date: " + returnDate);
         }
         
         if (!matchFound) {
-            System.out.println("Match NOT found");
+            error.setText("Match NOT found");
         }
             
             } catch(ClassNotFoundException | InstantiationException | IllegalAccessException | SQLException e) {
@@ -147,5 +158,20 @@ public class FutureHoldRequestController implements Initializable {
                 }   
             }    
     }
-    
+    @FXML
+    private void onBackEvent(MouseEvent event)  {
+        try {
+            okayButton.setDisable(false);
+            Parent foster = LMS.getParent();
+            Stage stage = LMS.getStage();
+            foster = FXMLLoader.load(getClass().getResource("Home.fxml"));
+
+            Scene scene = new Scene(foster);
+
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }    
+    }
 }
