@@ -21,6 +21,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 /**
@@ -36,11 +37,13 @@ public class SearchBookController implements Initializable {
     private TextField titleInput;
     @FXML
     private TextField authorInput;
-    
+    @FXML
+    private Text error;
     private String isbn;
     private String title;
     private String author;
     private static HashSet<Book> booksFound;
+    boolean matchFound = false;
     
     /**
      * Initializes the controller class.
@@ -70,23 +73,36 @@ public class SearchBookController implements Initializable {
     private void onSearchEvent(MouseEvent event) {
         if (!isbnInput.getText().equals("")) {
             searchByIsbn();
-            goToShowBooksScreen();
+            if (matchFound) {
+                goToShowBooksScreen();
+            } else {
+                error.setText("Match not Found!");
+            }
         } else if (!titleInput.getText().equals("")) {
             searchByTitle();
-            goToShowBooksScreen();
+            if (matchFound) {
+                goToShowBooksScreen();
+            } else {
+                error.setText("Match not Found!");
+            }
         } else if (!authorInput.getText().equals("")) {
             searchByAuthor();
-            goToShowBooksScreen();
+            if (matchFound) {
+                goToShowBooksScreen();
+            } else {
+                error.setText("Match not Found!");
+            }
         } else {
-            System.out.println("All fields Null!");
+            error.setText("All fields can't be empty!");
         }
     }
     
     private void searchByIsbn() {
         isbn = isbnInput.getText();
-        boolean matchFound = false;
+        matchFound = false;
         Connection con = null;
         try {
+            error.setText("");
             Class.forName("com.mysql.jdbc.Driver").newInstance();
             con = DriverManager.getConnection("jdbc:mysql://academic-mysql.cc.gatech.edu/cs4400_Group_22", "cs4400_Group_22",
             "ayt2V3Ck");
@@ -114,17 +130,11 @@ public class SearchBookController implements Initializable {
                 String onReserve = books.getString("Is_Book_On_Reserve");
                 String theIsbn = books.getString("Isbn");
                 int copyNumber = books.getInt("Copy_number");
-                
+                System.out.println("THE TITLE: " + theTitle);
                 addBookToList(theTitle, theDate, checkedOut, onReserve, theIsbn, copyNumber);
-                
-                matchFound = true;
                 System.out.println("Match found: " + theTitle);
+                matchFound = true;
             }
-
-            if (!matchFound) {
-                System.out.println("Match NOT found");
-            }
-
         } catch(Exception e) {
             System.err.println("Exception: " + e.getMessage());
         } finally {
@@ -139,9 +149,10 @@ public class SearchBookController implements Initializable {
     
     private void searchByTitle() {
         title = titleInput.getText();
-        boolean matchFound = false;
+        matchFound = false;
         Connection con = null;
         try {
+            error.setText("");
             Class.forName("com.mysql.jdbc.Driver").newInstance();
             con = DriverManager.getConnection("jdbc:mysql://academic-mysql.cc.gatech.edu/cs4400_Group_22", "cs4400_Group_22",
             "ayt2V3Ck");
@@ -170,14 +181,9 @@ public class SearchBookController implements Initializable {
                 String onReserve = books.getString("Is_Book_On_Reserve");
                 String theIsbn = books.getString("Isbn");
                 int copyNumber = books.getInt("Copy_number");
-                
                 addBookToList(theTitle, theDate, checkedOut, onReserve, theIsbn, copyNumber);
-                matchFound = true;
                 System.out.println("Match found: " + theTitle);
-            }
-
-            if (!matchFound) {
-                System.out.println("Match NOT found");
+                matchFound = true;
             }
             
         } catch(ClassNotFoundException | InstantiationException | IllegalAccessException | SQLException e) {
@@ -194,9 +200,10 @@ public class SearchBookController implements Initializable {
     
     private void searchByAuthor() {
         author = authorInput.getText();
-        boolean matchFound = false;
+        matchFound = false;
         Connection con = null;
         try {
+            error.setText("");
             Class.forName("com.mysql.jdbc.Driver").newInstance();
             con = DriverManager.getConnection("jdbc:mysql://academic-mysql.cc.gatech.edu/cs4400_Group_22", "cs4400_Group_22",
             "ayt2V3Ck");
@@ -225,17 +232,11 @@ public class SearchBookController implements Initializable {
             String onReserve = books.getString("Is_Book_On_Reserve");
             String theIsbn = books.getString("Isbn");
             int copyNumber = books.getInt("Copy_number");
-
             addBookToList(theTitle, theDate, checkedOut, onReserve, theIsbn, copyNumber);
-            matchFound = true;
             System.out.println("Match found: " + theTitle);
-        }
-        
-        if (!matchFound) {
-            System.out.println("Match NOT found");
-        }
-            
-            } catch(ClassNotFoundException | InstantiationException | IllegalAccessException | SQLException e) {
+            matchFound = true;
+        } 
+        } catch(ClassNotFoundException | InstantiationException | IllegalAccessException | SQLException e) {
                 System.err.println("Exception: " + e.getMessage());
             } finally {
                 try {

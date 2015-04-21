@@ -21,6 +21,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 /**
@@ -38,6 +39,8 @@ public class RegistrationFormController implements Initializable {
     private TextField confirmPassword;
     @FXML
     private Button cancelButton;
+    @FXML
+    private Text error;
     
     /**
      * Initializes the controller class.
@@ -52,21 +55,23 @@ public class RegistrationFormController implements Initializable {
         String usernameInput = username.getText();
         String passwordInput = password.getText();
         String conPasswordInput = confirmPassword.getText();
-        
+        error.setText("");
         //Boolean pass = false;
         
         if (!passwordsEqual(passwordInput,conPasswordInput)) {
             confirmPassword.setText("");
             password.setText("");
-            System.out.println("Passwords did not match");
+            error.setText("Passwords must match!");
         } else if (usernameExists(usernameInput)) {
-            System.out.println("Username is already in the database");
+            error.setText("Username is already in the database");
+        } else if (usernameInput.equals("")) {
+            error.setText("Username can't be empty.");
         } else if (!usernameCheck(usernameInput)) {
-            System.out.println("Incorrect username format");
+            error.setText("Incorrect username format");
         } else if (!checkPassword(passwordInput)) {
-            System.out.println("Incorrect password format");
+            error.setText("Bad password format (length must be more than 3)");
         } else if (usernameInput.equals(passwordInput)) {
-            System.out.println("Username cannot match password");
+            error.setText("Username cannot match password");
         } else {
             LMS.setSessionUser(usernameInput);
             LMS.setRegistrationPassword(passwordInput);

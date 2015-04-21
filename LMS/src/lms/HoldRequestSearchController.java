@@ -22,6 +22,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 /**
@@ -42,7 +43,9 @@ public class HoldRequestSearchController implements Initializable {
     private String author;
     private static ArrayList<Book> availableBooks;
     private static ArrayList<Book> booksOnReserve;
-    
+    @FXML
+    private Text error;
+    private boolean matchFound = false;
     /**
      * Initializes the controller class.
      */
@@ -73,15 +76,27 @@ public class HoldRequestSearchController implements Initializable {
     private void onSearchEvent(MouseEvent event) {
         if (!isbnInput.getText().equals("")) {
             searchByIsbn();
-            goToHoldRequestPage();
+            if (matchFound) {
+               goToHoldRequestPage();
+           } else {
+               error.setText("Match not found!");
+           }
         } else if (!titleInput.getText().equals("")) {
             searchByTitle();
-           goToHoldRequestPage();
+           if (matchFound) {
+               goToHoldRequestPage();
+           } else {
+               error.setText("Match not found!");
+           }
         } else if (!authorInput.getText().equals("")) {
            searchByAuthor();
-           goToHoldRequestPage();
+           if (matchFound) {
+               goToHoldRequestPage();
+           } else {
+               error.setText("Match not found!");
+           }
         } else {
-            System.out.println("All fields Null!");
+            error.setText("All fields can't be empty.");
         }
     }
     
@@ -103,7 +118,7 @@ public class HoldRequestSearchController implements Initializable {
     
     private void searchByIsbn() {
         isbn = isbnInput.getText();
-        boolean matchFound = false;
+        matchFound = false;
         Connection con = null;
         try {
             Class.forName("com.mysql.jdbc.Driver").newInstance();
@@ -130,18 +145,11 @@ public class HoldRequestSearchController implements Initializable {
                 String theTitle = books.getString("Title");
                 String theEdition = books.getString("Edition");
                 String onReserve = books.getString("Is_Book_On_Reserve");
-                int copiesAvailable = books.getInt("COUNT(BOOK_COPY.Copy_Number)");
-                
-                addBookToList(theIsbn, theTitle, theEdition, onReserve, copiesAvailable, copyNumber);
-                
+                int copiesAvailable = books.getInt("COUNT(BOOK_COPY.Copy_Number)");        
+                addBookToList(theIsbn, theTitle, theEdition, onReserve, copiesAvailable, copyNumber);  
                 matchFound = true;
                 System.out.println("Match found: " + books.getString("Title"));
             }
-
-            if (!matchFound) {
-                System.out.println("Match NOT found");
-            }
-
         } catch(Exception e) {
             System.err.println("Exception: " + e.getMessage());
         } finally {
@@ -156,7 +164,7 @@ public class HoldRequestSearchController implements Initializable {
     
     private void searchByTitle() {
         title = titleInput.getText();
-        boolean matchFound = false;
+        matchFound = false;
         Connection con = null;
         try {
             Class.forName("com.mysql.jdbc.Driver").newInstance();
@@ -191,9 +199,6 @@ public class HoldRequestSearchController implements Initializable {
                 System.out.println("Match found: " + books.getString("Title"));
             }
 
-            if (!matchFound) {
-                System.out.println("Match NOT found");
-            }
 
         } catch(Exception e) {
             System.err.println("Exception: " + e.getMessage());
@@ -209,17 +214,14 @@ public class HoldRequestSearchController implements Initializable {
     
     private void searchByAuthor() {
         author = authorInput.getText();
-        boolean matchFound = false;
+        matchFound = false;
         Connection con = null;
         try {
             Class.forName("com.mysql.jdbc.Driver").newInstance();
             con = DriverManager.getConnection("jdbc:mysql://academic-mysql.cc.gatech.edu/cs4400_Group_22", "cs4400_Group_22",
             "ayt2V3Ck");
             if(!con.isClosed())
-                System.out.println("Successfully connected to " + "MySQL server using TCP/IP...");
-            
-           
-            
+                System.out.println("Successfully connected to " + "MySQL server using TCP/IP...");       
             Statement stmt = con.createStatement();
 
             // TODO: if not available: show the date when the book will be available, which is based on last check-out OR hold-status
@@ -231,6 +233,7 @@ public class HoldRequestSearchController implements Initializable {
                                                 "ON BOOK.Isbn = BOOK_AUTHORS.B_ISBN \n" +                                                
                                                 "WHERE BOOK_AUTHORS.Name = '" + author + "' AND BOOK_COPY.Is_Checked_Out = 0 AND BOOK_COPY.Is_damaged = 0 AND BOOK_COPY.Is_On_Hold = 0\n" +
                                                 "GROUP BY BOOK.Title");
+            System.out.println("bro");
 
             while (books.next()) { 
                 int copyNumber = books.getInt("Copy_number");
@@ -241,13 +244,9 @@ public class HoldRequestSearchController implements Initializable {
                 int copiesAvailable = books.getInt("COUNT(BOOK_COPY.Copy_Number)");
                 
                 addBookToList(theIsbn, theTitle, theEdition, onReserve, copiesAvailable, copyNumber);
-                
+                System.out.println("gay");
                 matchFound = true;
                 System.out.println("Match found: " + books.getString("Title"));
-            }
-
-            if (!matchFound) {
-                System.out.println("Match NOT found");
             }
 
         } catch(Exception e) {

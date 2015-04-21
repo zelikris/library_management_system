@@ -9,7 +9,7 @@
 
 <AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lms.HoldRequestSearchController">
    <children>
-      <Text layoutX="65.0" layoutY="78.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Search Books for Hold Request">
+      <Text layoutX="25.0" layoutY="69.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Search Books for Hold Request" underline="true">
          <font>
             <Font size="36.0" />
          </font>
@@ -22,5 +22,6 @@
       <TextField fx:id="authorInput" layoutX="217.0" layoutY="254.0" />
       <TextField fx:id="titleInput" layoutX="217.0" layoutY="196.0" />
       <TextField fx:id="isbnInput" layoutX="217.0" layoutY="135.0" />
+      <Text fx:id="error" fill="#f20a0a" layoutX="263.0" layoutY="318.0" strokeType="OUTSIDE" strokeWidth="0.0" />
    </children>
 </AnchorPane>

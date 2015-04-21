@@ -20,13 +20,13 @@
 <TableColumn fx:id="availNoAvailableCopies" prefWidth="150.0" text="#copies available" />
 </columns>
 </TableView>
-<TextField fx:id="holdRequestDateField" editable="false" layoutX="124.0" layoutY="325.0" style="-fx-background-color: dddddd;" />
+<TextField fx:id="holdRequestDateField" editable="false" layoutX="130.0" layoutY="325.0" style="-fx-background-color: dddddd;" />
 <Text layoutX="14.0" layoutY="343.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Hold Request Date">
 <font>
 <Font size="12.0" />
 </font>
 </Text>
-<Text layoutX="342.0" layoutY="345.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Estimated Return Date">
+<Text layoutX="321.0" layoutY="342.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Estimated Return Date">
 <font>
 <Font size="12.0" />
 </font>

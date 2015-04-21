@@ -17,6 +17,11 @@
       <Button fx:id="cancelButton" layoutX="165.0" layoutY="309.0" mnemonicParsing="false" onMouseClicked="#cancelEvent" text="Cancel" />
       <PasswordField fx:id="password" layoutX="300.0" layoutY="177.0" />
       <PasswordField fx:id="confirmPassword" layoutX="300.0" layoutY="225.0" />
-      <Text layoutX="103.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Register here!" />
+      <Text layoutX="152.0" layoutY="70.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Register Here!" underline="true">
+         <font>
+            <Font size="41.0" />
+         </font>
+      </Text>
+      <Text fx:id="error" fill="#fc0e0e" layoutX="173.0" layoutY="297.0" strokeType="OUTSIDE" strokeWidth="0.0" />
    </children>
 </AnchorPane>

@@ -15,5 +15,11 @@
       <PasswordField fx:id="passInput" layoutX="322.0" layoutY="231.0" />
       <Button layoutX="206.0" layoutY="320.0" mnemonicParsing="false" onMouseClicked="#loginEvent" text="Login" />
       <Button layoutX="359.0" layoutY="320.0" mnemonicParsing="false" onMouseClicked="#registerEvent" text="Register" />
+      <Text layoutX="246.0" layoutY="75.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Login!" underline="true">
+         <font>
+            <Font size="43.0" />
+         </font>
+      </Text>
+      <Text fx:id="error" fill="#e40b0b" layoutX="206.0" layoutY="305.0" strokeType="OUTSIDE" strokeWidth="0.0" />
    </children>
 </AnchorPane>

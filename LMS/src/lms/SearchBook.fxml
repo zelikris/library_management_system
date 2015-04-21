@@ -22,5 +22,6 @@
             <Font size="36.0" />
          </font>
       </Text>
+      <Text fx:id="error" fill="#ee0707" layoutX="207.0" layoutY="306.0" strokeType="OUTSIDE" strokeWidth="0.0" />
    </children>
 </AnchorPane>
