@@ -7,7 +7,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lms.SearchBookController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="846.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lms.SearchBookController">
    <children>
       <TextField fx:id="isbnInput" layoutX="207.0" layoutY="125.0" />
       <TextField fx:id="titleInput" layoutX="207.0" layoutY="186.0" />
@@ -15,13 +15,17 @@
       <Text layoutX="83.0" layoutY="146.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ISBN" />
       <Text layoutX="83.0" layoutY="207.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Title" />
       <Text layoutX="83.0" layoutY="265.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Author" />
-      <Button layoutX="144.0" layoutY="318.0" mnemonicParsing="false" onMouseClicked="#onBackEvent" prefHeight="31.0" prefWidth="89.0" text="Back" />
-      <Button layoutX="290.0" layoutY="318.0" mnemonicParsing="false" onMouseClicked="#onSearchEvent" prefHeight="31.0" prefWidth="137.0" text="Search" />
-      <Text layoutX="195.0" layoutY="68.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Search Books">
+      <Button layoutX="256.0" layoutY="318.0" mnemonicParsing="false" onMouseClicked="#onBackEvent" prefHeight="31.0" prefWidth="89.0" text="Back" />
+      <Button layoutX="501.0" layoutY="318.0" mnemonicParsing="false" onMouseClicked="#onSearchEvent" prefHeight="31.0" prefWidth="137.0" text="Search" />
+      <Text layoutX="317.0" layoutY="67.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Search Books">
          <font>
             <Font size="36.0" />
          </font>
       </Text>
       <Text fx:id="error" fill="#ee0707" layoutX="207.0" layoutY="306.0" strokeType="OUTSIDE" strokeWidth="0.0" />
+      <TextField fx:id="publisherInput" layoutX="569.0" layoutY="125.0" />
+      <TextField fx:id="editionInput" layoutX="569.0" layoutY="187.0" />
+      <Text layoutX="476.0" layoutY="146.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Publisher" />
+      <Text layoutX="476.0" layoutY="208.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Edition" />
    </children>
 </AnchorPane>

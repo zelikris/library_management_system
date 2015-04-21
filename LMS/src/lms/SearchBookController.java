@@ -39,6 +39,13 @@ public class SearchBookController implements Initializable {
     private TextField authorInput;
     @FXML
     private Text error;
+    @FXML
+    private TextField publisherInput;
+    @FXML
+    private TextField editionInput;   
+    
+    private String publisher;
+    private String edition; 
     private String isbn;
     private String title;
     private String author;
@@ -71,30 +78,267 @@ public class SearchBookController implements Initializable {
     
     @FXML
     private void onSearchEvent(MouseEvent event) {
-        if (!isbnInput.getText().equals("")) {
-            searchByIsbn();
-            if (matchFound) {
-                goToShowBooksScreen();
-            } else {
-                error.setText("Match not Found!");
-            }
-        } else if (!titleInput.getText().equals("")) {
-            searchByTitle();
-            if (matchFound) {
-                goToShowBooksScreen();
-            } else {
-                error.setText("Match not Found!");
-            }
-        } else if (!authorInput.getText().equals("")) {
-            searchByAuthor();
-            if (matchFound) {
-                goToShowBooksScreen();
-            } else {
-                error.setText("Match not Found!");
-            }
-        } else {
+        searchDB();
+        if (allFieldsNull()) {
             error.setText("All fields can't be empty!");
+        } else {
+            if (matchFound) {
+                goToShowBooksScreen();
+            } else {
+                error.setText("Match not Found!");
+            }
+        }    
+        
+        
+//        if (!isbnInput.getText().equals("")) {
+//            if (!editionInput.getText().equals("")) {
+//                searchByIsbnEdition();
+//            } else {
+//                searchByIsbn();
+//            }
+//            
+//            if (matchFound) {
+//                goToShowBooksScreen();
+//            } else {
+//                error.setText("Match not Found!");
+//            }
+//        } else if (!titleInput.getText().equals("")) {
+//            searchByTitle();
+//            if (matchFound) {
+//                goToShowBooksScreen();
+//            } else {
+//                error.setText("Match not Found!");
+//            }
+//        } else if (!authorInput.getText().equals("")) {
+//            searchByAuthor();
+//            if (matchFound) {
+//                goToShowBooksScreen();
+//            } else {
+//                error.setText("Match not Found!");
+//            }
+//        } else if (!publisherInput.getText().equals("")) {
+//            searchByPublisher();
+//            if (matchFound) {
+//                goToShowBooksScreen();
+//            } else {
+//                error.setText("Match not Found!");
+//            }
+//        } else if (!editionInput.getText().equals("")) {
+//            searchByEdition();
+//            if (matchFound) {
+//                goToShowBooksScreen();
+//            } else {
+//                error.setText("Match not Found!");
+//            }
+//        } else {
+//            error.setText("All fields can't be empty!");
+//        }
+    }
+    
+    private Boolean allFieldsNull() {
+        if (isbnInput.getText().equals("") && titleInput.getText().equals("") && authorInput.getText().equals("") && 
+                publisherInput.getText().equals("") && editionInput.getText().equals("")) {
+            return true;
         }
+        return false;
+    }
+    
+    private void searchDB() {
+        isbn = isbnInput.getText();
+        title = titleInput.getText();
+        author = authorInput.getText();
+        publisher = publisherInput.getText();
+        edition = editionInput.getText();
+        
+        matchFound = false;
+        Connection con = null;
+        try {
+            error.setText("");
+            Class.forName("com.mysql.jdbc.Driver").newInstance();
+            con = DriverManager.getConnection("jdbc:mysql://academic-mysql.cc.gatech.edu/cs4400_Group_22", "cs4400_Group_22",
+            "ayt2V3Ck");
+            if(!con.isClosed())
+                System.out.println("Successfully connected to " + "MySQL server using TCP/IP...");
+            
+            Statement stmt = con.createStatement();
+            
+            ResultSet books = stmt.executeQuery("SELECT BOOK.Title, BOOK_COPY.Is_Checked_Out, ISSUES.Return_date, BOOK.Is_Book_On_Reserve, Isbn, Copy_number\n" +
+                                "FROM BOOK_COPY\n" +
+                                "INNER JOIN BOOK ON BOOK_COPY.C_ISBN = BOOK.ISBN\n" +
+                                "INNER JOIN BOOK_AUTHORS ON BOOK.Isbn = BOOK_AUTHORS.B_ISBN\n" +
+                                "LEFT JOIN ISSUES ON BOOK_COPY.C_isbn = ISSUES.I_Isbn\n" +
+                                "AND BOOK_COPY.Copy_number = ISSUES.I_copy_no\n" +
+                                "WHERE BOOK.Isbn = '" + isbn + "' OR BOOK.Title = '" + title + "' OR BOOK_AUTHORS.Name = '" + author + "' OR BOOK.Publisher = '" + publisher + "' OR BOOK.Edition = '" + edition + "'\n" +
+                                "GROUP BY Isbn, Copy_number\n" +
+                                "ORDER BY Return_date DESC");
+
+            while (books.next()) { 
+                String theTitle = books.getString("Title");
+                String theDate = books.getString("Return_date");
+                String checkedOut = books.getString("Is_Checked_Out");
+                String onReserve = books.getString("Is_Book_On_Reserve");
+                String theIsbn = books.getString("Isbn");
+                int copyNumber = books.getInt("Copy_number");
+                System.out.println("THE TITLE: " + theTitle);
+                addBookToList(theTitle, theDate, checkedOut, onReserve, theIsbn, copyNumber);
+                System.out.println("Match found: " + theTitle);
+                matchFound = true;
+            }
+        } catch(Exception e) {
+            System.err.println("Exception: " + e.getMessage());
+        } finally {
+            try {
+                if(con != null)
+                con.close();
+            } catch(SQLException e) {
+                System.err.println(e);
+            }   
+        }
+    }
+    
+    private void searchByIsbnEdition() {
+        isbn = isbnInput.getText();
+        edition = editionInput.getText();
+        matchFound = false;
+        Connection con = null;
+        try {
+            error.setText("");
+            Class.forName("com.mysql.jdbc.Driver").newInstance();
+            con = DriverManager.getConnection("jdbc:mysql://academic-mysql.cc.gatech.edu/cs4400_Group_22", "cs4400_Group_22",
+            "ayt2V3Ck");
+            if(!con.isClosed())
+                System.out.println("Successfully connected to " + "MySQL server using TCP/IP...");
+            
+            Statement stmt = con.createStatement();
+            
+            ResultSet books = stmt.executeQuery("SELECT BOOK.Title, BOOK_COPY.Is_Checked_Out, ISSUES.Return_date, BOOK.Is_Book_On_Reserve, Isbn, Copy_number\n" +
+                                "FROM BOOK_COPY\n" +
+                                "INNER JOIN BOOK ON BOOK_COPY.C_ISBN = BOOK.ISBN\n" +
+                                "INNER JOIN BOOK_AUTHORS ON BOOK.Isbn = BOOK_AUTHORS.B_ISBN\n" +
+                                "LEFT JOIN ISSUES ON BOOK_COPY.C_isbn = ISSUES.I_Isbn\n" +
+                                "AND BOOK_COPY.Copy_number = ISSUES.I_copy_no\n" +
+                                "WHERE BOOK.Isbn = '" + isbn + "' AND BOOK.Edition = '" + edition + "'\n" +
+                                "GROUP BY Isbn, Copy_number\n" +
+                                "ORDER BY Return_date DESC");
+
+            while (books.next()) { 
+                String theTitle = books.getString("Title");
+                String theDate = books.getString("Return_date");
+                String checkedOut = books.getString("Is_Checked_Out");
+                String onReserve = books.getString("Is_Book_On_Reserve");
+                String theIsbn = books.getString("Isbn");
+                int copyNumber = books.getInt("Copy_number");
+                System.out.println("THE TITLE: " + theTitle);
+                addBookToList(theTitle, theDate, checkedOut, onReserve, theIsbn, copyNumber);
+                System.out.println("Match found: " + theTitle);
+                matchFound = true;
+            }
+        } catch(Exception e) {
+            System.err.println("Exception: " + e.getMessage());
+        } finally {
+            try {
+                if(con != null)
+                con.close();
+            } catch(SQLException e) {
+                System.err.println(e);
+            }   
+        }
+    }
+    
+    private void searchByEdition() {
+        edition = editionInput.getText();
+        matchFound = false;
+        Connection con = null;
+        try {
+            error.setText("");
+            Class.forName("com.mysql.jdbc.Driver").newInstance();
+            con = DriverManager.getConnection("jdbc:mysql://academic-mysql.cc.gatech.edu/cs4400_Group_22", "cs4400_Group_22",
+            "ayt2V3Ck");
+            if(!con.isClosed())
+                System.out.println("Successfully connected to " + "MySQL server using TCP/IP...");
+            
+            Statement stmt = con.createStatement();
+            
+            ResultSet books = stmt.executeQuery("SELECT BOOK.Title, BOOK_COPY.Is_Checked_Out, ISSUES.Return_date, BOOK.Is_Book_On_Reserve, Isbn, Copy_number\n" +
+                                "FROM BOOK_COPY\n" +
+                                "INNER JOIN BOOK ON BOOK_COPY.C_ISBN = BOOK.ISBN\n" +
+                                "INNER JOIN BOOK_AUTHORS ON BOOK.Isbn = BOOK_AUTHORS.B_ISBN\n" +
+                                "LEFT JOIN ISSUES ON BOOK_COPY.C_isbn = ISSUES.I_Isbn\n" +
+                                "AND BOOK_COPY.Copy_number = ISSUES.I_copy_no\n" +
+                                "WHERE BOOK.Edition = '" + edition + "'\n" +
+                                "GROUP BY Isbn, Copy_number\n" +
+                                "ORDER BY Return_date DESC");
+
+            while (books.next()) { 
+                String theTitle = books.getString("Title");
+                String theDate = books.getString("Return_date");
+                String checkedOut = books.getString("Is_Checked_Out");
+                String onReserve = books.getString("Is_Book_On_Reserve");
+                String theIsbn = books.getString("Isbn");
+                int copyNumber = books.getInt("Copy_number");
+                System.out.println("THE TITLE: " + theTitle);
+                addBookToList(theTitle, theDate, checkedOut, onReserve, theIsbn, copyNumber);
+                System.out.println("Match found: " + theTitle);
+                matchFound = true;
+            }
+        } catch(Exception e) {
+            System.err.println("Exception: " + e.getMessage());
+        } finally {
+            try {
+                if(con != null)
+                con.close();
+            } catch(SQLException e) {
+                System.err.println(e);
+            }   
+        }    
+    }
+    
+    private void searchByPublisher() {
+        publisher = publisherInput.getText();
+        matchFound = false;
+        Connection con = null;
+        try {
+            error.setText("");
+            Class.forName("com.mysql.jdbc.Driver").newInstance();
+            con = DriverManager.getConnection("jdbc:mysql://academic-mysql.cc.gatech.edu/cs4400_Group_22", "cs4400_Group_22",
+            "ayt2V3Ck");
+            if(!con.isClosed())
+                System.out.println("Successfully connected to " + "MySQL server using TCP/IP...");
+            
+            Statement stmt = con.createStatement();
+            
+            ResultSet books = stmt.executeQuery("SELECT BOOK.Title, BOOK_COPY.Is_Checked_Out, ISSUES.Return_date, BOOK.Is_Book_On_Reserve, Isbn, Copy_number\n" +
+                                "FROM BOOK_COPY\n" +
+                                "INNER JOIN BOOK ON BOOK_COPY.C_ISBN = BOOK.ISBN\n" +
+                                "INNER JOIN BOOK_AUTHORS ON BOOK.Isbn = BOOK_AUTHORS.B_ISBN\n" +
+                                "LEFT JOIN ISSUES ON BOOK_COPY.C_isbn = ISSUES.I_Isbn\n" +
+                                "AND BOOK_COPY.Copy_number = ISSUES.I_copy_no\n" +
+                                "WHERE BOOK.Publisher = '" + publisher + "'\n" +
+                                "GROUP BY Isbn, Copy_number\n" +
+                                "ORDER BY Return_date DESC");
+
+            while (books.next()) { 
+                String theTitle = books.getString("Title");
+                String theDate = books.getString("Return_date");
+                String checkedOut = books.getString("Is_Checked_Out");
+                String onReserve = books.getString("Is_Book_On_Reserve");
+                String theIsbn = books.getString("Isbn");
+                int copyNumber = books.getInt("Copy_number");
+                System.out.println("THE TITLE: " + theTitle);
+                addBookToList(theTitle, theDate, checkedOut, onReserve, theIsbn, copyNumber);
+                System.out.println("Match found: " + theTitle);
+                matchFound = true;
+            }
+        } catch(Exception e) {
+            System.err.println("Exception: " + e.getMessage());
+        } finally {
+            try {
+                if(con != null)
+                con.close();
+            } catch(SQLException e) {
+                System.err.println(e);
+            }   
+        }    
     }
     
     private void searchByIsbn() {
