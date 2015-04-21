@@ -13,7 +13,7 @@
       <Text layoutX="123.0" layoutY="190.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Username" />
       <Text layoutX="125.0" layoutY="252.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password" />
       <PasswordField fx:id="passInput" layoutX="322.0" layoutY="231.0" />
-      <Button layoutX="206.0" layoutY="320.0" mnemonicParsing="false" onMouseClicked="#loginEvent" text="Login" />
+      <Button defaultButton="true" layoutX="206.0" layoutY="320.0" mnemonicParsing="false" onAction="#loginEvent" text="Login" />
       <Button layoutX="359.0" layoutY="320.0" mnemonicParsing="false" onMouseClicked="#registerEvent" text="Register" />
    </children>
 </AnchorPane>

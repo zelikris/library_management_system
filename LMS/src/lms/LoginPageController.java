@@ -6,7 +6,6 @@
 package lms;
 
 import java.io.IOException;
-import javafx.scene.input.MouseEvent;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
@@ -47,7 +46,7 @@ public class LoginPageController implements Initializable {
     }    
     
     @FXML
-    private void loginEvent(MouseEvent event) {
+    private void loginEvent() {
         password = passInput.getText();
         username = usernameInput.getText();
         boolean matchFound = false;
@@ -106,7 +105,7 @@ public class LoginPageController implements Initializable {
     }
     
     @FXML
-    private void registerEvent(MouseEvent event) {
+    private void registerEvent() {
        try {
             Parent foster = LMS.getParent();
             Stage stage = LMS.getStage();
