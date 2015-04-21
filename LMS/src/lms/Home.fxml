@@ -19,8 +19,9 @@
       <Button layoutX="140.0" layoutY="240.0" mnemonicParsing="false" onMouseClicked="#onFutureHoldRequestEvent" prefHeight="60.0" prefWidth="150.0" text="Future Hold Request" />
       <Button layoutX="310.0" layoutY="240.0" mnemonicParsing="false" onMouseClicked="#onRequestExtensionEvent" prefHeight="60.0" prefWidth="150.0" text="Request Extension" />
       <Button layoutX="310.0" layoutY="320.0" mnemonicParsing="false" onMouseClicked="#onViewReportsEvent" prefHeight="60.0" prefWidth="150.0" text="View Reports" />
-      <Button layoutX="310.0" layoutY="80.0" mnemonicParsing="false" onMouseClicked="#onReturnBookEvent" prefHeight="60.0" prefWidth="150.0" text="Return Book" />
-      <Button layoutX="310.0" layoutY="160.0" mnemonicParsing="false" onAction="#onCheckOutEvent" prefHeight="60.0" prefWidth="150.0" text="Check Out" />
+      <Button fx:id="returnButton" layoutX="310.0" layoutY="80.0" mnemonicParsing="false" onMouseClicked="#onReturnBookEvent" prefHeight="60.0" prefWidth="150.0" text="Return Book" />
+      <Button fx:id="checkOutButton" layoutX="310.0" layoutY="160.0" mnemonicParsing="false" onAction="#onCheckOutEvent" prefHeight="60.0" prefWidth="150.0" text="Check Out" />
       <Button layoutX="140.0" layoutY="320.0" mnemonicParsing="false" onAction="#onTrackEvent" prefHeight="60.0" prefWidth="150.0" text="Track Book Location" />
+      <Button layoutX="14.0" layoutY="360.0" mnemonicParsing="false" onAction="#onBackEvent" text="Log Out" />
    </children>
 </AnchorPane>
