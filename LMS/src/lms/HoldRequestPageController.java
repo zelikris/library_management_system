@@ -12,14 +12,11 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.ResourceBundle;
-import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -28,7 +25,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -87,15 +83,15 @@ public class HoldRequestPageController implements Initializable {
         ObservableList<Book> availableList = FXCollections.observableArrayList(booksAvailable);
         ObservableList<Book> reserveList = FXCollections.observableArrayList(booksOnReserve);
         
-        availIsbn.setCellValueFactory(new PropertyValueFactory<Book, String>("isbn"));
-        availTitle.setCellValueFactory(new PropertyValueFactory<Book, String>("title"));
-        availEdition.setCellValueFactory(new PropertyValueFactory<Book, String>("edition")); 
-        availNoAvailableCopies.setCellValueFactory(new PropertyValueFactory<Book, Integer>("copiesAvailable")); 
+        availIsbn.setCellValueFactory(new PropertyValueFactory<>("isbn"));
+        availTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
+        availEdition.setCellValueFactory(new PropertyValueFactory<>("edition")); 
+        availNoAvailableCopies.setCellValueFactory(new PropertyValueFactory<>("copiesAvailable")); 
         
-        resIsbn.setCellValueFactory(new PropertyValueFactory<Book, String>("isbn"));
-        resTitle.setCellValueFactory(new PropertyValueFactory<Book, String>("title"));
-        resEdition.setCellValueFactory(new PropertyValueFactory<Book, String>("edition")); 
-        resNoAvailableCopies.setCellValueFactory(new PropertyValueFactory<Book, Integer>("copiesAvailable")); 
+        resIsbn.setCellValueFactory(new PropertyValueFactory<>("isbn"));
+        resTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
+        resEdition.setCellValueFactory(new PropertyValueFactory<>("edition")); 
+        resNoAvailableCopies.setCellValueFactory(new PropertyValueFactory<>("copiesAvailable")); 
         
         availableTable.setItems(availableList);
         selectAvail.setItems(availableList);
