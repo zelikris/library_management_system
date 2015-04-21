@@ -22,13 +22,13 @@
       <Text layoutX="35.0" layoutY="307.0" strokeType="OUTSIDE" strokeWidth="0.0" text="New Return Date" />
       <Text layoutX="33.0" layoutY="271.0" strokeType="OUTSIDE" strokeWidth="0.0" text="New Extension Date" />
       <Text layoutX="33.0" layoutY="201.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Current Extension Date" />
-      <TextField fx:id="originalCheckoutDate" editable="false" layoutX="215.0" layoutY="151.0" />
-      <TextField fx:id="currentExtensionDate" editable="false" layoutX="215.0" layoutY="183.0" />
-      <TextField fx:id="currentReturnDate" editable="false" layoutX="215.0" layoutY="216.0" />
-      <TextField fx:id="newExtensionDate" editable="false" layoutX="215.0" layoutY="253.0" />
-      <TextField fx:id="newReturnDate" editable="false" layoutX="214.0" layoutY="286.0" />
+      <TextField fx:id="originalCheckoutDate" editable="false" layoutX="215.0" layoutY="151.0" style="-fx-background-color: dddddd;" />
+      <TextField fx:id="currentExtensionDate" editable="false" layoutX="215.0" layoutY="183.0" style="-fx-background-color: dddddd;" />
+      <TextField fx:id="currentReturnDate" editable="false" layoutX="215.0" layoutY="216.0" style="-fx-background-color: dddddd;" />
+      <TextField fx:id="newExtensionDate" editable="false" layoutX="215.0" layoutY="253.0" style="-fx-background-color: dddddd;" />
+      <TextField fx:id="newReturnDate" editable="false" layoutX="214.0" layoutY="286.0" style="-fx-background-color: dddddd;" />
       <Button fx:id="backButton" layoutX="33.0" layoutY="350.0" mnemonicParsing="false" text="Back" />
-      <Text fx:id="error" fill="#eb0707" layoutX="406.0" layoutY="96.0" strokeType="OUTSIDE" strokeWidth="0.0" />
+      <Text fx:id="error" fill="#eb0707" layoutX="345.0" layoutY="89.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="228.0" />
       <Text fx:id="success" fill="#0af52d" layoutX="345.0" layoutY="340.0" strokeType="OUTSIDE" strokeWidth="0.0" />
    </children>
 </AnchorPane>
