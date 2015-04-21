@@ -76,6 +76,8 @@ public class HomeController implements Initializable {
     
     @FXML
     private void onBackEvent() {
+        LMS.setRegistrationPassword(null);
+        LMS.setSessionUser(null);
         try {
             Parent foster = LMS.getParent();
             Stage stage = LMS.getStage();
