@@ -14,14 +14,15 @@
             <Font size="48.0" />
          </font>
       </Text>
-      <Button layoutX="140.0" layoutY="80.0" mnemonicParsing="false" onMouseClicked="#onSearchEvent" prefHeight="60.0" prefWidth="150.0" text="Search" />
-      <Button layoutX="140.0" layoutY="160.0" mnemonicParsing="false" onMouseClicked="#onHoldRequestEvent" prefHeight="60.0" prefWidth="150.0" text="Hold Request" />
-      <Button layoutX="140.0" layoutY="240.0" mnemonicParsing="false" onMouseClicked="#onFutureHoldRequestEvent" prefHeight="60.0" prefWidth="150.0" text="Future Hold Request" />
-      <Button layoutX="310.0" layoutY="240.0" mnemonicParsing="false" onMouseClicked="#onRequestExtensionEvent" prefHeight="60.0" prefWidth="150.0" text="Request Extension" />
-      <Button layoutX="310.0" layoutY="320.0" mnemonicParsing="false" onMouseClicked="#onViewReportsEvent" prefHeight="60.0" prefWidth="150.0" text="View Reports" />
-      <Button fx:id="returnButton" layoutX="310.0" layoutY="80.0" mnemonicParsing="false" onMouseClicked="#onReturnBookEvent" prefHeight="60.0" prefWidth="150.0" text="Return Book" />
-      <Button fx:id="checkOutButton" layoutX="310.0" layoutY="160.0" mnemonicParsing="false" onAction="#onCheckOutEvent" prefHeight="60.0" prefWidth="150.0" text="Check Out" />
-      <Button layoutX="140.0" layoutY="320.0" mnemonicParsing="false" onAction="#onTrackEvent" prefHeight="60.0" prefWidth="150.0" text="Track Book Location" />
+      <Button layoutX="28.0" layoutY="100.0" mnemonicParsing="false" onMouseClicked="#onSearchEvent" prefHeight="60.0" prefWidth="164.0" text="Search" />
+      <Button layoutX="209.0" layoutY="99.0" mnemonicParsing="false" onMouseClicked="#onHoldRequestEvent" prefHeight="60.0" prefWidth="164.0" text="Hold Request" />
+      <Button layoutX="389.0" layoutY="100.0" mnemonicParsing="false" onMouseClicked="#onFutureHoldRequestEvent" prefHeight="60.0" prefWidth="164.0" text="Future Hold Request" />
+      <Button layoutX="389.0" layoutY="180.0" mnemonicParsing="false" onMouseClicked="#onRequestExtensionEvent" prefHeight="60.0" prefWidth="164.0" text="Request Extension" />
+      <Button layoutX="209.0" layoutY="179.0" mnemonicParsing="false" onMouseClicked="#onViewReportsEvent" prefHeight="60.0" prefWidth="164.0" text="View Reports" />
+      <Button fx:id="returnButton" layoutX="389.0" layoutY="259.0" mnemonicParsing="false" onMouseClicked="#onReturnBookEvent" prefHeight="60.0" prefWidth="164.0" text="Return Book" />
+      <Button fx:id="checkOutButton" layoutX="28.0" layoutY="259.0" mnemonicParsing="false" onAction="#onCheckOutEvent" prefHeight="60.0" prefWidth="164.0" text="Check Out" />
+      <Button layoutX="28.0" layoutY="180.0" mnemonicParsing="false" onAction="#onTrackEvent" prefHeight="60.0" prefWidth="164.0" text="Track Book Location" />
       <Button layoutX="14.0" layoutY="360.0" mnemonicParsing="false" onAction="#onBackEvent" text="Log Out" />
+      <Button fx:id="lostDamagedButton" layoutX="211.0" layoutY="258.0" mnemonicParsing="false" onMouseClicked="#onLostDamagedEvent" prefHeight="60.0" prefWidth="164.0" text="Lost / Damaged " />
    </children>
 </AnchorPane>

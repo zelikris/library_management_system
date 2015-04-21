@@ -31,6 +31,7 @@ public class HomeController implements Initializable {
 
     @FXML Button checkOutButton;
     @FXML Button returnButton;
+    @FXML Button lostDamagedButton;
 
     /**
      * Initializes the controller class.
@@ -40,9 +41,11 @@ public class HomeController implements Initializable {
         if (userIsStaff()) {
             checkOutButton.setDisable(false);
             returnButton.setDisable(false);
+            lostDamagedButton.setDisable(false);
         } else {
             checkOutButton.setDisable(true);
             returnButton.setDisable(true);
+            lostDamagedButton.setDisable(true);
         }
     }    
     
@@ -218,6 +221,23 @@ public class HomeController implements Initializable {
             Parent foster = LMS.getParent();
             Stage stage = LMS.getStage();
             foster = FXMLLoader.load(getClass().getResource("ReportsPage.fxml"));
+
+            Scene scene = new Scene(foster);
+
+            stage.setScene(scene);
+            stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    @FXML
+    private void onLostDamagedEvent(MouseEvent event) {
+        try {
+            Parent foster = LMS.getParent();
+            Stage stage = LMS.getStage();
+            foster = FXMLLoader.load(getClass().getResource("LostDamagedBook.fxml"));
 
             Scene scene = new Scene(foster);
 
