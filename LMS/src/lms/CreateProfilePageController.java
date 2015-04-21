@@ -58,7 +58,8 @@ public class CreateProfilePageController implements Initializable {
     private Button registerButton;
     @FXML
     private Text departmentLabel;
-    
+    @FXML
+    private Text error;
     /**
      * Initializes the controller class.
      */
@@ -77,20 +78,18 @@ public class CreateProfilePageController implements Initializable {
     
     @FXML
     private void onRegisterEvent(MouseEvent event) {
-        if (!checkNulls()) {
-            System.out.println("All fields must be filled out!");
-        } else {
+        error.setText("");
+        if (checkNulls()) {
             insertToDB();
-            
-            goToSearchBooksPage();
+            goToHomePage();
         }
     }
     
-    private void goToSearchBooksPage() {
+    private void goToHomePage() {
        try {
             Parent foster = LMS.getParent();
             Stage stage = LMS.getStage();
-            foster = FXMLLoader.load(getClass().getResource("SearchBook.fxml"));
+            foster = FXMLLoader.load(getClass().getResource("Home.fxml"));
 
             Scene scene = new Scene(foster);
 
@@ -174,35 +173,35 @@ public class CreateProfilePageController implements Initializable {
     
     private boolean checkNulls() {
             if (firstName.getText().equals("")) {
-                System.out.println("failure at first name");
+                error.setText("First name must be filled out");
                 return false;
             }
             //Gender;
-            if (dateOfBirth.getValue() == null) {
-                System.out.println("failure at DOB");
+            else if (dateOfBirth.getValue() == null) {
+                error.setText("DOB must be filled out");
                 return false;
             }
             //if (Integer.parseInt(salary.getText()) < 1) {
-            if (address.getText().equals("")) {  
-                System.out.println("failure at address");
+            else if (address.getText().equals("")) {  
+                error.setText("Address must be filled out");
                 return false;
             }
-            if (lastName.getText().equals("")) {
-                System.out.println("failure at last name");
+            else if (lastName.getText().equals("")) {
+                error.setText("Last name must be filled out");
                 return false;
             }
-            if (isFaculty.isSelected()) {
+            else if (isFaculty.isSelected()) {
                 if (department.getText().equals("")) {
-                    System.out.println("failure at department");
+                    error.setText("Dept must be filled out");
                     return false;
                 }
             }
-            if (gender.getValue() == null) {
-                System.out.println("failure at gender");
+            else if (gender.getValue() == null) {
+                error.setText("Gender must be filled out");
                 return false;
             }
-            if (email.getText().equals("")) {
-                System.out.println("failure at email");
+            else if (email.getText().equals("")) {
+                error.setText("Email must be filled out");
                 return false;
             }
             System.out.println("Null check success");

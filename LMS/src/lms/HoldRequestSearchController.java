@@ -233,8 +233,6 @@ public class HoldRequestSearchController implements Initializable {
                                                 "ON BOOK.Isbn = BOOK_AUTHORS.B_ISBN \n" +                                                
                                                 "WHERE BOOK_AUTHORS.Name = '" + author + "' AND BOOK_COPY.Is_Checked_Out = 0 AND BOOK_COPY.Is_damaged = 0 AND BOOK_COPY.Is_On_Hold = 0\n" +
                                                 "GROUP BY BOOK.Title");
-            System.out.println("bro");
-
             while (books.next()) { 
                 int copyNumber = books.getInt("Copy_number");
                 String theIsbn = books.getString("Isbn");
@@ -244,7 +242,6 @@ public class HoldRequestSearchController implements Initializable {
                 int copiesAvailable = books.getInt("COUNT(BOOK_COPY.Copy_Number)");
                 
                 addBookToList(theIsbn, theTitle, theEdition, onReserve, copiesAvailable, copyNumber);
-                System.out.println("gay");
                 matchFound = true;
                 System.out.println("Match found: " + books.getString("Title"));
             }

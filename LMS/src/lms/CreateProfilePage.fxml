@@ -27,6 +27,10 @@
       <TextField fx:id="firstName" layoutX="150.0" layoutY="56.0" />
       <TextField fx:id="email" layoutX="150.0" layoutY="158.0" />
       <Text layoutX="55.0" layoutY="179.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Email" />
-      <Text layoutX="82.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Registration Page" />
+      <Text layoutX="296.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Registration Page">
+         <font>
+            <Font size="23.0" />
+         </font></Text>
+      <Text fx:id="error" fill="#cd0707" layoutX="448.0" layoutY="307.0" strokeType="OUTSIDE" strokeWidth="0.0" />
    </children>
 </AnchorPane>
