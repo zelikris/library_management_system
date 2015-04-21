@@ -143,9 +143,9 @@ INSERT INTO `BOOK_COPY` (`C_isbn`, `Copy_number`, `Is_on_hold`, `Is_checked_out`
 ('9780439785969', 6, 0, 0, 0, NULL),
 ('9780439785969', 7, 0, 0, 0, NULL),
 ('9780545139700', 1, 0, 1, 0, NULL),
-('9780545139700', 2, 0, 1, 0, NULL);
+('9780545139700', 2, 0, 1, 0, NULL),
 ('9780316015844', 1, 0, 1, 0, 'dkeatts3'),
-('9780316015844', 2, 0, 0, 0, NULL)
+('9780316015844', 2, 0, 0, 0, NULL);
 
 -- --------------------------------------------------------
 
@@ -342,7 +342,7 @@ INSERT INTO `STUDENT_FACULTY` (`Sf_username`, `Name`, `Dob`, `Gender`, `Is_debar
 ('monica', 'monica sweat', '1997-12-01', 'F', 0, 'm@gmail.com', '23423 Place', 0, 0.00, NULL),
 ('chris', 'chris simpkins', '1998-12-25', 'M', 0, 'c@gmail.com', '2342 Place', 0, 0.00, NULL),
 ('frank007', 'Frank Cilantro', '2015-04-14', 'Male', 0, 'frank@gmail.com', '1220 Home Sweet Home Atlanta, GA', 1, 0.00, 'Chef'),
-('jjadams', 'Jerry Springer', '2015-04-16', 'Male', 0, 'f@gmail.com', '2343 Joe Drive Atlanta, GA', 1, 0.00, 'Comedian'),
+('jjadams', 'Jerry Springer', '2015-04-16', 'Male', 0, 'f@gmail.com', '2343 Joe Drive Atlanta, GA', 1, 0.00, 'Comedian');
 
 -- --------------------------------------------------------
 
@@ -389,7 +389,7 @@ INSERT INTO `SUBJECT_KEYWORDS` (`Sk_name`, `Keyword`) VALUES
 ('Fiction', 'Dragons'),
 ('Non-fiction', 'Nothingness'),
 ('Non-fiction', 'Suffering'),
-('Religion', 'Pointers');
+('Religion', 'Pointers'),
 ('Fantasy', 'Sparkles');
 
 -- --------------------------------------------------------
@@ -432,4 +432,4 @@ INSERT INTO `USER` (`Username`, `Password`) VALUES
 ('basketball', 'sportz'),
 ('pokemon', 'billcosby'),
 ('frank007', 'pass'),
-('jjadams', 'fdsa'),
+('jjadams', 'fdsa');
