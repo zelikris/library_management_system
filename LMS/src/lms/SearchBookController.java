@@ -87,52 +87,7 @@ public class SearchBookController implements Initializable {
             } else {
                 error.setText("Match not Found!");
             }
-        }    
-        
-        
-//        if (!isbnInput.getText().equals("")) {
-//            if (!editionInput.getText().equals("")) {
-//                searchByIsbnEdition();
-//            } else {
-//                searchByIsbn();
-//            }
-//            
-//            if (matchFound) {
-//                goToShowBooksScreen();
-//            } else {
-//                error.setText("Match not Found!");
-//            }
-//        } else if (!titleInput.getText().equals("")) {
-//            searchByTitle();
-//            if (matchFound) {
-//                goToShowBooksScreen();
-//            } else {
-//                error.setText("Match not Found!");
-//            }
-//        } else if (!authorInput.getText().equals("")) {
-//            searchByAuthor();
-//            if (matchFound) {
-//                goToShowBooksScreen();
-//            } else {
-//                error.setText("Match not Found!");
-//            }
-//        } else if (!publisherInput.getText().equals("")) {
-//            searchByPublisher();
-//            if (matchFound) {
-//                goToShowBooksScreen();
-//            } else {
-//                error.setText("Match not Found!");
-//            }
-//        } else if (!editionInput.getText().equals("")) {
-//            searchByEdition();
-//            if (matchFound) {
-//                goToShowBooksScreen();
-//            } else {
-//                error.setText("Match not Found!");
-//            }
-//        } else {
-//            error.setText("All fields can't be empty!");
-//        }
+        }
     }
     
     private Boolean allFieldsNull() {
@@ -168,7 +123,7 @@ public class SearchBookController implements Initializable {
                                 "INNER JOIN BOOK_AUTHORS ON BOOK.Isbn = BOOK_AUTHORS.B_ISBN\n" +
                                 "LEFT JOIN ISSUES ON BOOK_COPY.C_isbn = ISSUES.I_Isbn\n" +
                                 "AND BOOK_COPY.Copy_number = ISSUES.I_copy_no\n" +
-                                "WHERE BOOK.Isbn = '" + isbn + "' OR BOOK.Title = '" + title + "' OR BOOK_AUTHORS.Name = '" + author + "' OR BOOK.Publisher = '" + publisher + "' OR BOOK.Edition = '" + edition + "'\n" +
+                                "WHERE BOOK_COPY.Is_damaged = 0 AND BOOK.Isbn = '" + isbn + "' OR BOOK.Title = '" + title + "' OR BOOK_AUTHORS.Name = '" + author + "' OR BOOK.Publisher = '" + publisher + "' OR BOOK.Edition = '" + edition + "'\n" +
                                 "GROUP BY Isbn, Copy_number\n" +
                                 "ORDER BY Return_date DESC");
 
