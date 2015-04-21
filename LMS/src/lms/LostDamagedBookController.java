@@ -39,8 +39,6 @@ public class LostDamagedBookController implements Initializable {
     @FXML
     private Button submitButton;
     @FXML
-    private Button cancelButton;
-    @FXML
     private Button searchLastUser;
     @FXML
     private TextField isbn;
@@ -159,21 +157,6 @@ public class LostDamagedBookController implements Initializable {
     }
     
     public void backButtonPressed() {
-        try {
-            Parent foster = LMS.getParent();
-            Stage stage = LMS.getStage();
-            foster = FXMLLoader.load(getClass().getResource("Home.fxml"));
-
-            Scene scene = new Scene(foster);
-
-            stage.setScene(scene);
-            stage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-    
-    public void cancelButtonPressed() {
         try {
             Parent foster = LMS.getParent();
             Stage stage = LMS.getStage();
