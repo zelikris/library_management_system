@@ -18,6 +18,6 @@
             <TableColumn fx:id="copyNumber" minWidth="0.0" prefWidth="63.0" text="Copy #" />
         </columns>
       </TableView>
-      <Button layoutX="327.0" layoutY="408.0" mnemonicParsing="false" onMouseClicked="#onBackEvent" prefHeight="31.0" prefWidth="307.0" text="Back" />
+      <Button layoutX="14.0" layoutY="409.0" mnemonicParsing="false" onMouseClicked="#onBackEvent" prefHeight="31.0" prefWidth="248.0" text="Back" />
    </children>
 </AnchorPane>
