@@ -23,6 +23,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.text.Text;
@@ -46,8 +47,6 @@ public class LostDamagedBookController implements Initializable {
     @FXML
     private TextField bookCopyNumber;
     @FXML
-    private TextField currentTime;
-    @FXML
     private TextField lastUserOfBook;
     @FXML
     private TextField amountToCharge;
@@ -57,13 +56,16 @@ public class LostDamagedBookController implements Initializable {
     private Text error;
     @FXML
     private Text success;
+    @FXML
+    private ComboBox lostOrDamaged;
     private boolean searchedUser;
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        currentTime.setText(getTime());
+        lostOrDamaged.getItems().addAll("Lost", "Damaged");
+        lostOrDamaged.setValue("Lost");
     }    
     public void searchLastUserPressed(MouseEvent event) {
         success.setText("");
@@ -79,19 +81,25 @@ public class LostDamagedBookController implements Initializable {
                 "ayt2V3Ck");
 
                 Statement stmt = con.createStatement();
-                ResultSet results = stmt.executeQuery("SELECT ISSUES.I_sf_username\n" +
+                ResultSet results = stmt.executeQuery("SELECT I_sf_username, Cost, TRUNCATE(0.5*Cost, 2)\n" +
                         "FROM ISSUES\n" +
+                        "INNER JOIN BOOK\n" + 
+                        "ON Isbn = I_isbn\n" +
                         "WHERE ISSUES.I_isbn = " + bookISBN + " AND ISSUES.I_copy_no = " + copyNum + "\n" +
                         "ORDER BY Date_of_issue DESC\n" +
                         "LIMIT 1");
                 String lastUser = "";
                 while (results.next()) {
                     lastUser = results.getString("I_sf_username");
+                    amountToCharge.setText(results.getString("TRUNCATE(0.5*Cost, 2)"));
+                    if (lostOrDamaged.getValue().equals("Lost")) {
+                        amountToCharge.setText(results.getString("Cost"));
+                    }
                 }
                 if (lastUser.equals("")) {
                     error.setText("Invalid information");
                 } else {
-                    lastUserOfBook.setText(results.getString("I_sf_username"));
+                    lastUserOfBook.setText(lastUser);
                     searchedUser = true;
                 }
             } catch(Exception e) {
