@@ -49,6 +49,40 @@ public class HomeController implements Initializable {
     }
     
     @FXML
+    private void onTrackEvent() {
+        try {
+            Parent foster = LMS.getParent();
+            Stage stage = LMS.getStage();
+            foster = FXMLLoader.load(getClass().getResource("TrackBookLocation.fxml"));
+
+            Scene scene = new Scene(foster);
+
+            stage.setScene(scene);
+            stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    @FXML
+    private void onCheckOutEvent() {
+        try {
+            Parent foster = LMS.getParent();
+            Stage stage = LMS.getStage();
+            foster = FXMLLoader.load(getClass().getResource("BookCheckout.fxml"));
+
+            Scene scene = new Scene(foster);
+
+            stage.setScene(scene);
+            stage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    @FXML
     private void onHoldRequestEvent(MouseEvent event) {
         try {
             Parent foster = LMS.getParent();
