@@ -23,5 +23,7 @@
       <Button fx:id="returnButton" layoutX="466.0" layoutY="333.0" mnemonicParsing="false" onAction="#returnBookAction" text="Return Book" />
       <Button fx:id="backButton" layoutX="37.0" layoutY="333.0" mnemonicParsing="false" onAction="#backAction" text="Back" />
       <Button fx:id="penaltyButton" layoutX="251.0" layoutY="333.0" mnemonicParsing="false" onAction="#penaltyAction" text="Assign Penalty" />
+      <Text fx:id="error" fill="#ee0707" layoutX="91.0" layoutY="158.0" strokeType="OUTSIDE" strokeWidth="0.0" />
+      <Text fx:id="success" fill="#02fc3d" layoutX="487.0" layoutY="381.0" strokeType="OUTSIDE" strokeWidth="0.0" />
    </children>
 </AnchorPane>

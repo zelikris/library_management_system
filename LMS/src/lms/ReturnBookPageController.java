@@ -21,6 +21,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 /**
@@ -38,6 +39,8 @@ public class ReturnBookPageController implements Initializable {
     @FXML TextField isbnField;
     @FXML TextField copyNoField;
     @FXML TextField usernameField;
+    @FXML Text error;
+    @FXML Text success;
 
     /**
      * Initializes the controller class.
@@ -80,42 +83,51 @@ public class ReturnBookPageController implements Initializable {
 
     public void returnBookAction() {
         Connection con = null;
-        
-        Integer issueId = Integer.parseInt(issueIdField.getText());
-
-        try {
-            Class.forName("com.mysql.jdbc.Driver").newInstance();
-            con = DriverManager.getConnection("jdbc:mysql://academic-mysql.cc.gatech.edu/cs4400_Group_22", "cs4400_Group_22",
-            "ayt2V3Ck");
-
-            Statement stmt = con.createStatement();
-            ResultSet results = stmt.executeQuery("SELECT COUNT(*)\n" +
-                                                  "FROM ISSUES\n" +
-                                                  "WHERE Issue_id = '" + String.valueOf(issueId) + "' AND CURDATE() > Return_date");
-
-            while (results.next()) {
-                Boolean isDamaged = conditionBox.getValue().equals("Y");
-                Boolean isLate = results.getBoolean("COUNT(*)");
-                System.out.println("Is book damaged? " + (isDamaged? "Y" : "N"));
-                returnBookOnTime(issueId, isDamaged);
-                
-                if (isLate) {
-                    System.out.println("Book was returned late.  Assign a penalty.");
-                    penaltyButton.setDefaultButton(true);
-                }
-            }
-        } catch(ClassNotFoundException | InstantiationException | IllegalAccessException | SQLException e) {
-            System.err.println("Exception: " + e.getMessage());
-        } finally {
+        error.setText("");
+        success.setText("");
+        if (issueIdField.getText().equals("")) {
+            error.setText("IssueID can't be empty!");
+        } else {
+            Integer issueId = Integer.parseInt(issueIdField.getText());
             try {
-                if (con != null) {
-                    con.close();
+                Class.forName("com.mysql.jdbc.Driver").newInstance();
+                con = DriverManager.getConnection("jdbc:mysql://academic-mysql.cc.gatech.edu/cs4400_Group_22", "cs4400_Group_22",
+                "ayt2V3Ck");
+
+                Statement stmt = con.createStatement();
+                ResultSet results = stmt.executeQuery("SELECT Issue_id, CURDATE() > Return_date\n" +
+                                                      "FROM ISSUES\n" +
+                                                      "WHERE Issue_id = '" + String.valueOf(issueId) + "'");
+                
+                while (results.next()) {
+                    if (results.getString("Issue_id") == null) {
+                        error.setText("Match NOT found");
+                    } else {
+                        Boolean isDamaged = conditionBox.getValue().equals("Y");
+                        Boolean isLate = results.getBoolean("CURDATE() > Return_date");
+                        System.out.println("Is book damaged? " + (isDamaged? "Y" : "N"));
+                        returnBookOnTime(issueId, isDamaged);
+
+                        if (isLate) {
+                            error.setText("Book was returned late.  Assign penalty.");
+                            penaltyButton.setDefaultButton(true);
+                        } else {
+                            success.setText("Returned!");
+                        }
+                    }
                 }
-            } catch(SQLException e) {
-                System.err.println(e);
+            } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | SQLException e) {
+                System.err.println("Exception: " + e.getMessage());
+            } finally {
+                try {
+                    if (con != null) {
+                        con.close();
+                    }
+                } catch(SQLException e) {
+                    System.err.println(e);
+                }
             }
         }
-
     }
 
     public void returnBookOnTime(Integer issueId, Boolean isDamaged) {
