@@ -126,31 +126,29 @@ public class FrequentUsersReportController implements Initializable {
             "ayt2V3Ck");
 
             Statement stmt = con.createStatement();
-            ResultSet results = stmt.executeQuery("SELECT * FROM\n" +
-                                                "(\n" +
-                                                "    SELECT USER.Username, COUNT(USER.Username), MONTH(ISSUES.Date_of_issue)\n" +
-                                                "    FROM USER\n" +
-                                                "    INNER JOIN ISSUES\n" +
-                                                "    ON USER.Username = ISSUES.I_sf_username\n" +
-                                                "    WHERE MONTH(ISSUES.Date_of_issue) = 3\n" +
-                                                "    GROUP BY USER.Username, MONTH(ISSUES.Date_of_issue)\n" +
-                                                "    HAVING COUNT(USER.Username) > 10\n" +
-                                                "    ORDER BY COUNT(USER.Username) DESC\n" +
-                                                "    LIMIT 5\n" +
-                                                ") T1\n" +
-                                                "UNION\n" +
-                                                "SELECT * FROM\n" +
-                                                "(\n" +
-                                                "    SELECT USER.Username, COUNT(USER.Username), MONTH(ISSUES.Date_of_issue)\n" +
-                                                "    FROM USER\n" +
-                                                "    INNER JOIN ISSUES\n" +
-                                                "    ON USER.Username = ISSUES.I_sf_username\n" +
-                                                "    WHERE MONTH(ISSUES.Date_of_issue) = 4\n" +
-                                                "    GROUP BY USER.Username, MONTH(ISSUES.Date_of_issue)\n" +
-                                                "    HAVING COUNT(USER.Username) > 10\n" +
-                                                "    ORDER BY COUNT(USER.Username) DESC\n" +
-                                                "    LIMIT 5\n" +
-                                                ") T2");
+            ResultSet results = stmt.executeQuery("SELECT * FROM (\n" +
+                                                  "    SELECT USER.Username, COUNT(USER.Username), MONTH(ISSUES.Date_of_issue)\n" +
+                                                  "    FROM USER\n" +
+                                                  "    INNER JOIN ISSUES\n" +
+                                                  "    ON USER.Username = ISSUES.I_sf_username\n" +
+                                                  "    WHERE MONTH(ISSUES.Date_of_issue) = 3\n" +
+                                                  "    GROUP BY USER.Username, MONTH(ISSUES.Date_of_issue)\n" +
+                                                  "    HAVING COUNT(USER.Username) > 10\n" +
+                                                  "    ORDER BY COUNT(USER.Username) DESC\n" +
+                                                  "    LIMIT 5\n" +
+                                                  ") T1\n" +
+                                                  "UNION\n" +
+                                                  "SELECT * FROM (\n" +
+                                                  "    SELECT USER.Username, COUNT(USER.Username), MONTH(ISSUES.Date_of_issue)\n" +
+                                                  "    FROM USER\n" +
+                                                  "    INNER JOIN ISSUES\n" +
+                                                  "    ON USER.Username = ISSUES.I_sf_username\n" +
+                                                  "    WHERE MONTH(ISSUES.Date_of_issue) = 4\n" +
+                                                  "    GROUP BY USER.Username, MONTH(ISSUES.Date_of_issue)\n" +
+                                                  "    HAVING COUNT(USER.Username) > 10\n" +
+                                                  "    ORDER BY COUNT(USER.Username) DESC\n" +
+                                                  "    LIMIT 5\n" +
+                                                  ") T2");
 
             while (results.next()) {
                 String username = results.getString("Username");

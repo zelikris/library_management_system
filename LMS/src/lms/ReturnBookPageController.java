@@ -94,9 +94,10 @@ public class ReturnBookPageController implements Initializable {
                                                   "WHERE Issue_id = '" + String.valueOf(issueId) + "' AND CURDATE() > Return_date");
 
             while (results.next()) {
+                Boolean isDamaged = conditionBox.getValue().equals("Y");
                 Boolean isLate = results.getBoolean("COUNT(*)");
-                
-                returnBookOnTime(issueId);
+                System.out.println("Is book damaged? " + (isDamaged? "Y" : "N"));
+                returnBookOnTime(issueId, isDamaged);
                 
                 if (isLate) {
                     System.out.println("Book was returned late.  Assign a penalty.");
@@ -117,7 +118,7 @@ public class ReturnBookPageController implements Initializable {
 
     }
 
-    public void returnBookOnTime(Integer issueId) {
+    public void returnBookOnTime(Integer issueId, Boolean isDamaged) {
         Connection con = null;
 
         try {
@@ -126,15 +127,17 @@ public class ReturnBookPageController implements Initializable {
             "ayt2V3Ck");
 
             Statement stmt = con.createStatement();
-            ResultSet results = stmt.executeQuery("UPDATE BOOK_COPY T1\n" +
-                                                  "INNER JOIN (\n" +
-                                                  "    SELECT Issue_id, Is_checked_out, Is_damaged, Return_date\n" +
-                                                  "    FROM BOOK_COPY\n" +
-                                                  "    INNER JOIN ISSUES\n" +
-                                                  "    ON Issue_id = '" + String.valueOf(issueId) + "'\n" +
-                                                  ") T2 ON T1.Issue_id = T2.Issue_id\n" +
-                                                  "SET T1.Is_checked_out = FALSE, T1.Is_damaged = $is_damaged;\n" +
-                                                  "SELECT I_isbn, I_copy_no, I_sf_username\n" +
+                stmt.executeUpdate("UPDATE BOOK_COPY T1\n" +
+                                   "INNER JOIN (\n" +
+                                   "    SELECT *\n" +
+                                   "    FROM BOOK_COPY\n" +
+                                   "    INNER JOIN ISSUES\n" +
+                                   "    ON C_isbn = I_isbn AND Copy_number = I_copy_no\n" +
+                                   "    WHERE Issue_id = '" + issueId + "'\n" +
+                                   ") T2 ON T2.Issue_id = '" + issueId + "'\n" +
+                                   "SET T1.Future_requester = NULL, T1.Is_checked_out = FALSE, T1.Is_damaged = '" + (isDamaged ? 1 : 0) + "'\n");
+
+            ResultSet results = stmt.executeQuery("SELECT I_isbn, I_copy_no, I_sf_username\n" +
                                                   "FROM ISSUES\n" +
                                                   "WHERE Issue_id = '" + String.valueOf(issueId) + "'");
 
@@ -142,7 +145,7 @@ public class ReturnBookPageController implements Initializable {
                 String isbn = results.getString("I_isbn");
                 Integer copyNo = results.getInt("I_copy_no");
                 String username = results.getString("I_sf_username");
-                
+
                 isbnField.setText(isbn);
                 copyNoField.setText(Integer.toString(copyNo));
                 usernameField.setText(username);

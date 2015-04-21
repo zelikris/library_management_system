@@ -24,7 +24,11 @@ public class LMS extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         this.stage = stage;
+<<<<<<< HEAD
         Parent root = FXMLLoader.load(getClass().getResource("HoldRequestSearch.fxml"));
+=======
+        Parent root = FXMLLoader.load(getClass().getResource("LoginPage.fxml"));
+>>>>>>> 0a953eecfbbd6d2038702718d2252bf4bb11d9be
         
         Scene scene = new Scene(root);
         

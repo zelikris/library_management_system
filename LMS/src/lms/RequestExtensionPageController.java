@@ -72,10 +72,12 @@ public class RequestExtensionPageController implements Initializable {
         if (!enteredIssueID) {
             error.setText("First enter valid Issue ID");
         } else {
-            if (isStudent == 1 && countExtensions >= 2) {
+            if (checkForFutureRequester(id)) {
+                error.setText("Extension denied: there is a future requester");
+            } else if (isStudent == 1 && countExtensions >= 2) {
                 error.setText("Out of Extensions");
             } else if (isStudent == 0 && countExtensions >= 4) {
-                error.setText("Out of Extensions");            
+                error.setText("Out of Extensions");
             } else {
                 try {
                     error.setText("");
@@ -166,6 +168,38 @@ public class RequestExtensionPageController implements Initializable {
             e.printStackTrace();
         }
     }
+    
+
+    private Boolean checkForFutureRequester(String issueId) {
+        Connection con = null;
+
+        try {
+            Class.forName("com.mysql.jdbc.Driver").newInstance();
+            con = DriverManager.getConnection("jdbc:mysql://academic-mysql.cc.gatech.edu/cs4400_Group_22", "cs4400_Group_22",
+            "ayt2V3Ck");
+
+            Statement stmt = con.createStatement();
+            ResultSet results =  stmt.executeQuery("SELECT COUNT(*)\n" +
+                                                   "FROM ISSUES\n" +
+                                                   "INNER JOIN BOOK_COPY\n" +
+                                                   "ON ISSUES.I_isbn = BOOK_COPY.C_isbn AND ISSUES.I_copy_no = BOOK_COPY.Copy_number\n" +
+                                                   "WHERE ISSUES.Issue_id = " + issueId + " AND Future_requester IS NOT NULL");
+            while (results.next()) {
+                return Integer.parseInt(results.getString("COUNT(*)")) == 1;
+            }
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        } finally {
+            try {
+                if (con != null) {
+                    con.close();
+                }
+            } catch (SQLException e) {
+                System.err.println(e.getMessage());
+            }
+        }
+        return false;
+    }
 
     private int checkStudentOrStaff() {
         String id = issueID.getText();
@@ -183,7 +217,7 @@ public class RequestExtensionPageController implements Initializable {
                     "INNER JOIN STUDENT_FACULTY\n" +
                     "ON STUDENT_FACULTY.Sf_username = ISSUES.I_sf_username\n" +
                     "WHERE ISSUES.Issue_id = '" + id + "'\n" +
-                    ")T1");
+                    ") T1");
             while (results.next()) {
                 isStudent = Integer.parseInt(results.getString("COUNT(*)"));
             }

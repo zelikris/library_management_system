@@ -33,14 +33,6 @@ public class Book {
         isbn = theIsbn;
         copyNumber = cNumber;
     }
-
-//    public Book(Boolean select, String aIsbn, String aTitle, String aEdition, Integer aCopies) {
-//        selected = select;
-//        isbn = aIsbn;
-//        title = aTitle;
-//        edition = aEdition;
-//        copies = aCopies;
-//    }
     
     // for hold request
     public Book(String theIsbn, String theTitle, String theEdition, Boolean onReserve, int available, int aCopyNumber) {

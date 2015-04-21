@@ -126,8 +126,7 @@ public class PopularSubjectsReportController implements Initializable {
             "ayt2V3Ck");
 
             Statement stmt = con.createStatement();
-            ResultSet results = stmt.executeQuery("SELECT * FROM\n" +
-                                                "(\n" +
+            ResultSet results = stmt.executeQuery("SELECT * FROM (\n" +
                                                 "    SELECT SUBJECT.S_Name, MONTH(ISSUES.Date_of_issue), COUNT(BOOK.Title)\n" +
                                                 "    FROM BOOK\n" +
                                                 "    INNER JOIN SUBJECT\n" +
@@ -139,8 +138,7 @@ public class PopularSubjectsReportController implements Initializable {
                                                 "    ORDER BY COUNT(SUBJECT.S_Name) DESC\n" +
                                                 ") T1\n" +
                                                 "UNION\n" +
-                                                "SELECT * FROM\n" +
-                                                "(\n" +
+                                                "SELECT * FROM (\n" +
                                                 "    SELECT SUBJECT.S_Name, MONTH(ISSUES.Date_of_issue), COUNT(BOOK.Title)\n" +
                                                 "    FROM BOOK\n" +
                                                 "    INNER JOIN SUBJECT\n" +

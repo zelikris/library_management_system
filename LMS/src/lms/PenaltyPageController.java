@@ -74,9 +74,9 @@ public class PenaltyPageController implements Initializable {
             "ayt2V3Ck");
 
             Statement stmt = con.createStatement();
-            ResultSet results = stmt.executeQuery("SELECT ISSUES.Issue_id, ISSUES.I_sf_username, ISSUES.Return_date, STUDENT_FACULTY.Penalty\n, CURDATE(), 0.50 * DATEDIFF(CURDATE(), T2.Return_date)" +
+            ResultSet results = stmt.executeQuery("SELECT ISSUES.Issue_id, ISSUES.I_sf_username, ISSUES.Return_date, Penalty, Sf_username, CURDATE(), GREATEST(0, 0.50 * DATEDIFF(CURDATE(), Return_date)) + Penalty\n" +
                                                   "FROM ISSUES\n" + 
-                                                  "INNER JOIN STUDENT_FACULTY ON ISSUES.I_sf_username = STUDENT_FACULTY.Username\n" +
+                                                  "INNER JOIN STUDENT_FACULTY ON ISSUES.I_sf_username = Sf_username\n" +
                                                   "WHERE ISSUES.Issue_id = '" + Integer.toString(issueId) + "'");
 
             while (results.next()) {
@@ -84,7 +84,7 @@ public class PenaltyPageController implements Initializable {
                 Date returnDate = results.getDate("Return_date");
                 Double penalty = results.getDouble("Penalty");
                 Date currentDate = results.getDate("CURDATE()");
-                Double newPenalty = results.getDouble("0.50 * DATEDIFF(CURDATE(), T2.Return_date)");
+                Double newPenalty = results.getDouble("GREATEST(0, 0.50 * DATEDIFF(CURDATE(), Return_date)) + Penalty");
                 
                 userField.setText(username);
                 dueDateField.setText(returnDate.toString());
@@ -92,8 +92,8 @@ public class PenaltyPageController implements Initializable {
                 todaysDateField.setText(currentDate.toString());
                 newPenaltyField.setText(Double.toString(newPenalty));
                 newPenaltyField.setEditable(true);
-                newPenaltyField.setStyle("-fx-background-color: dddddd;");
-                issueIdField.setEditable(false);
+                newPenaltyField.setStyle("-fx-background-color: ffffff;");
+                penaltyButton.setDisable(false);
 
             }
         } catch(ClassNotFoundException | InstantiationException | IllegalAccessException | SQLException e) {
@@ -122,26 +122,26 @@ public class PenaltyPageController implements Initializable {
             "ayt2V3Ck");
 
             Statement stmt = con.createStatement();
-            ResultSet results = stmt.executeQuery("UPDATE STUDENT_FACULTY T1\n" +
-                                                  "INNER JOIN (\n" +
-                                                  "    SELECT I_sf_username, Penalty\n" +
-                                                  "    FROM STUDENT_FACULTY \n" +
-                                                  "    INNER JOIN ISSUES\n" +
-                                                  "    ON STUDENT_FACULTY.Sf_username = ISSUES.I_sf_username\n" +
-                                                  "    WHERE Issue_id = '" + issueId + "'\n" +
-                                                  "    LIMIT 1\n" +
-                                                  ") T2 ON T1.Sf_username = T2.I_sf_username\n" +
-                                                  "SET T1.Penalty = " + newPenalty + ";\n" + 
-                                                  "SELECT STUDENT_FACULTY.Penalty\n" +
+            stmt.executeUpdate("UPDATE STUDENT_FACULTY T1\n" +
+                               "INNER JOIN (\n" +
+                               "    SELECT I_sf_username, Penalty\n" +
+                               "    FROM STUDENT_FACULTY \n" +
+                               "    INNER JOIN ISSUES\n" +
+                               "    ON STUDENT_FACULTY.Sf_username = ISSUES.I_sf_username\n" +
+                               "    WHERE Issue_id = '" + issueId + "'\n" +
+                               "    LIMIT 1\n" +
+                               ") T2 ON T1.Sf_username = T2.I_sf_username\n" +
+                               "SET T1.Penalty = " + newPenalty);
+
+            ResultSet results = stmt.executeQuery("SELECT STUDENT_FACULTY.Penalty\n" +
                                                   "FROM ISSUES\n" + 
-                                                  "INNER JOIN STUDENT_FACULTY ON ISSUES.I_sf_username = STUDENT_FACULTY.Username\n" +
+                                                  "INNER JOIN STUDENT_FACULTY ON ISSUES.I_sf_username = Sf_username\n" +
                                                   "WHERE ISSUES.Issue_id = '" + Integer.toString(issueId) + "'");
 
             while (results.next()) {
                 Double penalty = results.getDouble("Penalty");
-                
+
                 currentPenaltyField.setText(Double.toString(penalty));
-                penaltyButton.setDisable(true);
 
             }
         } catch(ClassNotFoundException | InstantiationException | IllegalAccessException | SQLException e) {

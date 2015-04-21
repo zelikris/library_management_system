@@ -13,6 +13,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -24,6 +26,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 /**
@@ -53,6 +56,8 @@ public class CreateProfilePageController implements Initializable {
     private TextField department;
     @FXML
     private Button registerButton;
+    @FXML
+    private Text departmentLabel;
     
     /**
      * Initializes the controller class.
@@ -60,6 +65,14 @@ public class CreateProfilePageController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         gender.getItems().addAll("Male", "Female");
+        
+        isFaculty.selectedProperty().addListener(new ChangeListener<Boolean>() {
+        public void changed(ObservableValue<? extends Boolean> ov,
+            Boolean old_val, Boolean new_val) {
+                department.setVisible(new_val);
+                departmentLabel.setVisible(new_val);
+        }
+    });
     }
     
     @FXML
@@ -98,7 +111,10 @@ public class CreateProfilePageController implements Initializable {
         String addrs = address.getText();
         String gendr = gender.getValue();
         boolean isAFaculty = isFaculty.isSelected();
-        String dept = department.getText();
+        String dept = "NULL";
+        if (isAFaculty) {
+            dept = department.getText();
+        }
         String theEmail = email.getText();
         Connection con = null;
         
@@ -157,38 +173,40 @@ public class CreateProfilePageController implements Initializable {
     }
     
     private boolean checkNulls() {
-           if (firstName.getText().equals("")) {
-               System.out.println("failure at first name");
-               return false;
-           }
-           //Gender;
-           if (dateOfBirth.getValue() == null) {
-               System.out.println("failure at DOB");
-               return false;
-           }
-           //if (Integer.parseInt(salary.getText()) < 1) {
-           if (address.getText().equals("")) {  
-               System.out.println("failure at address");
-               return false;
-           }
-           if (lastName.getText().equals("")) {
-               System.out.println("failure at last name");
-               return false;
-           }
-           if (department.getText().equals("")) {
-               System.out.println("failure at department");
-               return false;
-           }
-           if (gender.getValue() == null) {
-               System.out.println("failure at gender");
-               return false;
-           }
-           if (email.getText().equals("")) {
-               System.out.println("failure at email");
-               return false;
-           }
-           System.out.println("Null check success");
-           return true;
+            if (firstName.getText().equals("")) {
+                System.out.println("failure at first name");
+                return false;
+            }
+            //Gender;
+            if (dateOfBirth.getValue() == null) {
+                System.out.println("failure at DOB");
+                return false;
+            }
+            //if (Integer.parseInt(salary.getText()) < 1) {
+            if (address.getText().equals("")) {  
+                System.out.println("failure at address");
+                return false;
+            }
+            if (lastName.getText().equals("")) {
+                System.out.println("failure at last name");
+                return false;
+            }
+            if (isFaculty.isSelected()) {
+                if (department.getText().equals("")) {
+                    System.out.println("failure at department");
+                    return false;
+                }
+            }
+            if (gender.getValue() == null) {
+                System.out.println("failure at gender");
+                return false;
+            }
+            if (email.getText().equals("")) {
+                System.out.println("failure at email");
+                return false;
+            }
+            System.out.println("Null check success");
+            return true;
     }
     
 }
