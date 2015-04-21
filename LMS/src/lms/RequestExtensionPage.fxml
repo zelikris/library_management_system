@@ -27,7 +27,7 @@
       <TextField fx:id="currentReturnDate" editable="false" layoutX="215.0" layoutY="216.0" style="-fx-background-color: dddddd;" />
       <TextField fx:id="newExtensionDate" editable="false" layoutX="215.0" layoutY="253.0" style="-fx-background-color: dddddd;" />
       <TextField fx:id="newReturnDate" editable="false" layoutX="214.0" layoutY="286.0" style="-fx-background-color: dddddd;" />
-      <Button fx:id="backButton" layoutX="33.0" layoutY="350.0" mnemonicParsing="false" text="Back" />
+      <Button fx:id="backButton" layoutX="33.0" layoutY="350.0" mnemonicParsing="false" onAction="#backButtonPressed" text="Back" />
       <Text fx:id="error" fill="#eb0707" layoutX="345.0" layoutY="89.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="228.0" />
       <Text fx:id="success" fill="#0af52d" layoutX="345.0" layoutY="340.0" strokeType="OUTSIDE" strokeWidth="0.0" />
    </children>
