@@ -45,7 +45,7 @@ public class PenaltyPageController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        penaltyButton.setDisable(true);
     }    
 
     public void backAction() {
