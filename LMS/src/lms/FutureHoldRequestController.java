@@ -129,7 +129,7 @@ public class FutureHoldRequestController implements Initializable {
                                             "FROM BOOK_COPY \n" +
                                             "INNER JOIN ISSUES\n" +
                                             "ON BOOK_COPY.C_isbn = ISSUES.I_isbn AND BOOK_COPY.Copy_number = I_copy_no\n" +
-                                            "WHERE C_Isbn = '" + isbn + "' AND Future_requester IS NULL\n" +
+                                            "WHERE C_Isbn = '" + isbn + "' AND Future_requester IS NULL AND BOOK_COPY.Is_checked_out = 1\n" +
                                             "ORDER BY Return_date DESC");     
                                           
         while (books.next() && !matchFound) {

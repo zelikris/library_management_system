@@ -85,6 +85,7 @@ public class ReturnBookPageController implements Initializable {
         Connection con = null;
         error.setText("");
         success.setText("");
+        Boolean found = false;
         if (issueIdField.getText().equals("")) {
             error.setText("IssueID can't be empty!");
         } else {
@@ -95,9 +96,12 @@ public class ReturnBookPageController implements Initializable {
                 "ayt2V3Ck");
 
                 Statement stmt = con.createStatement();
+                
                 ResultSet results = stmt.executeQuery("SELECT Issue_id, CURDATE() > Return_date\n" +
-                                                      "FROM ISSUES\n" +
-                                                      "WHERE Issue_id = '" + String.valueOf(issueId) + "'");
+                                                      "FROM BOOK_COPY\n" +
+                                                      "INNER JOIN ISSUES\n" +
+                                                      "ON BOOK_COPY.C_isbn = ISSUES.I_isbn AND BOOK_COPY.Copy_number = I_copy_no\n" +
+                                                      "WHERE Issue_id = '" + String.valueOf(issueId) + "' AND BOOK_COPY.Is_checked_out = 1");
                 
                 while (results.next()) {
                     if (results.getString("Issue_id") == null) {
@@ -107,6 +111,7 @@ public class ReturnBookPageController implements Initializable {
                         Boolean isLate = results.getBoolean("CURDATE() > Return_date");
                         System.out.println("Is book damaged? " + (isDamaged? "Y" : "N"));
                         returnBookOnTime(issueId, isDamaged);
+                        found = true;
 
                         if (isLate) {
                             error.setText("Book was returned late.  Assign penalty.");
@@ -116,6 +121,11 @@ public class ReturnBookPageController implements Initializable {
                         }
                     }
                 }
+                
+                if (!found) {
+                    error.setText("Match NOT found");
+                }
+
             } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | SQLException e) {
                 System.err.println("Exception: " + e.getMessage());
             } finally {

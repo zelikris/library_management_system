@@ -13,8 +13,8 @@
       <Text layoutX="106.0" layoutY="175.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Username" />
       <Text layoutX="108.0" layoutY="237.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password" />
       <PasswordField fx:id="passInput" layoutX="305.0" layoutY="216.0" />
-      <Button defaultButton="true" layoutX="226.0" layoutY="308.0" mnemonicParsing="false" onAction="#loginEvent" prefHeight="57.0" prefWidth="149.0" text="Login" />
-      <Button layoutX="496.0" layoutY="336.0" mnemonicParsing="false" onMouseClicked="#registerEvent" text="Register" />
+      <Button defaultButton="true" layoutX="226.0" layoutY="280.0" mnemonicParsing="false" onAction="#loginEvent" prefHeight="57.0" prefWidth="149.0" text="Login" />
+      <Button layoutX="226.0" layoutY="346.0" mnemonicParsing="false" onMouseClicked="#registerEvent" prefHeight="31.0" prefWidth="149.0" text="Register" />
       <Text layoutX="252.0" layoutY="86.0" strokeLineJoin="ROUND" strokeType="OUTSIDE" strokeWidth="0.0" text="Login" underline="true">
          <font>
             <Font size="43.0" />
