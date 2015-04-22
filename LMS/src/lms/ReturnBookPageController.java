@@ -156,7 +156,7 @@ public class ReturnBookPageController implements Initializable {
                                    "    INNER JOIN ISSUES\n" +
                                    "    ON C_isbn = I_isbn AND Copy_number = I_copy_no\n" +
                                    "    WHERE Issue_id = '" + issueId + "'\n" +
-                                   ") T2 ON T2.Issue_id = '" + issueId + "'\n" +
+                                   ") T2 ON T1.C_isbn = I_isbn AND T1.Copy_number = I_copy_no\n" + 
                                    "SET T1.Future_requester = NULL, T1.Is_checked_out = FALSE, T1.Is_damaged = '" + (isDamaged ? 1 : 0) + "'\n");
 
             ResultSet results = stmt.executeQuery("SELECT I_isbn, I_copy_no, I_sf_username\n" +

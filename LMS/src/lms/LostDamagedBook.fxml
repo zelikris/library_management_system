@@ -25,7 +25,7 @@
       <TextField fx:id="amountToCharge" layoutX="191.0" layoutY="286.0" />
       <Button fx:id="submitButton" layoutX="327.0" layoutY="354.0" mnemonicParsing="false" onMouseClicked="#submitButtonPressed" prefHeight="31.0" prefWidth="139.0" text="Submit" />
       <Button fx:id="backButton" layoutX="88.0" layoutY="354.0" mnemonicParsing="false" onMouseClicked="#backButtonPressed" prefHeight="31.0" prefWidth="139.0" text="Back" />
-      <Text fx:id="error" fill="#ee0e0e" layoutX="378.0" layoutY="247.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="19.0" />
+      <Text fx:id="error" fill="#ee0e0e" layoutX="378.0" layoutY="234.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="179.0" />
       <Text fx:id="success" fill="#08e81e" layoutX="372.0" layoutY="342.0" strokeType="OUTSIDE" strokeWidth="0.0" />
       <ComboBox fx:id="lostOrDamaged" layoutX="185.0" layoutY="200.0" prefWidth="150.0" />
       <Text layoutX="45.0" layoutY="218.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Lost or damaged" />
